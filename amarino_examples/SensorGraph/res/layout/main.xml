@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    <edu.mit.media.hlt.sensorgraph.GraphView
+    	android:id="@+id/graph"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent"
+	    android:layout_weight="4"
+    />
+	<TextView 
+		android:id="@+id/value"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="fill_parent"
+	    android:layout_weight="6"
+	    android:text="@string/hello"
+	    android:textSize="40sp"
+	    android:gravity="center"
+	    android:background="#fff"
+    />
+</LinearLayout>

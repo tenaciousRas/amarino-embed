@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+    
+    <include android:id="@+id/buttons" layout="@layout/button_panel" />
+    
+    <ScrollView android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" 
+		android:layout_alignParentTop="true"
+		android:layout_above="@id/buttons" 
+		>
+		
+		<LinearLayout
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:orientation="vertical"
+			android:padding="8dp">
+			
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="@string/plugin_name" 
+				android:layout_width="fill_parent"
+				android:layout_gravity="center" 
+				android:gravity="center" 
+				android:textColor="#3f3"
+				android:textSize="20sp" 
+		        android:textStyle="bold">
+			</TextView>
+			
+			<TextView
+				android:layout_height="wrap_content"
+				android:text="@string/plugin_desc" 
+				android:layout_width="fill_parent"
+				android:layout_gravity="center" 
+				android:gravity="center" 
+				android:textColor="#eee"
+				android:textSize="14sp" >
+			</TextView>
+			
+			<ViewStub android:id="@+id/plugin_edit"
+				android:layout="@layout/plugin_edit"
+				android:layout_width="fill_parent"
+  				android:layout_height="wrap_content"/>
+			
+			
+			<include layout="@layout/visualizer_spinner" />
+			 
+		</LinearLayout>
+		
+	</ScrollView>
+	
+	
+	
+</RelativeLayout>
+
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- General -->
+    <string name="app_name">AmarinoPluginTime</string>
+    <string name="plugin_name">Time</string>
+    <string name="plugin_desc">Sends every second the actual time as int array. {h, m, s}</string>
+    <string name="service_class_name">MyBackgroundService</string>
+    
+    <!-- EditActivity -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+	<string name="select_visualizer">Data Visualizer</string>
+    
+</resources>

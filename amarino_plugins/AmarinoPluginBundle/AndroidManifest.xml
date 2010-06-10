@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="at.abraxas.amarino.plugins"
+      android:versionName="0.2" android:versionCode="2">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+		<activity
+            android:name="at.abraxas.amarino.plugin.InfoActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/icon"
+            android:theme="@android:style/Theme.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+        </activity>
+        
+        <receiver android:name=".Receiver">
+	    	<intent-filter>
+	    		<action android:name="amarino.intent.action.ENABLE" />
+	    		<action android:name="amarino.intent.action.DISABLE" />
+	    	</intent-filter>
+		</receiver>
+		
+        
+        <!-- ##### Compass plug-in ##### -->
+        <activity android:name=".compass.EditActivity"
+                  android:label="@string/compass_plugin_name"
+                  android:icon="@drawable/compass_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".compass.BackgroundService" />
+        
+        
+        
+        <!-- ##### Accelerometer plug-in ##### -->
+        <activity android:name=".accelerometer.EditActivity"
+                  android:label="@string/accelerometer_plugin_name"
+                  android:icon="@drawable/accelerometer_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".accelerometer.BackgroundService" />
+        
+        
+        
+        <!-- ##### Orientation plug-in ##### -->
+        <activity android:name=".orientation.EditActivity"
+                  android:label="@string/orientation_plugin_name"
+                  android:icon="@drawable/orientation_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".orientation.BackgroundService" />
+
+
+
+		<!-- ##### Magnetic Field plug-in ##### -->
+        <activity android:name=".magneticfield.EditActivity"
+                  android:label="@string/magneticfield_plugin_name"
+                  android:icon="@drawable/magneticfield_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".magneticfield.BackgroundService" />
+        
+        
+        
+        <!-- ##### Phone state plug-in ##### -->
+		<activity android:name=".phonestate.EditActivity"
+                  android:label="@string/phonestate_plugin_name"
+                  android:icon="@drawable/phonestate_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".phonestate.BackgroundService" />
+        
+ 
+        
+        <!-- ##### Light sensor plug-in ##### -->
+		<activity android:name=".lightsensor.EditActivity"
+                  android:label="@string/lightsensor_plugin_name"
+                  android:icon="@drawable/lightsensor_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".lightsensor.BackgroundService" />
+        
+        
+        
+        <!-- ##### Proximity sensor plug-in ##### -->
+		<activity android:name=".proximity.EditActivity"
+                  android:label="@string/proximitysensor_plugin_name"
+                  android:icon="@drawable/proximitysensor_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".proximity.BackgroundService" />
+        
+        
+        
+        <!-- ##### Battery Level plug-in ##### -->
+		<activity android:name=".batterylevel.EditActivity"
+                  android:label="@string/batterylevel_plugin_name"
+                  android:icon="@drawable/batterylevel_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".batterylevel.BackgroundService" />
+        
+        
+        
+        <!-- ##### Time tick plug-in ##### -->
+		<activity android:name=".timetick.EditActivity"
+                  android:label="@string/timetick_plugin_name"
+                  android:icon="@drawable/timetick_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".timetick.BackgroundService" />
+        
+  
+           
+        <!-- ##### Testevent plug-in ##### -->
+		<activity android:name=".testevent.EditActivity"
+                  android:label="@string/testevent_plugin_name"
+                  android:icon="@drawable/testevent_icon" android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".testevent.BackgroundService" />
+
+    	
+
+    </application>
+    <uses-sdk android:targetSdkVersion="7" android:minSdkVersion="3"/>
+
+<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+<uses-permission android:name="android.permission.BATTERY_STATS"></uses-permission>
+<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission> 
+</manifest> 

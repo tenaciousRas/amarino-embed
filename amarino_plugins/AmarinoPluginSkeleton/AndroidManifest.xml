@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      android:versionCode="1"
+      android:versionName="1.0" package="at.abraxas.amarino.plugin.skeleton">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    
+    
+    	<!-- ###   InfoActivity   ### -->
+   		<activity android:name="at.abraxas.amarino.plugin.InfoActivity"
+            	  android:label="@string/app_name"
+            	  android:icon="@drawable/icon">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+        </activity>
+    
+    	<!-- ###   EditActivity   ### -->
+    	<activity android:name=".MyEditActivity"
+                  android:label="@string/plugin_name"
+                  android:icon="@drawable/icon"
+                  android:exported="true">
+            <intent-filter>
+                <action android:name="amarino.intent.action.EDIT_PLUGIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        
+        <!-- ###   BackgroundService   ### -->
+        <service android:name=".MyBackgroundService" />
+        
+        
+        <!-- ###   PluginReceiver   ### -->
+        <receiver android:name=".MyPluginReceiver">
+	    	<intent-filter>
+	    		<action android:name="amarino.intent.action.ENABLE" />
+	    		<action android:name="amarino.intent.action.DISABLE" />
+	    	</intent-filter>
+		</receiver>
+
+
+    </application>
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="8"/>
+
+</manifest> 

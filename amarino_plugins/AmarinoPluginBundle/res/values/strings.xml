@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Amarino Plugin Bundle</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="select_visualizer">Data Visualizer</string>
+    
+    
+    <!-- COMPASS PLUG_IN -->
+    <string name="compass_plugin_name">Compass Sensor</string>
+    <string name="compass_plugin_desc">Sends heading as int value [0-359].</string>
+    <string name="compass_desc">Sends heading as int value [0-359].\n0=North, 90=East, 180=South, 270=West
+    \n\nGraph y-axis range goes from 0 to 360</string>
+    <string name="very_slow">very slow</string>
+    <string name="slow">slow</string>
+    <string name="medium">medium</string>
+    <string name="fast">fast</string>
+    <string name="very_fast">very fast</string>
+    <string name="compass_frequency_desc">Set how fast compass sensor data should be sent.</string>
+    
+    
+    
+    <!-- ACCELEROMETER PLUG_IN -->
+    <string name="accelerometer_plugin_name">Accelerometer Sensor</string>
+    <string name="accelerometer_plugin_desc">Sends accelerometer sensor values as float array with length 3.</string>
+    <string name="accelerometer_desc">All values are in SI units (m/s^2) and measure the acceleration applied to the phone minus the force of gravity.
+		\n\nvalues[0]: Acceleration minus Gx on the x-axis (green)
+		\nvalues[1]: Acceleration minus Gy on the y-axis (yellow)
+		\nvalues[2]: Acceleration minus Gz on the z-axis (red)
+		\n\n<b>Examples:</b>
+
+			\n\n - When the device lies flat on a table and is pushed on its left side toward the right, the x acceleration value is positive.
+			\n\n - When the device lies flat on a table, the acceleration value is +9.81, which correspond to the acceleration of the device (0 m/s^2) minus the force of gravity (-9.81 m/s^2).
+			\n\n - When the device lies flat on a table and is pushed toward the sky with an acceleration of A m/s^2, the acceleration value is equal to A+9.81 which correspond to the acceleration of the device (+A m/s^2) minus the force of gravity (-9.81 m/s^2).
+
+		\n\nFor more details refer to\nhttp://developer.android.com/reference/android/hardware/SensorEvent.html
+		\n\nGraph y-axis range goes from -25 to 25
+		</string>
+    <string name="accelerometer_frequency_desc">Set how fast accelerometer sensor data should be sent.</string>
+    
+    
+    <!-- ORIENTATION PLUG_IN -->
+    <string name="orientation_plugin_name">Orientation Sensor</string>
+    <string name="orientation_plugin_desc">Sends orientation sensor values as float array with length 3.</string>
+    <string name="orientation_desc">All values are angles in degrees.
+		\n\nvalues[0]: Azimuth, angle between the magnetic north direction and the Y axis, around the Z axis (0 to 359). 0=North, 90=East, 180=South, 270=West (green)
+		\n\nvalues[1]: Pitch, rotation around X axis (-180 to 180), with positive values when the z-axis moves toward the y-axis. (yellow)
+		\n\nvalues[2]: Roll, rotation around Y axis (-90 to 90), with positive values when the x-axis moves away from the z-axis. (red)
+		\n\nNote: This definition is different from yaw, pitch and roll used in aviation where the X axis is along the long side of the plane (tail to nose).
+		\n\nFor more details refer to\nhttp://developer.android.com/reference/android/hardware/SensorEvent.html
+		\n\nGraph y-axis range goes from -180 to 360
+		</string>
+    <string name="orientation_frequency_desc">Set how fast orientation sensor data should be sent.</string>
+    
+    
+    
+    <!-- MAGNETIC_FIELD PLUG_IN -->
+    <string name="magneticfield_plugin_name">Magnetic Field Sensor</string>
+    <string name="magneticfield_plugin_desc">Sends magnetic field sensor data as float array with length 3.</string>
+    <string name="magneticfield_desc">All values are in micro-Tesla (uT) and measure the ambient magnetic field in the X, Y and Z axis.
+		\n\nvalues[0]: x-axis (green)
+		\nvalues[1]: y-axis (yellow)
+		\nvalues[2]: z-axis (red)
+		\n\nFor more details refer to\nhttp://developer.android.com/reference/android/hardware/SensorEvent.html
+		\n\nGraph y-axis range goes from -30 to 30
+		</string>
+    <string name="magneticfield_frequency_desc">Set how fast magnetic field sensor data should be sent.</string>
+    
+    
+    
+    <!-- TIMETICK PLUG_IN -->
+    <string name="timetick_plugin_name">Time Tick</string>
+    <string name="timetick_plugin_desc">Sends the actual minute as int value [0-59]</string>
+    <string name="timetick_desc">This plug-in sends every minute a message.
+    	The message contains an Integer value about the actual minute.
+    	\n\nGraph y-axis range goes from 0 to 60</string>
+   
+   
+    <!-- BATTERY LEVEL PLUG_IN -->
+    <string name="batterylevel_plugin_name">Battery Level</string>
+    <string name="batterylevel_plugin_desc">Fires whenever your phones battery level changes [0-100]</string>
+    <string name="batterylevel_desc">This plug-in sends an integer value with the current battery level as soon
+    as the battery level of your phone changes.
+    \n\nThe message contains an Integer value between 0 and 100 about the actual battery level.</string>
+   
+   
+    <!-- PHONESTATE PLUG_IN -->
+    <string name="phonestate_plugin_name">Phone State</string>
+    <string name="phonestate_plugin_desc">Sends information about phone state changes. [0=IDLE, 1=RINGING, 2=OFFHOOK]</string>
+    <string name="phonestate_desc">This plug-in sends a message whenever the phone state changes.
+    	\n\nPossible phone states are:
+    	\n
+    	\n - IDLE    - send when phone is idle
+    	\n - RINGING - phone starts ringing
+    	\n - OFFHOOK - talking
+    	\n
+    	\nTo indicate which type of message has been sent, following mapping is applied.
+    	\n
+    	\nIDLE    = 0
+    	\nRINGING = 1
+    	\nOFFHOOK = 2
+    	\n\n e.g. When the phone is ringing, this plug-in will send an integer with value 1.
+    	</string>
+   
+   
+   
+    <!-- LIGHT SENSOR PLUG_IN -->
+    <string name="lightsensor_plugin_name">Light Sensor</string>
+    <string name="lightsensor_plugin_desc">Sends ambient light level in SI lux units as int value [0-?]</string>
+    <string name="lightsensor_desc">This plug-in sends as soon as the ambient light level changes a message
+	    that contains an Integer value indicating the light level in SI lux units.
+	    \n\nRange of the value goes from 0 to far more than 10.000
+	    \n\nGraph y-axis range goes from 0 to 15000</string>
+	    
+	
+	
+	<!-- PROXIMITY SENSOR PLUG_IN -->
+    <string name="proximitysensor_plugin_name">Proximity Sensor</string>
+    <string name="proximitysensor_plugin_desc">Sends proximity sensor distance in centimeters as an int value.</string>
+    <string name="proximitysensor_desc">This plug-in sends the distance to the proximity sensor in centimeters as an Integer value.
+	    \n\nNote that some proximity sensors only support a binary \"close\" or \"far\" measurement.
+	    In this case, the sensor should report its maxRange value in the \"far\" state and a value
+	    less than maxRange in the \"near\" state.
+	    \n\nGraph y-axis range goes from 0 to 5</string>
+	    
+	    
+	<!-- TESTEVENT PLUG_IN -->
+    <string name="testevent_plugin_name">Test Event</string>
+    <string name="testevent_plugin_desc">Sends a random integer each 3 seconds [0-255]</string>
+    <string name="testevent_desc">This plug-in sends simply a test event. It does not really make anything useful,
+    but generating random numbers and sending them over to Arduino for simple tests.
+    The plug-in sends every 3 seconds a random number between 0 and 255.</string>
+    
+</resources>
+

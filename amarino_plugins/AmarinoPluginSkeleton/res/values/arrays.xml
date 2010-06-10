@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="visualizer_entries">
+		<item>Text</item>
+		<item>Graph</item>
+		<item>Bars</item>
+	</string-array>
+</resources>
