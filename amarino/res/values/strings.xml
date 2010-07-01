@@ -39,6 +39,8 @@
 	<string name="disabled">disabled</string>
 	<string name="force_enable">Force Enable</string>
 	<string name="force_disable">Force Disable</string>
+	<string name="no_plugins_installed">There are no Amarino plug-ins installed on your phone.
+	\n\nInstall the AmarinoPlugInBundle to get some events to start with.</string>
 	<string name="plugin_info_msg">This is a plug-in for Amarino 2.0 and not a standalone application.
 	\n\nYou can add this plug-in to Amarino, by selecting \'Add Event\' within Amarino</string>
 	
@@ -71,7 +73,15 @@
 	<string name="about_msg">Amarino 2.0 - A prototyping platform for Android and Arduino
 	\n\n\u00A9 2010 by Bonifaz Kaufmann
 	\n\nhttp://www.amarino-toolkit.net
+	
 	\n\nThanks to Stefano Sanna and Emanuele Di Saverio, since Amarino uses
 	their Android Bluetooth API which can be found at
 	\nhttp://code.google.com/p/android-bluetooth/</string>
+	
+	<string name="about_changelog"><b>Release Notes</b>
+	\n0.5
+	\n - uses UUID (instead of always port 1) to determine which port to use when connecting to a Bluetooth module
+	\n - added release notes dialog to show up when a new Amarino version has been installed
+	\n - shows a message when no plug-ins are installed and user tries to add an event
+	</string>
 </resources>

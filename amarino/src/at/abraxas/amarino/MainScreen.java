@@ -23,11 +23,13 @@ import it.gerdavax.easybluetooth.LocalDevice;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -70,6 +72,10 @@ public class MainScreen extends ListActivity implements OnClickListener{
 	private static final int MENU_ITEM_MOVE_DOWN = 5;
 	
 	private static final int MENU_ABOUT = 10;
+	
+	private static final int DIALOG_ABOUT = 1;
+	
+	private static final String PREF_VERSION = "at.abraxas.amarino.version";
 	
 	
 	AmarinoDbAdapter db;
@@ -143,7 +149,19 @@ public class MainScreen extends ListActivity implements OnClickListener{
         
         setListAdapter(devices);
         registerForContextMenu(getListView());
+        
+        showReleaseNotes();
     }
+
+
+	private void showReleaseNotes() {
+		SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        int versionCode = getVersionCode();
+        if (prefs.getInt(PREF_VERSION, 0) != versionCode){
+        	showDialog(DIALOG_ABOUT);
+        	prefs.edit().putInt(PREF_VERSION, versionCode).commit();
+        }
+	}
     
     
     @Override
@@ -231,16 +249,35 @@ public class MainScreen extends ListActivity implements OnClickListener{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
 		case MENU_ABOUT:
-			String title = getString(R.string.app_name) + " build " + getVersion(this);
-			new AlertDialog.Builder(MainScreen.this)
-				.setTitle(title)
-				.setView(View.inflate(this, R.layout.about, null))
-				.setIcon(R.drawable.icon_small)
-				.setPositiveButton("OK", null)
-				.show();
-			break;
+			showDialog(DIALOG_ABOUT);
 		}
 		return super.onOptionsItemSelected(item);
+		
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		Dialog dialog;
+		switch(id) {
+			case DIALOG_ABOUT:
+				dialog = getAboutBox();
+				break;
+
+			default:
+		        dialog = null;
+		}
+		return dialog;
+	}
+	
+	private AlertDialog getAboutBox() {
+		String title = getString(R.string.app_name) + " build " + getVersion(this);
+		
+		return new AlertDialog.Builder(MainScreen.this)
+			.setTitle(title)
+			.setView(View.inflate(this, R.layout.about, null))
+			.setIcon(R.drawable.icon_small)
+			.setPositiveButton("OK", null)
+			.create();
 		
 	}
 
@@ -455,6 +492,17 @@ public class MainScreen extends ListActivity implements OnClickListener{
 		    Log.e(TAG, "Package name not found", e); 
 		} 
 		return version;
+	}
+	
+	private int getVersionCode() {
+		int code = 1; 
+		try { 
+			PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0); 
+			code = pi.versionCode; 
+		} catch (PackageManager.NameNotFoundException e) { 
+		    Log.e(TAG, "Package name not found", e); 
+		} 
+		return code;
 	}
 	
 	

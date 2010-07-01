@@ -30,5 +30,6 @@
 	<color name="background_graph">#767643</color>
 	<color name="background_screen">#111</color>
 	<drawable name="list_selector">#40aa40</drawable>
+	
 
 </resources>

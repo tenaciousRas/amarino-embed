@@ -42,6 +42,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import at.abraxas.amarino.log.Logger;
 import at.abraxas.amarino.visualizer.Visualizer;
 
@@ -247,30 +248,36 @@ public class EventListActivity extends ListActivity {
 	}
 
 	public void addEventBtnClick(View view){
-		showPlugins();
+		if (pluginListAdapter.entries.size() == 0){
+			Toast.makeText(EventListActivity.this, R.string.no_plugins_installed, Toast.LENGTH_LONG).show();
+		}
+		else {
+			showPlugins();
+		}
 	}
 	
 	private void showPlugins(){
 		new AlertDialog.Builder(EventListActivity.this)
-		.setTitle("Add Event")
-		.setIcon(R.drawable.icon_very_small)
-		.setAdapter(pluginListAdapter, new DialogInterface.OnClickListener()  {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// start EditActivity of selected plugin
-				selectedPlugin = pluginListAdapter.entries.get(which);
-				Intent intent = new Intent(AmarinoIntent.ACTION_EDIT_PLUGIN);
-				intent.setClassName(selectedPlugin.packageName, selectedPlugin.editClassName);
-				
-				intent.putExtra(AmarinoIntent.EXTRA_FLAG, getNextFlag());
-				intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.address);
-				intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, selectedPlugin.label.hashCode());
-
-				startActivityForResult(intent, REQUEST_CREATE_EVENT);
-			}
-		})
-		.create()
-		.show();
+			.setTitle("Add Event")
+			.setIcon(R.drawable.icon_very_small)
+			.setAdapter(pluginListAdapter, new DialogInterface.OnClickListener()  {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// start EditActivity of selected plugin
+					selectedPlugin = pluginListAdapter.entries.get(which);
+					Intent intent = new Intent(AmarinoIntent.ACTION_EDIT_PLUGIN);
+					intent.setClassName(selectedPlugin.packageName, selectedPlugin.editClassName);
+					
+					intent.putExtra(AmarinoIntent.EXTRA_FLAG, getNextFlag());
+					intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.address);
+					intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, selectedPlugin.label.hashCode());
+	
+					startActivityForResult(intent, REQUEST_CREATE_EVENT);
+				}
+			})
+			.create()
+			.show();
+		
 	}
 
 	@Override

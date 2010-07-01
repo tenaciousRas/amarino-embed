@@ -18,6 +18,7 @@
 */
 package at.abraxas.amarino;
 
+import it.gerdavax.android.bluetooth.BluetoothDevice;
 import it.gerdavax.easybluetooth.BtSocket;
 import it.gerdavax.easybluetooth.LocalDevice;
 import it.gerdavax.easybluetooth.ReadyListener;
@@ -56,6 +57,8 @@ public class AmarinoService extends Service {
 	
 	private static final int NOTIFY_ID = 119561;
 	private static final String TAG = "AmarinoService";
+
+	
 	
 	private static final int BUSY = 1;
 	private static final int ACTIVE_CONNECTIONS = 2;
@@ -296,7 +299,7 @@ public class AmarinoService extends Service {
 		if (ct != null)
 			ct.cancel();
 
-		// end sevice if this was the last connection to disconnect
+		// end service if this was the last connection to disconnect
 		if (connections.size()==0){
 			serviceState = NO_CONNECTIONS;
 			shutdownService(true);
@@ -492,8 +495,8 @@ public class AmarinoService extends Service {
 	private class ConnectThread extends Thread {
 		
 		//private static final String TAG = "ConnectThread";
-		@SuppressWarnings("unused")
-		private final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+		//@SuppressWarnings("unused")
+		private final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 		
 		private final RemoteDevice mDevice;
 		private BtSocket mSocket;
@@ -527,7 +530,9 @@ public class AmarinoService extends Service {
 	    			// Let main thread do some stuff to render UI immediately
 		    		Thread.yield();
 		    		// Get a BluetoothSocket to connect with the given BluetoothDevice
-		    		mSocket = mDevice.openSocket(1);
+		    		//mSocket = mDevice.openSocket(1);
+		    		//mSocket = mDevice.openSocket(BluetoothDevice.BluetoothProfiles.UUID_SERIAL_PORT_PROFILE);
+		    		mSocket = mDevice.openSocket(SPP_UUID);
 		    		
 		    		// Do work to manage the connection (in a separate thread)
 			        manageConnectedSocket(mSocket);
