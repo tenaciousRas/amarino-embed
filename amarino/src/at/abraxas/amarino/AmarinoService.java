@@ -18,7 +18,6 @@
 */
 package at.abraxas.amarino;
 
-import it.gerdavax.android.bluetooth.BluetoothDevice;
 import it.gerdavax.easybluetooth.BtSocket;
 import it.gerdavax.easybluetooth.LocalDevice;
 import it.gerdavax.easybluetooth.ReadyListener;
@@ -384,6 +383,7 @@ public class AmarinoService extends Service {
 		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, address);
 		intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, e.pluginId);
 		intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
+		
 		intent.setPackage(e.packageName);
 		sendBroadcast(intent);
 	}
@@ -495,7 +495,6 @@ public class AmarinoService extends Service {
 	private class ConnectThread extends Thread {
 		
 		//private static final String TAG = "ConnectThread";
-		//@SuppressWarnings("unused")
 		private final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 		
 		private final RemoteDevice mDevice;
@@ -530,9 +529,13 @@ public class AmarinoService extends Service {
 	    			// Let main thread do some stuff to render UI immediately
 		    		Thread.yield();
 		    		// Get a BluetoothSocket to connect with the given BluetoothDevice
-		    		//mSocket = mDevice.openSocket(1);
-		    		//mSocket = mDevice.openSocket(BluetoothDevice.BluetoothProfiles.UUID_SERIAL_PORT_PROFILE);
-		    		mSocket = mDevice.openSocket(SPP_UUID);
+		    		try {
+						mSocket = mDevice.openSocket(SPP_UUID);
+					} catch (Exception e) {
+						Logger.d(TAG, "Connection via SDP unsuccessful, try to connect via port directly");
+						// 1.x Android devices only work this way since SDP was not part of their firmware then
+						mSocket = mDevice.openSocket(1);
+					}
 		    		
 		    		// Do work to manage the connection (in a separate thread)
 			        manageConnectedSocket(mSocket);
@@ -562,7 +565,7 @@ public class AmarinoService extends Service {
 	    }
 	    
 	    private void manageConnectedSocket(BtSocket socket){
-	    	Logger.d(TAG, "connection established, about to open sockets.");
+	    	Logger.d(TAG, "connection established.");
 	    	// pass the socket to a worker thread
 	    	String address = mDevice.getAddress();
 	    	ConnectedThread t = new ConnectedThread(socket, address);
