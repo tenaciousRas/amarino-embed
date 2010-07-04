@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService {
@@ -21,13 +21,8 @@ public class BackgroundService extends AbstractPluginService {
 		public void onReceive(Context context, Intent intent) {
 			int batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 			
-			Intent i = new Intent(AmarinoIntent.ACTION_SEND);
-			i.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-			i.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-			i.putExtra(AmarinoIntent.EXTRA_DATA, batteryLevel);
-			
 			if (DEBUG) Log.d(TAG, "send: " + batteryLevel);
-			sendBroadcast(i);
+			Amarino.sendDataFromPlugin(context, pluginId, batteryLevel);
 		}
 	};
 	

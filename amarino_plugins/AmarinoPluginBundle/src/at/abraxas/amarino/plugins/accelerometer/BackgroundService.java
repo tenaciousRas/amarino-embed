@@ -2,7 +2,6 @@ package at.abraxas.amarino.plugins.accelerometer;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.hardware.Sensor;
@@ -12,7 +11,7 @@ import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService
@@ -75,13 +74,8 @@ public class BackgroundService extends AbstractPluginService
 			if (ignoreCounter >= ignoreThreshold) {
 				ignoreCounter = 0;
 				
-				Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-				intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-				intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.FLOAT_ARRAY_EXTRA);
-				intent.putExtra(AmarinoIntent.EXTRA_DATA, event.values.clone());
-				
 				if (DEBUG) Log.d(TAG, "send: x:" + event.values[0] + " y:" + event.values[1] + " z: " + event.values[2]);
-				sendBroadcast(intent);
+				Amarino.sendDataFromPlugin(this, pluginId, event.values.clone());
 			}
 			else {
 				ignoreCounter++;

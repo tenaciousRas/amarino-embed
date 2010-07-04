@@ -1,4 +1,4 @@
-package at.abraxas.amarino.plugins.phonestate;
+package at.abraxas.amarino.plugins.sms;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,10 +12,10 @@ import at.abraxas.amarino.plugins.R;
 
 public class EditActivity extends Activity {
 	
-	private static final String TAG = "TimeTick EditActivity";
+	private static final String TAG = "SMS EditActivity";
 	
-	static final String KEY_VISUALIZER = "at.abraxas.amarino.plugins.phonestate.visualizer";
-	static final String KEY_PLUGIN_ID = "at.abraxas.amarino.plugins.phonestate.id";
+	static final String KEY_VISUALIZER = "at.abraxas.amarino.plugins.sms.visualizer";
+	static final String KEY_PLUGIN_ID = "at.abraxas.amarino.plugins.sms.id";
 	
 	Button okBtn;
 	Button discardBtn;
@@ -27,7 +27,7 @@ public class EditActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.phonestate_edit);
+        setContentView(R.layout.sms_edit);
         
         Intent intent = getIntent();
         if (intent != null){
@@ -41,7 +41,7 @@ public class EditActivity extends Activity {
 				.commit();
         }
 
-       
+ 
         okBtn = (Button)findViewById(R.id.saveBtn);
         discardBtn = (Button)findViewById(R.id.discardBtn);
         
@@ -70,13 +70,16 @@ public class EditActivity extends Activity {
 		else {
 			final Intent returnIntent = new Intent();
 			
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, getString(R.string.phonestate_plugin_name));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, getString(R.string.phonestate_plugin_desc));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.phonestate.BackgroundService"); 
+			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, getString(R.string.sms_plugin_name));
+			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, getString(R.string.sms_plugin_desc));
+			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.sms.BackgroundService"); 
 			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);	
 			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_TEXT);
+			
+			// visualizer min and max would not be needed for text
+			// but maybe we introduce in the future text size based on how many characters we expect to receive
 			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, 0f);
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 2f);
+			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 20f);
 			
 			setResult(RESULT_OK, returnIntent);
 		}

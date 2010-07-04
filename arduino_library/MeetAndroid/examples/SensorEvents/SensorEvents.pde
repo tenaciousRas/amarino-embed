@@ -1,5 +1,5 @@
 /*
-  Receives sensor events from your phone.
+  Receives compass sensor events from your phone.
   
 */
  
@@ -26,7 +26,7 @@ void setup()
   // register callback functions, which will be called when an associated event occurs.
   // - the first parameter is the name of your function (see below)
   // - match the second parameter ('A', 'B', 'a', etc...) with the flag on your Android application
-  meetAndroid.registerFunction(compass, 'F');  
+  meetAndroid.registerFunction(compass, 'A');  
 
   pinMode(onboardLed, OUTPUT);
   digitalWrite(onboardLed, HIGH);
@@ -42,7 +42,7 @@ void loop()
  * This method is called constantly.
  * Compass events are sent several times a second.
  *
- * note: flag is in this case 'F' and numOfValues is 1 
+ * note: flag is in this case 'A' and numOfValues is 1 
  * since compass event sends exactly one single int value for heading
  */
 void compass(byte flag, byte numOfValues)

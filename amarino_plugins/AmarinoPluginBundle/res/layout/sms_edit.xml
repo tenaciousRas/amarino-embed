@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    
-    
+
     <include android:id="@+id/buttons"
     	layout="@layout/button_panel" />
     	
@@ -16,14 +15,12 @@
 		android:padding="@dimen/plugin_layout_padding" >
 		
 		<TextView
-			android:text="@string/timetick_plugin_name" 
+			android:text="@string/sms_plugin_name" 
 			style="@style/plugin_name_style" />
 
 		<TextView
-			android:text="@string/timetick_desc" 
+			android:text="@string/sms_desc" 
 			style="@style/plugin_desc_style" />
-		
-		<include layout="@layout/visualizer_spinner" />
 		
 	</LinearLayout>
 	

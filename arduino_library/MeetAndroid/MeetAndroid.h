@@ -24,15 +24,16 @@
   Following changes were made:
 	  - ByteBufferLenght has been increased from 16 to 64
 	  - FunctionBufferLength has been decreased from 128 to 75
-	  - A startFlag, delimiter and alive char has been added.
+	  - A startFlag and delimiter char has been added.
 	  - ack and abord chars has been made private
-	  - alive messages will sent when a certain message comes in
 	  - convenient convertion functions added
 	  - constructor simplified
 	  - default error handling introduced
 	  - some more optimizations
 	  - send functions added
 	  - names of most functions changed
+	  
+  last modified by Bonifaz Kaufmann 04 Jul 2010
 */
 
 #ifndef MeetAndroid_h
@@ -52,7 +53,7 @@ class MeetAndroid : public Print
 #define ByteBufferLenght 64
 #define FunctionBufferLenght 75 // 48-122 (in ascii: 0 - z)
 #define FunctionBufferOffset 48  // offset to calc the position in the function buffer ('0' should be stored in intFunc[0])
-#define _MEET_ANDROID_VERSION 1 // software version of this library
+#define _MEET_ANDROID_VERSION 2 // software version of this library
 private:
 	// per object data
 	uint8_t bufferCount;
@@ -63,7 +64,6 @@ private:
 	char abord;
 	char ack;
 	char delimiter;
-	char alive;
 	char startFlag; // used to communicate with Android (leads each msg to Android)
 	
 	bool customErrorFunc;
@@ -88,9 +88,11 @@ public:
 	bool receive(void);
 	void registerFunction(void(*)(uint8_t, uint8_t),uint8_t);
 	void unregisterFunction(uint8_t);
-	int bufferLength(){return bufferCount;}
+	int bufferLength(){return bufferCount;} // buffer withouth ACK
+	int stringLength(){return bufferCount;} // string without flag but '/0' at the end
 	void getBuffer(uint8_t[]);
 	
+	void getString(char[]);
 	int getInt();
 	long getLong();
 	float getFloat();

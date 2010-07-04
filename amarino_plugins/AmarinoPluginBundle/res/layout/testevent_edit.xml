@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent" >
     
     
     <include android:id="@+id/buttons"
-    	layout="@layout/button_panel" 
-    	/>
+    	layout="@layout/button_panel" />
+    	
 	<LinearLayout
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content" 
 		android:orientation="vertical"
 		android:layout_alignParentTop="true"
 		android:layout_above="@id/buttons"
-		android:padding="8dp">
-		<TextView
-			android:layout_height="wrap_content"
-			android:text="@string/testevent_plugin_name" 
-			android:layout_width="fill_parent"
-			android:layout_gravity="center" 
-			android:gravity="center" 
-			android:textColor="#3f3"
-			android:textSize="20sp" 
-	        android:textStyle="bold">
-		</TextView>
-		<TextView
-			android:layout_height="wrap_content"
-			android:text="@string/testevent_desc" 
-			android:layout_width="fill_parent"
-			android:layout_gravity="center" 
-			android:gravity="center" 
-			android:textColor="#eee"
-			android:textSize="14sp" >
-		</TextView>
+		android:padding="@dimen/plugin_layout_padding" >
 		
+		<TextView
+			android:text="@string/testevent_plugin_name" 
+			style="@style/plugin_name_style" />
+
+		<TextView
+			android:text="@string/testevent_desc" 
+			style="@style/plugin_desc_style" />
+
 		<include layout="@layout/visualizer_spinner" />
 		
 	</LinearLayout>

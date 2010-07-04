@@ -2,23 +2,16 @@ package at.abraxas.amarino.plugins.proximity;
 
 import java.util.List;
 
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
-import at.abraxas.amarino.plugins.Receiver;
 
 public class BackgroundService extends AbstractPluginService 
 			implements SensorEventListener {
@@ -71,14 +64,8 @@ public class BackgroundService extends AbstractPluginService
 
 			int cm = (int) event.values[0];
 			
-			Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-			intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-			intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-			intent.putExtra(AmarinoIntent.EXTRA_DATA, cm);
-			
 			if (DEBUG) Log.d(TAG, "send: " + cm);
-			sendBroadcast(intent);
-
+			Amarino.sendDataFromPlugin(this, pluginId, cm);
 		}
 	}
 

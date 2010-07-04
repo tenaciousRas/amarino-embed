@@ -65,6 +65,9 @@ public class Receiver extends BroadcastReceiver {
 		else if (className.equals(context.getPackageName() + ".testevent.BackgroundService")){
 			i = new Intent(context, at.abraxas.amarino.plugins.testevent.BackgroundService.class);
 		}
+		else if (className.equals(context.getPackageName() + ".sms.BackgroundService")){
+			i = new Intent(context, at.abraxas.amarino.plugins.sms.BackgroundService.class);
+		}
 		else {
 			return;
 		}

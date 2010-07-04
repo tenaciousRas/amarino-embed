@@ -1,12 +1,11 @@
 package at.abraxas.amarino.plugins.phonestate;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService {
@@ -23,23 +22,14 @@ public class BackgroundService extends AbstractPluginService {
 			case TelephonyManager.CALL_STATE_IDLE:
 			case TelephonyManager.CALL_STATE_RINGING:
 			case TelephonyManager.CALL_STATE_OFFHOOK:
-				send(state);
+				if (DEBUG) Log.d(TAG, "send: " + state);
+				Amarino.sendDataFromPlugin(BackgroundService.this, pluginId, state);
 				break;
 			}
 		}
-		
 	};
 	
-	private void send(int state){
-		Intent i = new Intent(AmarinoIntent.ACTION_SEND);
-		i.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-		i.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-		i.putExtra(AmarinoIntent.EXTRA_DATA, state);
-		
-		if (DEBUG) Log.d(TAG, "send: " + state);
-		sendBroadcast(i);
-	}
-	
+
 	
 	@Override
 	public void init() {

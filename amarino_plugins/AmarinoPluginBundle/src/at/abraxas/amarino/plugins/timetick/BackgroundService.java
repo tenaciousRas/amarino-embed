@@ -9,7 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService {
@@ -21,16 +21,10 @@ public class BackgroundService extends AbstractPluginService {
 		
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			// TODO Auto-generated method stub
 			int minutes = new Date().getMinutes();
 			
-			Intent i = new Intent(AmarinoIntent.ACTION_SEND);
-			i.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-			i.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-			i.putExtra(AmarinoIntent.EXTRA_DATA, minutes);
-			
 			if (DEBUG) Log.d(TAG, "send: " + minutes);
-			sendBroadcast(i);
+			Amarino.sendDataFromPlugin(context, pluginId, minutes);
 		}
 	};
 	

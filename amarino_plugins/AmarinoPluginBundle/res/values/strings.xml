@@ -132,5 +132,13 @@
     but generating random numbers and sending them over to Arduino for simple tests.
     The plug-in sends every 3 seconds a random number between 0 and 255.</string>
     
+    
+    <!-- SMS PLUG_IN -->
+    <string name="sms_plugin_name">Receive SMS</string>
+    <string name="sms_plugin_desc">Sends the first 30 characters of an SMS as a string</string>
+    <string name="sms_desc">This plug-in sends the first 30 characters of an received sms to Arduino.
+    The message is sent as a string. The lengths of the string might be between 0 and 30.
+    \n\nYou should use the meetAndroid.getIntValues() function in Arduino to retrieve the message.</string>
+    
 </resources>
 

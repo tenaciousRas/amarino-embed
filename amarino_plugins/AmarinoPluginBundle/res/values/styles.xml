@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="seekbar_style" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:minWidth">15dp</item>
+        <item name="android:paddingLeft">@dimen/seekbar_padding</item>
+        <item name="android:paddingRight">@dimen/seekbar_padding</item>
+        <item name="android:max">100</item>
+        
+        <item name="android:thumbOffset">4px</item>
+        <item name="android:thumb">@drawable/btn_square_overlay_normal</item>
+        <item name="android:progressDrawable">@drawable/progress_horizontal</item>
+    </style>
+    
+	<style name="seekbar_value_style" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/seekbar_value</item>
+        <item name="android:textSize">@dimen/seekbar_value</item>
+    </style>
+    
+    <style name="seekbar_desc_style" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/plugin_desc</item>
+        <item name="android:textSize">@dimen/plugin_desc</item>
+    </style>
+    
+    <style name="plugin_name_style" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/plugin_name</item>
+        <item name="android:textSize">@dimen/plugin_name</item>
+    </style>
+    
+    <style name="plugin_desc_style" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">25dp</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:textColor">@color/plugin_desc</item>
+        <item name="android:textSize">@dimen/plugin_desc</item>
+    </style>
+
+
+</resources>

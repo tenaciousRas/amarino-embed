@@ -1,85 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
+    android:layout_height="fill_parent" >
     
    <include android:id="@+id/buttons"
-    	layout="@layout/button_panel" 
-   />
+    	layout="@layout/button_panel" />
  
     <ScrollView 
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent"
 			android:layout_alignParentTop="true"
 			android:layout_above="@id/buttons"
-			android:scrollbars="vertical">
+			android:scrollbars="vertical" >
 			
 		<LinearLayout
 			android:layout_width="fill_parent" 
 			android:layout_height="fill_parent" 
 			android:orientation="vertical"
-			android:padding="8dp">
+			android:padding="@dimen/plugin_layout_padding" >
+			
 			<TextView
-				android:layout_height="wrap_content"
 				android:text="@string/orientation_plugin_name" 
-				android:layout_width="fill_parent"
-				android:layout_gravity="center" 
-				android:gravity="center" 
-				android:textColor="#3f3"
-				android:textSize="20sp" 
-		        android:textStyle="bold">
-			</TextView>
+				style="@style/plugin_name_style" />
 			
 			<TextView
-				android:layout_height="wrap_content"
 				android:text="@string/orientation_frequency_desc" 
-				android:layout_width="fill_parent"
-				android:layout_gravity="center" 
-				android:gravity="center" 
-				android:textColor="#eee"
-				android:textSize="14sp" >
-			</TextView>
-			
+				style="@style/seekbar_desc_style" />
+
 			<TextView
 				android:id="@+id/seekBar_value" 
-				android:layout_height="wrap_content"
-				android:layout_width="fill_parent"
-				android:layout_marginTop="10dp"
-				android:layout_gravity="center" 
-				android:gravity="center" 
-				android:textColor="#ee4"
-				android:textSize="20sp">
-			</TextView>
+				style="@style/seekbar_value_style" />
 		    
 		    <SeekBar android:id="@+id/seekBar" 
-				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content"
-				android:paddingLeft="25dp"
-				android:paddingRight="25dp"
-				android:minWidth="15dp"
-				android:max="100" 
-				android:layout_gravity="center" 
-				android:thumbOffset="4px" 
-				android:thumb="@drawable/btn_square_overlay_normal" 
-				android:progressDrawable="@drawable/progress_horizontal">
-			</SeekBar>
+				style="@style/seekbar_style" />
 			
 			<include layout="@layout/visualizer_spinner" />
 			
 			<TextView
-				android:layout_height="wrap_content"
 				android:text="@string/orientation_desc" 
-				android:layout_width="fill_parent"
-				android:layout_marginBottom="25dp"
-				android:textColor="#eee"
-				android:autoLink="web"
-				android:textSize="14sp" >
-			</TextView>
+				style="@style/plugin_desc_style" />
 
 		</LinearLayout>
 	</ScrollView>
-	
-	
 	
 </RelativeLayout>

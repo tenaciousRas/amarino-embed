@@ -26,11 +26,9 @@
 
 // Private methods
 void MeetAndroid::processCommand(){
-	if(buffer[0] == alive) Serial.print(alive);
-	else if(buffer[0]-FunctionBufferOffset < FunctionBufferLenght){
+	if(buffer[0]-FunctionBufferOffset < FunctionBufferLenght){
 		void (*H_FuncPtr)(uint8_t, uint8_t) = intFunc[buffer[0]-FunctionBufferOffset];
 		H_FuncPtr(buffer[0], getArrayLength());
-		//Serial.print(alive); // this can be used to get a alive message after something has been received.
 	}
 	else {
 		if (customErrorFunc)
@@ -50,7 +48,6 @@ void MeetAndroid::init()
 	ack = 19;
 	abord = 27;
 	delimiter = 59; //';'
-	alive = 17;
 
 	numberOfValues = 0;
 	
@@ -125,6 +122,14 @@ void MeetAndroid::getBuffer(uint8_t buf[]){
 	}
 }
 
+void MeetAndroid::getString(char string[]){
+
+	for(int a = 1;a < bufferCount;a++){
+		string[a-1] = buffer[a];
+	}
+	string[bufferCount-1] = '\0';
+}
+
 int MeetAndroid::getInt()
 {
 	uint8_t b[bufferCount];
@@ -154,7 +159,7 @@ float MeetAndroid::getFloat()
 
 int MeetAndroid::getArrayLength()
 {
-	if (bufferCount == 2) return 0; // only a flag and ack was sent, not data attached
+	if (bufferCount == 1) return 0; // only a flag and ack was sent, not data attached
 	numberOfValues = 1;
 	// find the amount of values we got
 	for (int a=1; a<bufferCount;a++){

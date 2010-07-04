@@ -3,7 +3,6 @@ package at.abraxas.amarino.plugins.compass;
 import java.util.List;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.hardware.Sensor;
@@ -15,7 +14,7 @@ import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService 
@@ -86,13 +85,9 @@ public class BackgroundService extends AbstractPluginService
 				ignoreCounter = 0;
 				int heading = (int)event.values[0];
 				
-				Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-				intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-				intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-				intent.putExtra(AmarinoIntent.EXTRA_DATA, heading);
-				
 				if (DEBUG) Log.d(TAG, "send: " + heading);
-				sendBroadcast(intent);
+				Amarino.sendDataFromPlugin(this, pluginId, heading);
+
 			}
 			else {
 				ignoreCounter++;

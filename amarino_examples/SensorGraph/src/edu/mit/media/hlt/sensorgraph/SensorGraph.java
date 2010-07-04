@@ -42,7 +42,7 @@ public class SensorGraph extends Activity {
 	private static final String TAG = "SensorGraph";
 	
 	// change this to your Bluetooth device address 
-	private static final String DEVICE_ADDRESS =  "00:06:66:03:17:17"; //"00:06:66:03:73:7B";
+	private static final String DEVICE_ADDRESS =  "00:06:66:03:73:7B"; //"00:06:66:03:73:7B";
 	
 	private GraphView mGraph; 
 	private TextView mValueTV;

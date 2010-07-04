@@ -2,7 +2,6 @@ package at.abraxas.amarino.plugins.lightsensor;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,7 +10,7 @@ import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService 
@@ -64,13 +63,8 @@ public class BackgroundService extends AbstractPluginService
 
 			int lux = (int)event.values[0];
 			
-			Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-			intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-			intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-			intent.putExtra(AmarinoIntent.EXTRA_DATA, lux);
-			
 			if (DEBUG) Log.d(TAG, "send: " + lux);
-			sendBroadcast(intent);
+			Amarino.sendDataFromPlugin(this, pluginId, lux);
 
 		}
 	}

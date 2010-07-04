@@ -1,11 +1,8 @@
 package at.abraxas.amarino.plugins.lightsensor;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;

@@ -26,6 +26,7 @@ void setup()
   meetAndroid.registerFunction(longValue, 'f');
   meetAndroid.registerFunction(floatValues, 'g'); // float array
   meetAndroid.registerFunction(intValues, 'i'); // int array
+  meetAndroid.registerFunction(stringValue, 'h'); // a string
 }
 
 void loop()
@@ -46,7 +47,7 @@ void loop()
 void intValue(byte flag, byte numOfValues)
 {
   int v = meetAndroid.getInt();
-  Serial.println(v);
+  meetAndroid.send(v);
 }
 
 /**
@@ -57,7 +58,7 @@ void intValue(byte flag, byte numOfValues)
 void longValue(byte flag, byte numOfValues)
 {
   long v = meetAndroid.getLong();
-  Serial.println(v);
+  meetAndroid.send(v);
 }
 
 /*
@@ -66,7 +67,7 @@ void longValue(byte flag, byte numOfValues)
 void floatValue(byte flag, byte numOfValues)
 {
   float v = meetAndroid.getFloat();
-  Serial.print(v);
+  meetAndroid.send(v);
 }
 
 /*
@@ -75,13 +76,13 @@ void floatValue(byte flag, byte numOfValues)
 void doubleValue(byte flag, byte numOfValues)
 {
   double v = meetAndroid.getDouble();
-  Serial.print(v);
+  meetAndroid.send(v);
 }
 
 /*
  * In this function we extract more than one value of an event
  * Use this technique when you know that more than one value is
- * attached to the event
+ * attached to the event (basically an array of floats)
  */
 void floatValues(byte flag, byte numOfValues)
 {
@@ -96,7 +97,7 @@ void floatValues(byte flag, byte numOfValues)
   // access the values
   for (int i=0; i<numOfValues;i++)
   {
-    Serial.println(data[i]);
+    meetAndroid.send(data[i]);
   }
 }
 
@@ -110,9 +111,33 @@ void intValues(byte flag, byte numOfValues)
   
   for (int i=0; i<numOfValues;i++)
   {
-    Serial.println(data[i]);
+    meetAndroid.send(data[i]);
   }
 }
 
+/*
+ * This function will retrieve a String sent by your Android phone
+ */
+void stringValue(byte flag, byte numOfValues)
+{
+  // first we need to know how long the string was in order to prepare an array big enough to hold it.
+  // you should know that: (length == 'length of string sent from Android' + 1)
+  // due to the '\0' null char added in Arduino
+  int length = meetAndroid.stringLength();
+  
+  // define an array with the appropriate size which will store the string
+  char data[length];
+  
+  // tell MeetAndroid to put the string into your prepared array
+  meetAndroid.getString(data);
+  
+  // go and do something with the string, here we simply send it back to Android
+  meetAndroid.send(data);
+  
+  for (int i=0; i<length-1; i++)
+  {
+	meetAndroid.send(data[i]);
+  }
+}
 
 

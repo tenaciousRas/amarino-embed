@@ -3,11 +3,10 @@ package at.abraxas.amarino.plugins.testevent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.plugins.AbstractPluginService;
 
 public class BackgroundService extends AbstractPluginService {
@@ -17,13 +16,8 @@ public class BackgroundService extends AbstractPluginService {
 
 	private void sendTestEvent(){
 		int random = (int) (Math.random() * 255.0);
-		Intent i = new Intent(AmarinoIntent.ACTION_SEND);
-		i.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
-		i.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, AmarinoIntent.INT_EXTRA);
-		i.putExtra(AmarinoIntent.EXTRA_DATA, random);
-		
 		if (DEBUG) Log.d(TAG, "send: " + random);
-		sendBroadcast(i);
+		Amarino.sendDataFromPlugin(this, pluginId, random);
 	}
 
 	@Override

@@ -1,10 +1,19 @@
 /*
   This example is more a template rather an example.
-  It registers 4 different callback functions to
-  receive phone state events.
+  It registers callback functions to
+  receive phone state events and time tick events.
+  
+  When a time tick event happens the LED 13
+  will blink the amount of minutes of the actual time
+  
+  Add first event 'Phone State' then 'Time Tick' in Amarino to use this sketch
 */
  
 #include <MeetAndroid.h>
+
+#define IDLE 0
+#define RINGING 1
+#define OFFHOOK 2
 
 MeetAndroid meetAndroid;
 int onboardLed = 13;
@@ -18,10 +27,8 @@ void setup()
   // register callback functions, which will be called when an associated event occurs.
   // - the first parameter is the name of your function (see below)
   // - match the second parameter ('A', 'B', 'a', etc...) with the flag on your Android application
-  meetAndroid.registerFunction(timeTick, 'B');  
-  meetAndroid.registerFunction(ringing, 'C');
-  meetAndroid.registerFunction(idle, 'D');
-  meetAndroid.registerFunction(offhook, 'E');
+  meetAndroid.registerFunction(phoneState, 'A');  
+  meetAndroid.registerFunction(timeTick, 'B'); 
 
   pinMode(onboardLed, OUTPUT);
   digitalWrite(onboardLed, HIGH);
@@ -33,47 +40,72 @@ void loop()
   meetAndroid.receive(); // you need to keep this in your loop() to receive events
 }
 
+
+/*  
+ *  Will be called as soon as you receive a phone state event.
+ *
+ *  Use a switch statement to determine which kind of phone state event you got
+ *  note: flag is in this case 'A' and numOfValues is 1 
+ */
+void phoneState(byte flag, byte numOfValues)
+{
+  // phone state
+  int state = meetAndroid.getInt();
+  
+  switch (state)
+  {
+	case IDLE: idle(); break;
+	case RINGING: ringing(); break;
+	case OFFHOOK: offhook(); break;
+  }
+}
+
+
 /*
  * Will be called as soon as you receive a time tick event.
  *
- * note: flag is in this case 'B' and numOfValues is 0 
+ * note: flag is in this case 'B' and numOfValues is 1 
  */
 void timeTick(byte flag, byte numOfValues)
 {
-  digitalWrite(onboardLed, LOW);
-  delay(500);
-  digitalWrite(onboardLed, HIGH);
-}
-
-/*  
- *  Will be called as soon as you receive a ringing event.
- *
- *  If there is data attached to the function call, 
- *  buffer[1] to buffer[meetAndroid.bufferLength()-1] contains the data
- *  note: flag is in this case 'C' and numOfValues is 0 
- */
-void ringing(byte flag, byte numOfValues)
-{
-  int arraySize = meetAndroid.bufferLength();
-  byte incomingNumber[arraySize];
-  meetAndroid.getBuffer(incomingNumber);
+  int minutes = meetAndroid.getInt();
   
-  // start with 1, since incomingNumber[0] == 'C'
-  for (int i=1; i<arraySize; i++)
+  if (minutes == 0) 
   {
-    Serial.print(incomingNumber[i]);
+    digitalWrite(onboardLed, LOW);
+    delay(1000);
+    digitalWrite(onboardLed, HIGH);
   }
-  // you could extract the called number
-  // and do whatever you want to do with the phone number
-
+  else 
+  {
+    for (int i=0; i<minutes; i++)
+    {
+      digitalWrite(onboardLed, LOW);
+      delay(75);
+      digitalWrite(onboardLed, HIGH);
+      delay(75);
+    }
+  }
 }
 
-void idle(byte flag, byte numOfValues)
+
+void idle()
 {
-
+  // phone has changed its state to idle
+  // either from state ringing (missed call)
+  // or from state offhook (accepted call)
+  meetAndroid.send("idle");
 }
 
-void offhook(byte flag, byte numOfValues)
+void ringing()
 {
-  
+  // phone is ringing
+  meetAndroid.send("ringing");
 }
+
+void offhook()
+{
+  // call has been accepted
+  meetAndroid.send("call accepted");
+}
+

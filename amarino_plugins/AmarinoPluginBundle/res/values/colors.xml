@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="plugin_desc">#eee</color>
+	<color name="plugin_name">#3f3</color>
+	<color name="button_text">#ccc</color>
+	<color name="seekbar_value">#ee4</color>
+</resources>
