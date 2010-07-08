@@ -89,7 +89,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, boolean data) {
-		Intent intent = getSendIntent(AmarinoIntent.BOOLEAN_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.BOOLEAN_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -103,7 +103,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, byte data) {
-		Intent intent = getSendIntent(AmarinoIntent.BYTE_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.BYTE_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -117,7 +117,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, char data) {
-		Intent intent = getSendIntent(AmarinoIntent.CHAR_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.CHAR_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -131,7 +131,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, short data) {
-		Intent intent = getSendIntent(AmarinoIntent.SHORT_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.SHORT_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -145,7 +145,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, int data) {
-		Intent intent = getSendIntent(AmarinoIntent.INT_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.INT_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -162,7 +162,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, long data) {
-		Intent intent = getSendIntent(AmarinoIntent.LONG_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.LONG_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -176,7 +176,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, float data) {
-		Intent intent = getSendIntent(AmarinoIntent.FLOAT_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.FLOAT_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -193,7 +193,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, double data) {
-		Intent intent = getSendIntent(AmarinoIntent.DOUBLE_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.DOUBLE_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -210,7 +210,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, String data) {
-		Intent intent = getSendIntent(AmarinoIntent.STRING_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.STRING_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -224,7 +224,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, boolean[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.BOOLEAN_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.BOOLEAN_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -238,7 +238,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, byte[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.BYTE_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.BYTE_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -252,7 +252,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, char[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.CHAR_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.CHAR_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -266,7 +266,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, short[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.SHORT_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.SHORT_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -280,7 +280,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, int[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.INT_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.INT_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -297,7 +297,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, long[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.LONG_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.LONG_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -311,7 +311,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, float[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.FLOAT_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.FLOAT_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -328,7 +328,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, double[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.DOUBLE_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.DOUBLE_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -345,7 +345,7 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, String[] data) {
-		Intent intent = getSendIntent(AmarinoIntent.STRING_ARRAY_EXTRA, flag);
+		Intent intent = getSendIntent(address, AmarinoIntent.STRING_ARRAY_EXTRA, flag);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
@@ -651,8 +651,9 @@ public class Amarino {
 		return intent;
 	}
 
-	private static Intent getSendIntent(int dataType, char flag){
+	private static Intent getSendIntent(String address, int dataType, char flag){
 		Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
+		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, address);
 		intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, dataType);
 		intent.putExtra(AmarinoIntent.EXTRA_FLAG, flag);
 		return intent;

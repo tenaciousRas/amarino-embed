@@ -79,7 +79,11 @@
 	\nhttp://code.google.com/p/android-bluetooth/</string>
 	
 	<string name="about_changelog"><b>Release Notes</b>
-	\n0.5
+	\n0.53
+	\n - fixed bug in Amarino API (in Amarino.java), device address was not sent when using sendDataToArduino() function
+	\n\n0.52
+	\n - added fall back when UUID does not work, it will try to use the good old port 1
+	\n\n0.5
 	\n - uses UUID (instead of always port 1) to determine which port to use when connecting to a Bluetooth module
 	\n - added release notes dialog to show up when a new Amarino version has been installed
 	\n - shows a message when no plug-ins are installed and user tries to add an event
