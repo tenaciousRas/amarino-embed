@@ -26,6 +26,7 @@ import it.gerdavax.easybluetooth.RemoteDevice;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -203,7 +204,13 @@ public class AmarinoService extends Service {
 			
 			final char flag = intent.getCharExtra(AmarinoIntent.EXTRA_FLAG, 'a');
 			message = flag + message;
-			sendData(address, message.getBytes());
+			try {
+				sendData(address, message.getBytes("ISO-8859-1"));
+			} catch (UnsupportedEncodingException e) {
+				// use default encoding as fallback alternative if encoding ISO 8859-1 is not possible
+				Logger.d(TAG, "Encoding message using ISO-8859-1 not possible");
+				sendData(address, message.getBytes());
+			}
 		}
 		else {
 			List<BTDevice> devices = enabledEvents.get(pluginId);
@@ -475,7 +482,7 @@ public class AmarinoService extends Service {
 	}
 	
 	private Notification getNotification(String title) {
-		notification = new Notification(R.drawable.icon_very_small, title, System.currentTimeMillis());
+		notification = new Notification(R.drawable.icon_small, title, System.currentTimeMillis());
 		notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		notification.flags |= Notification.FLAG_NO_CLEAR;
 		notification.setLatestEventInfo(this, title, getString(R.string.service_notify_text), launchIntent);
