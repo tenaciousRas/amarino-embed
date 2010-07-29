@@ -19,7 +19,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="at.abraxas.amarino"
-      android:installLocation="internalOnly" android:versionName="0.54" android:versionCode="10">
+      android:installLocation="internalOnly" android:versionCode="11" android:versionName="0.55">
       
     <uses-sdk android:targetSdkVersion="8" android:minSdkVersion="4"/>
       

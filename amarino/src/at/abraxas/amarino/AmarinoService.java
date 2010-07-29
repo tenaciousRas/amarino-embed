@@ -199,11 +199,9 @@ public class AmarinoService extends Service {
 			String message = MessageBuilder.getMessage(intent);
 			if (message == null) return; 
 			
-			// cutoff ACK_FLAG for logger
-			Logger.d(TAG, getString(R.string.service_message_to_send, message.substring(0, message.length()-1)));
+			// cutoff leading flag and ACK_FLAG for logger
+			Logger.d(TAG, getString(R.string.service_message_to_send, message.substring(1, message.length()-1)));
 			
-			final char flag = intent.getCharExtra(AmarinoIntent.EXTRA_FLAG, 'a');
-			message = flag + message;
 			try {
 				sendData(address, message.getBytes("ISO-8859-1"));
 			} catch (UnsupportedEncodingException e) {
@@ -214,15 +212,16 @@ public class AmarinoService extends Service {
 		}
 		else {
 			List<BTDevice> devices = enabledEvents.get(pluginId);
+			
 			if (devices != null && devices.size() != 0){
 				for (BTDevice device : devices){
-
+					// we have to put the flag into the intent in order to fulfill the message builder requirements
+					intent.putExtra(AmarinoIntent.EXTRA_FLAG, device.events.get(pluginId).flag);
 					String message = MessageBuilder.getMessage(intent);
 					if (message == null) return;
 					
-					Logger.d(TAG, getString(R.string.service_message_to_send, message.substring(0, message.length()-1)));
+					Logger.d(TAG, getString(R.string.service_message_to_send, message.substring(1, message.length()-1)));
 
-					message = device.events.get(pluginId).flag + message;
 					sendData(device.getAddress(), message.getBytes());
 				}
 			}

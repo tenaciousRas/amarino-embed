@@ -54,60 +54,66 @@ public class MessageBuilder {
 			return null;
 		}
 		
+		final char flag = intent.getCharExtra(AmarinoIntent.EXTRA_FLAG, '-');
+		if (flag  == -1 ){
+			Logger.d(TAG, "EXTRA_FLAG not found");
+			return null;
+		}
+		
 		switch (dataType){
 		case AmarinoIntent.STRING_EXTRA:
 			String s = intent.getStringExtra(AmarinoIntent.EXTRA_DATA);
 			//Logger.d(TAG, "plugin says: " + s);
 			if (s==null) return "0" + ACK_FLAG;
-			return s + ACK_FLAG;
+			return flag + s + ACK_FLAG;
 			
 		/* double is too large for Arduinos, better not to use this datatype */
 		case AmarinoIntent.DOUBLE_EXTRA:
 			double d = intent.getDoubleExtra(AmarinoIntent.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + d);
-			return d + String.valueOf(ACK_FLAG);
+			return flag + d + String.valueOf(ACK_FLAG);
 			
 		/* byte is byte. In Arduino a byte stores an 8-bit unsigned number, from 0 to 255. */
 		case AmarinoIntent.BYTE_EXTRA:
 			byte by = intent.getByteExtra(AmarinoIntent.EXTRA_DATA, (byte)-1);
 			//Logger.d(TAG, "plugin says: " + by);
-			return by + String.valueOf(ACK_FLAG);
+			return flag + by + String.valueOf(ACK_FLAG);
 			
 		/* int in Android is long in Arduino (4 bytes) */
 		case AmarinoIntent.INT_EXTRA:
 			int i = intent.getIntExtra(AmarinoIntent.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + i);
-			return i + String.valueOf(ACK_FLAG);
+			return flag + i + String.valueOf(ACK_FLAG);
 			
 		/* short in Android is like int in Arduino (2 bytes) 2^15 */
 		case AmarinoIntent.SHORT_EXTRA:
 			short sh = intent.getShortExtra(AmarinoIntent.EXTRA_DATA, (short)-1);
 			//Logger.d(TAG, "plugin says: " + sh);
-			return sh + String.valueOf(ACK_FLAG);
+			return flag + sh + String.valueOf(ACK_FLAG);
 
 		/* float in Android is float in Arduino (4 bytes) */
 		case AmarinoIntent.FLOAT_EXTRA:
 			float f = intent.getFloatExtra(AmarinoIntent.EXTRA_DATA, -1f);
 			//Logger.d(TAG, "plugin says: " + f);
-			return f + String.valueOf(ACK_FLAG);
+			return flag + f + String.valueOf(ACK_FLAG);
 		
 		/* boolean in Android is in Arduino 0=false, 1=true */
 		case AmarinoIntent.BOOLEAN_EXTRA:
 			boolean b = intent.getBooleanExtra(AmarinoIntent.EXTRA_DATA, false);
 			//Logger.d(TAG, "plugin says: " + b);
-			return b + String.valueOf(ACK_FLAG);
+			return flag + (((b) ? 1 : 0) + String.valueOf(ACK_FLAG));
 			
 		/* char is char. In Arduino stored in 1 byte of memory */
 		case AmarinoIntent.CHAR_EXTRA:
 			char c = intent.getCharExtra(AmarinoIntent.EXTRA_DATA, 'x');
 			//Logger.d(TAG, "plugin says: " + c);
-			return c + String.valueOf(ACK_FLAG);
+			return flag + c + String.valueOf(ACK_FLAG);
 		
 		/* long in Android does not fit in Arduino data types, better not to use it */
 		case AmarinoIntent.LONG_EXTRA:
 			long l = intent.getLongExtra(AmarinoIntent.EXTRA_DATA, -1l);
 			//Logger.d(TAG, "plugin says: " + l);
-			return l + String.valueOf(ACK_FLAG);
+			return flag + l + String.valueOf(ACK_FLAG);
 
 		case AmarinoIntent.INT_ARRAY_EXTRA:
 			int[] ints = intent.getIntArrayExtra(AmarinoIntent.EXTRA_DATA);
@@ -116,7 +122,7 @@ public class MessageBuilder {
 				for (int integer : ints){
 					msg += String.valueOf(integer) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -127,7 +133,7 @@ public class MessageBuilder {
 				for (char character : chars){
 					msg += String.valueOf(character) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -138,7 +144,7 @@ public class MessageBuilder {
 				for (byte oneByte : bytes){
 					msg += String.valueOf(oneByte) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -149,7 +155,7 @@ public class MessageBuilder {
 				for (short shorty : shorts){
 					msg += String.valueOf(shorty) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -160,7 +166,7 @@ public class MessageBuilder {
 				for (String str : strings){
 					msg += String.valueOf(str) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -171,7 +177,7 @@ public class MessageBuilder {
 				for (double singleDouble : doubles){ // :-)
 					msg += String.valueOf(singleDouble) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -182,7 +188,7 @@ public class MessageBuilder {
 				for (float fl : floats){
 					msg += String.valueOf(fl) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -191,9 +197,9 @@ public class MessageBuilder {
 			if (booleans != null){
 				String msg = new String();
 				for (boolean bool : booleans){
-					msg += String.valueOf(bool) + DELIMITER;
+					msg += String.valueOf((bool) ? 1 : 0) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 			
@@ -204,7 +210,7 @@ public class MessageBuilder {
 				for (long longo : longs){
 					msg += String.valueOf(longo) + DELIMITER;
 				}
-				return finishingMessage(msg);
+				return flag + finishingMessage(msg);
 			}
 			break;
 
@@ -220,6 +226,13 @@ public class MessageBuilder {
 			return msg + ACK_FLAG;
 	}
 	
+	/**
+	 * Returns array values, in a line by line matter (each value one in a separate line)
+	 * 
+	 * @param dataType
+	 * @param array
+	 * @return
+	 */
 	public static String getMessage(int dataType, Object array){
 		String s = new String();
 		switch(dataType){
