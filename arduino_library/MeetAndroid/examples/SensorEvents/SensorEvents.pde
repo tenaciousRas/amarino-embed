@@ -1,13 +1,12 @@
 /*
-  Receives compass sensor events from your phone.
-  
-*/
+ * Receives compass sensor events from your phone.
+ *
+ */
  
 #include <MeetAndroid.h>
 
-// MeetAndroid meetAndroid();
 // you can define your own error function to catch messages
-// where not fuction has been attached for
+// where no fuction has been attached for
 MeetAndroid meetAndroid(error);
 
 void error(uint8_t flag, uint8_t values){
