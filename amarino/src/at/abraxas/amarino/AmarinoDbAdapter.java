@@ -83,16 +83,16 @@ public class AmarinoDbAdapter {
         	
         	db.execSQL("CREATE TABLE " + EVENT_TABLE_NAME + " ("
         			+ KEY_EVENT_ID + " INTEGER PRIMARY KEY,"
-                    + KEY_EVENT_NAME + " TEXT,"
+                    + KEY_EVENT_NAME + " TEXT NOT NULL,"
                     + KEY_EVENT_DESC  + " TEXT,"
                     + KEY_EVENT_VISUALIZER  + " INTEGER,"
                     + KEY_EVENT_VISUALIZER_MIN  + " NUMBER,"
                     + KEY_EVENT_VISUALIZER_MAX  + " NUMBER,"
-                    + KEY_EVENT_FLAG  + " INTEGER,"
-                    + KEY_EVENT_PACKAGE_NAME  + " TEXT,"
-                    + KEY_EVENT_EDIT_CLASS_NAME  + " TEXT,"
-                    + KEY_EVENT_SERVICE_CLASS_NAME  + " TEXT,"
-                    + KEY_EVENT_PLUGIN_ID  + " INTEGER,"
+                    + KEY_EVENT_FLAG  + " INTEGER NOT NULL,"
+                    + KEY_EVENT_PACKAGE_NAME  + " TEXT NOT NULL,"
+                    + KEY_EVENT_EDIT_CLASS_NAME  + " TEXT NOT NULL,"
+                    + KEY_EVENT_SERVICE_CLASS_NAME  + " TEXT NOT NULL,"
+                    + KEY_EVENT_PLUGIN_ID  + " INTEGER NOT NULL,"
                     + KEY_EVENT_DEVICE_ID  + " INTEGER REFERENCES " + DEVICE_TABLE_NAME + "(_id) "
                     + ");");
         	

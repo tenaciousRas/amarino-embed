@@ -64,7 +64,7 @@ public class Logger {
 	}
 	
 	private static void add(String msg){
-		 synchronized (log){
+		synchronized (log){
 			if (logSize < MAX_LOG_ENTRIES){
 				logSize++;
 			}

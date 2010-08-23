@@ -57,8 +57,6 @@ public class AmarinoService extends Service {
 	
 	private static final int NOTIFY_ID = 119561;
 	private static final String TAG = "AmarinoService";
-
-	
 	
 	private static final int BUSY = 1;
 	private static final int ACTIVE_CONNECTIONS = 2;

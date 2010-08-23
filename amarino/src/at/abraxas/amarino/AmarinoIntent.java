@@ -187,11 +187,6 @@ public interface AmarinoIntent {
 	 * </ul>
 	 * 
 	 * <p>
-	 * This action is only broadcasted if you have requested the list of device
-	 * before by sending {@link #ACTION_GET_CONNECTED_DEVICES}
-	 * </p>
-	 * 
-	 * <p>
 	 * <b>Example</b>
 	 * </p>
 	 * 
@@ -401,7 +396,12 @@ public interface AmarinoIntent {
 	public static final String EXTRA_FLAG = "amarino.intent.extra.FLAG";
 
 	/**
-	 * Type: Integer - the type of data attached to an intent
+	 * <p>the type of data attached to an intent</p>
+	 * 
+	 * <p>
+	 * You have to pass in the type of extra you going to send;
+	 * for example: BOOLEAN_EXTRA, BYTE_EXTRA, STRING_EXTRA, INTEGER_EXTRA, etc.
+	 * </p>
 	 */
 	public static final String EXTRA_DATA_TYPE = "amarino.intent.extra.DATA_TYPE";
 	/**
