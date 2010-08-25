@@ -65,9 +65,6 @@ public abstract class BackgroundService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		if (DEBUG) Log.d(TAG, "onCreate");
-		
-		pluginId = PreferenceManager.getDefaultSharedPreferences(BackgroundService.this)
-			.getInt(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
 	}
 	
 	@Override

@@ -35,7 +35,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -162,7 +161,7 @@ public class AmarinoService extends Service {
 		// we don't want to shutdown our service while it does some work
 		serviceState = BUSY;
 		
-		if (!isCorrectAddressFormat(address)) {
+		if (!Amarino.isCorrectAddressFormat(address)) {
 			Logger.d(TAG, getString(R.string.service_address_invalid, address));
 			sendConnectionFailed(address);
 			shutdownServiceIfNecessary();
@@ -230,12 +229,6 @@ public class AmarinoService extends Service {
 	}
 
 
-	private boolean isCorrectAddressFormat(String address){
-		if (address.length() != 17) return false;
-		// TODO use regular expression to check format needs more specific regex
-		return Pattern.matches("[[A-F][0-9][:]]+", address.toUpperCase());
-	}
-	
 
 	@Override
 	public void onDestroy() {
