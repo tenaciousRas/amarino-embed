@@ -1,5 +1,7 @@
 package at.abraxas.amarino.plugin.skeleton;
 
+import android.preference.PreferenceManager;
+import at.abraxas.amarino.AmarinoIntent;
 import at.abraxas.amarino.plugin.BackgroundService;
 
 public class MyBackgroundService extends BackgroundService{
@@ -10,6 +12,8 @@ public class MyBackgroundService extends BackgroundService{
 	
 	public MyBackgroundService() {
 		super(TAG, DEBUG); 
+		pluginId = PreferenceManager.getDefaultSharedPreferences(this)
+			.getInt(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
 	}
 	
 	
