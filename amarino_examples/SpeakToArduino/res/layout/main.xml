@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<TextView android:id="@+id/TextView01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:text="This example shows how you can use words to control your Arduino."
+	android:textSize="16sp">
+	</TextView>
+	 
+	<Button 
+	android:id="@+id/Button01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="200dp" 
+	android:textSize="40dp" 
+	android:layout_gravity="center"
+ 	android:onClick="buttonClick">
+ 	</Button>
+
+</LinearLayout>
