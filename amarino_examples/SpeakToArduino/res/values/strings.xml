@@ -3,5 +3,10 @@
     <string name="hello">Hello World, SpeakToArduino!</string>
     <string name="app_name">SpeakToArduino</string>
     <string name="button_text">Click and say \'%s\'</string>
+    
+    <string name="device_address">Set BT Device Address</string>
+    <string name="set_device_address">Please enter the address of your Bluetooth module on your Arduino.</string>
+    <string name="device_address_format_error">Address needs to be in the following format: xx:xx:xx:xx:xx:xx\n\ne.g. 00:06:66:03:73:7B</string>
+    
      
 </resources>

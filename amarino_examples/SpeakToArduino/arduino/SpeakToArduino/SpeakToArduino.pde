@@ -1,12 +1,11 @@
 /*
-  SpeakToArduino (works with Amarino and the SpeakToArduino Android app)
+  SpeakToArduino (works with Amarino 2.0 and the SpeakToArduino Android app)
   
-  - based on the Amarino SpeakToArduino
-  - receives custom events from Amarino turning lights on and off
-    using speech recognision
-  - reuses Multicolor lamp custom events to turn individual lights on/off
+  - counterpart of the Amarino 2.0 SpeakToArduino app
+  - receives events from Amarino turning lights on and off and changes
+    its color using speech recognision
   
-  author: Bonifaz Kaufmann - December 2009
+  author: Bonifaz Kaufmann - September 2010
 */
  
 #include <MeetAndroid.h>
@@ -30,11 +29,7 @@ void setup()
   Serial.begin(57600); 
   
   // register callback functions, which will be called when an associated event occurs.
-  meetAndroid.registerFunction(redCB, 'a');
-  meetAndroid.registerFunction(greenCB, 'b');  
-  meetAndroid.registerFunction(blueCB, 'c');
-  meetAndroid.registerFunction(onCB, 'r');  
-  meetAndroid.registerFunction(offCB, 's');
+  meetAndroid.registerFunction(color, 'c');
 
   // set all color leds as output pins
   pinMode(redLed, OUTPUT);
@@ -53,52 +48,13 @@ void loop()
   meetAndroid.receive(); // you need to keep this in your loop() to receive events
 }
 
-void redCB(byte flag, byte numOfValues)
+void color(byte flag, byte numOfValues)
 {
-  if (red)
-    digitalWrite(redLed, LOW);
-  else
-    digitalWrite(redLed, HIGH);
-  red = !red;
-}
-
-void greenCB(byte flag, byte numOfValues)
-{
-  if (green)
-    digitalWrite(greenLed, LOW);
-  else
-    digitalWrite(greenLed, HIGH);
-  green = !green;
-}
-
-void blueCB(byte flag, byte numOfValues)
-{
-  if (blue)
-    digitalWrite(blueLed, LOW);
-  else
-    digitalWrite(blueLed, HIGH);
-  blue = !blue;
-}
-
-void onCB(byte flag, byte numOfValues)
-{
-  digitalWrite(redLed, HIGH);
-  digitalWrite(greenLed, HIGH);
-  digitalWrite(blueLed, HIGH);
+  int rgb[3];
+  meetAndroid.getIntValues(rgb);
   
-  red = true;
-  green = true;
-  blue = true;
-}
-
-void offCB(byte flag, byte numOfValues)
-{
-  digitalWrite(redLed, LOW);
-  digitalWrite(greenLed, LOW);
-  digitalWrite(blueLed, LOW);
-  
-  red = false;
-  green = false;
-  blue = false;
+  analogWrite(redLed, rgb[0]);
+  analogWrite(greenLed, rgb[1]);
+  analogWrite(blueLed, rgb[2]);
 }
 
