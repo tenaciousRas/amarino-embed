@@ -4,4 +4,8 @@
     <string name="red">Red</string>
     <string name="green">Green</string>
     <string name="blue">Blue</string>
+    <string name="device_address">Set BT Device Address</string>
+    <string name="set_device_address">Please enter the address of your Bluetooth module on your Arduino.</string>
+    <string name="device_address_format_error">Address needs to be in the following format: xx:xx:xx:xx:xx:xx\n\ne.g. 00:06:66:03:73:7B</string>
+    
 </resources>

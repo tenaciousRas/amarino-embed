@@ -11,7 +11,16 @@
             </intent-filter>
         </activity>
 
-    </application>
+	    <receiver android:name="ColorReceiver">
+	    	<intent-filter>
+	    		<action android:name="amarino.multicolorlamp.SET_COLOR"></action>
+			</intent-filter>
+		</receiver>
+		
+		<service android:name="ChangeColorService"></service>
+	
+	</application>
+	
     <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="4"/>
 
 </manifest> 
