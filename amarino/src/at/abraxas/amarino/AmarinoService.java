@@ -214,6 +214,8 @@ public class AmarinoService extends Service {
 				for (BTDevice device : devices){
 					// we have to put the flag into the intent in order to fulfill the message builder requirements
 					intent.putExtra(AmarinoIntent.EXTRA_FLAG, device.events.get(pluginId).flag);
+					//Log.d(TAG, "flag" + device.events.get(pluginId).flag);
+					
 					String message = MessageBuilder.getMessage(intent);
 					if (message == null) return;
 					

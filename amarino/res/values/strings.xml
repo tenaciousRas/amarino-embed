@@ -79,6 +79,8 @@
 	\nhttp://code.google.com/p/android-bluetooth/</string>
 	
 	<string name="about_changelog"><b>Release Notes</b>
+	\n0.55
+	\n - fixed bug in MessageBuilder. Flags were converted to numbers in some cases.
 	\n0.53
 	\n - fixed bug in Amarino API (in Amarino.java), device address was not sent when using sendDataToArduino() function
 	\n\n0.52

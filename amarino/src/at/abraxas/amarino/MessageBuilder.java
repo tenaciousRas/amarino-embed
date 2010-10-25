@@ -71,31 +71,31 @@ public class MessageBuilder {
 		case AmarinoIntent.DOUBLE_EXTRA:
 			double d = intent.getDoubleExtra(AmarinoIntent.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + d);
-			return flag + d + String.valueOf(ACK_FLAG);
+			return flag + (d + String.valueOf(ACK_FLAG));
 			
 		/* byte is byte. In Arduino a byte stores an 8-bit unsigned number, from 0 to 255. */
 		case AmarinoIntent.BYTE_EXTRA:
 			byte by = intent.getByteExtra(AmarinoIntent.EXTRA_DATA, (byte)-1);
 			//Logger.d(TAG, "plugin says: " + by);
-			return flag + by + String.valueOf(ACK_FLAG);
+			return flag + (by + String.valueOf(ACK_FLAG));
 			
 		/* int in Android is long in Arduino (4 bytes) */
 		case AmarinoIntent.INT_EXTRA:
 			int i = intent.getIntExtra(AmarinoIntent.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + i);
-			return flag + i + String.valueOf(ACK_FLAG);
+			return flag + (i + String.valueOf(ACK_FLAG));
 			
 		/* short in Android is like int in Arduino (2 bytes) 2^15 */
 		case AmarinoIntent.SHORT_EXTRA:
 			short sh = intent.getShortExtra(AmarinoIntent.EXTRA_DATA, (short)-1);
 			//Logger.d(TAG, "plugin says: " + sh);
-			return flag + sh + String.valueOf(ACK_FLAG);
+			return flag + (sh + String.valueOf(ACK_FLAG));
 
 		/* float in Android is float in Arduino (4 bytes) */
 		case AmarinoIntent.FLOAT_EXTRA:
 			float f = intent.getFloatExtra(AmarinoIntent.EXTRA_DATA, -1f);
 			//Logger.d(TAG, "plugin says: " + f);
-			return flag + f + String.valueOf(ACK_FLAG);
+			return flag + (f + String.valueOf(ACK_FLAG));
 		
 		/* boolean in Android is in Arduino 0=false, 1=true */
 		case AmarinoIntent.BOOLEAN_EXTRA:
@@ -107,13 +107,13 @@ public class MessageBuilder {
 		case AmarinoIntent.CHAR_EXTRA:
 			char c = intent.getCharExtra(AmarinoIntent.EXTRA_DATA, 'x');
 			//Logger.d(TAG, "plugin says: " + c);
-			return flag + c + String.valueOf(ACK_FLAG);
+			return flag + (c + String.valueOf(ACK_FLAG));
 		
 		/* long in Android does not fit in Arduino data types, better not to use it */
 		case AmarinoIntent.LONG_EXTRA:
 			long l = intent.getLongExtra(AmarinoIntent.EXTRA_DATA, -1l);
 			//Logger.d(TAG, "plugin says: " + l);
-			return flag + l + String.valueOf(ACK_FLAG);
+			return flag + (l + String.valueOf(ACK_FLAG));
 
 		case AmarinoIntent.INT_ARRAY_EXTRA:
 			int[] ints = intent.getIntArrayExtra(AmarinoIntent.EXTRA_DATA);
