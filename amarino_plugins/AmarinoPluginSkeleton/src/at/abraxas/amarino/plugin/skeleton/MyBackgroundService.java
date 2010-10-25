@@ -12,13 +12,15 @@ public class MyBackgroundService extends BackgroundService{
 	
 	public MyBackgroundService() {
 		super(TAG, DEBUG); 
-		pluginId = PreferenceManager.getDefaultSharedPreferences(this)
-			.getInt(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+		
 	}
 	
 	
 	@Override
 	public boolean init() {
+		pluginId = PreferenceManager.getDefaultSharedPreferences(this)
+			.getInt(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+		
 		/* add your code here */
 		
 		return false; // note: return true if init was successful
