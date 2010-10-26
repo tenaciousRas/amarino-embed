@@ -28,14 +28,20 @@
 void MeetAndroid::processCommand(){
 	if(buffer[0]-FunctionBufferOffset < FunctionBufferLenght){
 		void (*H_FuncPtr)(uint8_t, uint8_t) = intFunc[buffer[0]-FunctionBufferOffset];
-		H_FuncPtr(buffer[0], getArrayLength());
+		if (H_FuncPtr != 0) {
+			H_FuncPtr(buffer[0], getArrayLength());
+		}
+		else {
+			send("Flag not registered: ");
+			send(buffer[0]);
+		}
 	}
 	else {
 		if (customErrorFunc)
 			errorFunc(buffer[0], getArrayLength());
 		else {
-			Serial.print("No func. attached for: ");
-			Serial.print(buffer[0]);
+			send("Flag out of bounds: ");
+			send(buffer[0]);
 		}
 	}
 }
@@ -62,6 +68,7 @@ MeetAndroid::MeetAndroid()
 {
     // it is hard to use member function pointer together with normal function pointers.
     customErrorFunc = false;
+	errorFunc = 0;
 	init();
 }
 
@@ -72,7 +79,6 @@ MeetAndroid::MeetAndroid(H_voidFuncPtr err)
 	errorFunc = err;
 	init();
 }
-
 
 void MeetAndroid::registerFunction(void(*userfunction)(uint8_t, uint8_t),uint8_t command){
 	intFunc[command-FunctionBufferOffset] = userfunction;
