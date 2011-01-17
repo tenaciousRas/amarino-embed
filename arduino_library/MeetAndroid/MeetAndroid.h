@@ -53,7 +53,7 @@ class MeetAndroid : public Print
 #define ByteBufferLenght 64
 #define FunctionBufferLenght 75 // 48-122 (in ascii: 0 - z)
 #define FunctionBufferOffset 48  // offset to calc the position in the function buffer ('0' should be stored in intFunc[0])
-#define _MEET_ANDROID_VERSION 2 // software version of this library
+#define _MEET_ANDROID_VERSION 3 // software version of this library
 private:
 	// per object data
 	uint8_t bufferCount;
