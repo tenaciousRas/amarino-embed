@@ -18,10 +18,14 @@
 */
 
 // Includes
+#include "WProgram.h"
 #include "HardwareSerial.h"
 #include "WConstants.h"
 #include "MeetAndroid.h"
-#include "stdlib.h"
+
+extern "C" {
+#include <stdlib.h>
+}
 
 
 // Private methods
