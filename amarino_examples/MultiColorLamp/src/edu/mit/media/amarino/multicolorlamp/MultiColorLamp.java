@@ -56,6 +56,10 @@ public class MultiColorLamp extends Activity implements OnSeekBarChangeListener{
 	private static final int DIALOG_DEVICE_ADDRESS = 1;
 	private static final int addressEditTextId = 15;
 	
+	public static final char FLAG_RED = 'r';
+	public static final char FLAG_GREEN = 'g';
+	public static final char FLAG_BLUE = 'b';
+	
 	
 	final int DELAY = 150;
 	SeekBar redSB;
@@ -260,16 +264,17 @@ public class MultiColorLamp extends Activity implements OnSeekBarChangeListener{
 	private void updateRed(){
 		// I have chosen random small letters for the flag 'o' for red, 'p' for green and 'q' for blue
 		// you could select any small letter you want
-		// however be sure to match the character you register a function for your in Arduino sketch
-		Amarino.sendDataToArduino(this, deviceAddress, 'o', red);
+		// however be sure to match the character you register a function for in your Arduino sketch
+		Amarino.sendDataToArduino(this, deviceAddress, FLAG_RED, red);
 	}
 	
 	private void updateGreen(){
-		Amarino.sendDataToArduino(this, deviceAddress, 'p', green);
+		Amarino.sendDataToArduino(this, deviceAddress, FLAG_GREEN, green);
 	}
 	
 	private void updateBlue(){
-		Amarino.sendDataToArduino(this, deviceAddress, 'q', blue);
+		Amarino.sendDataToArduino(this, deviceAddress, FLAG_BLUE, blue);
 	}
 	
 }
+

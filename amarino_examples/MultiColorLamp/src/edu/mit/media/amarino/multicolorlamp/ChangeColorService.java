@@ -62,9 +62,9 @@ public class ChangeColorService extends Service {
 			if (intent != null){
 				String action = intent.getAction();
 				if (AmarinoIntent.ACTION_CONNECTED.equals(action)){
-					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, 'o', Color.red(color));
-					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, 'p', Color.green(color));
-					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, 'q', Color.blue(color));
+					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_RED, Color.red(color));
+					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_GREEN, Color.green(color));
+					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_BLUE, Color.blue(color));
 					Amarino.disconnect(ChangeColorService.this, deviceAddress);
 					stopSelf();
 				}

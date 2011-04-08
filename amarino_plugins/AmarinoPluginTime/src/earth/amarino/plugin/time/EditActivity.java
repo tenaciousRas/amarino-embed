@@ -13,7 +13,7 @@ import at.abraxas.amarino.AmarinoIntent;
 
 public abstract class EditActivity extends Activity {
 
-	static final String KEY_VISUALIZER = "at.abraxas.amarino.example.plugin.skeleton.visualizer";
+	static final String KEY_VISUALIZER = "visualizer";
 	
 	private static final String TAG = "EditActivity";
 	private static final boolean DEBUG = true;
