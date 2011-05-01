@@ -6,7 +6,7 @@
 #include <MeetAndroid.h>
 
 MeetAndroid meetAndroid;
-int sensor = 5;
+int sensor = A5;
 
 
 void setup()  
