@@ -23,6 +23,8 @@ import it.gerdavax.easybluetooth.RemoteDevice;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import at.abraxas.amarino.intent.DefaultServiceIntentConfig;
+
 
 /**
  * $Id: BTDevice.java 444 2010-06-10 13:11:59Z abraxas $
@@ -31,10 +33,10 @@ public class BTDevice implements Serializable {
 	
 	private static final long serialVersionUID = -6041931825295548358L;
 	
-	long id = -1;
-	String address;
-	String name;
-	int state = AmarinoIntent.DISCONNECTED;
+	private long id = -1;
+	private String address;
+	private String name;
+	int state = DefaultServiceIntentConfig.DISCONNECTED;
 	// <pluginID, event>
 	HashMap<Integer, Event> events;
 	
@@ -52,15 +54,77 @@ public class BTDevice implements Serializable {
 		this.address = rd.getAddress();
 		this.name = rd.getFriendlyName();
 	}
-	
-	public String getAddress(){
-		return this.address;
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
 	}
-	
-	public String getName(){
-		return this.name;
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(long id) {
+		this.id = id;
 	}
-	
+
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public int getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the events
+	 */
+	public HashMap<Integer, Event> getEvents() {
+		return events;
+	}
+
+	/**
+	 * @param events the events to set
+	 */
+	public void setEvents(HashMap<Integer, Event> events) {
+		this.events = events;
+	}
+
 	public boolean equals(Object o){
 		if (this == o)
 			return true;

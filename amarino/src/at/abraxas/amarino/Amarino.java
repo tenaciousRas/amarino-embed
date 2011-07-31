@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.content.Intent;
+import at.abraxas.amarino.intent.DefaultServiceIntentConfig;
 
 /**
  * This class is part of the Amarino Library and bundles some very useful methods to communicate
@@ -40,17 +41,17 @@ public class Amarino {
 	
 	/**
 	 * Establish a connection to the Bluetooth device with the given address.
-	 * This method uses {@link at.abraxas.amarino.AmarinoIntent#ACTION_CONNECT} to initiate a connection.
+	 * This method uses {@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_CONNECT} to initiate a connection.
 	 * 
 	 * You might want to know if your connection was successful or not.
 	 * To get feedback from Amarino register a
 	 * <a href="http://developer.android.com/reference/android/content/BroadcastReceiver.html">BroadcastReceiver</a>
 	 * for the following intents.
 	 * <ul>
-     *   <li><em>{@link at.abraxas.amarino.AmarinoIntent#ACTION_CONNECTED}</em></li>
-     *   <li><em>{@link at.abraxas.amarino.AmarinoIntent#ACTION_DISCONNECTED}</em></li>
-     *   <li><em>{@link at.abraxas.amarino.AmarinoIntent#ACTION_CONNECTION_FAILED}</em></li>
-     *   <li><em>{@link at.abraxas.amarino.AmarinoIntent#ACTION_PAIRING_REQUESTED}</em></li>
+     *   <li><em>{@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_CONNECTED}</em></li>
+     *   <li><em>{@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_DISCONNECTED}</em></li>
+     *   <li><em>{@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_CONNECTION_FAILED}</em></li>
+     *   <li><em>{@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_PAIRING_REQUESTED}</em></li>
      * </ul>
 	 * 
 	 * Amarino will broadcast one of the four intents after your have called {@link #connect(Context, String)}
@@ -60,8 +61,8 @@ public class Amarino {
 	 * <pre>e.g. "00:06:54:4B:31:7E"</pre>
 	 */
 	public static void connect(Context context, String address){
-		Intent intent = new Intent(AmarinoIntent.ACTION_CONNECT);
-		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, address);
+		Intent intent = new Intent(DefaultServiceIntentConfig.DEFAULT_ACTION_CONNECT);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		context.sendBroadcast(intent);
 	}
 	
@@ -70,15 +71,15 @@ public class Amarino {
 	 * 
 	 * For feedback register a
 	 * <a href="http://developer.android.com/reference/android/content/BroadcastReceiver.html">BroadcastReceiver</a>
-	 * for the {@link at.abraxas.amarino.AmarinoIntent#ACTION_DISCONNECTED} intent.
+	 * for the {@link at.abraxas.amarino.intent.DefaultServiceIntentConfig#ACTION_DISCONNECTED} intent.
 	 * 
 	 * @param context the context
 	 * @param address address of your Arduino Bluetooth module, should be the same
 	 * which you used to connect to the device
 	 */
 	public static void disconnect(Context context, String address){
-		Intent intent = new Intent(AmarinoIntent.ACTION_DISCONNECT);
-		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, address);
+		Intent intent = new Intent(DefaultServiceIntentConfig.DEFAULT_ACTION_DISCONNECT);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		context.sendBroadcast(intent);
 	}
 	
@@ -91,8 +92,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, boolean data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.BOOLEAN_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.BOOLEAN_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -105,8 +106,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, byte data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.BYTE_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.BYTE_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -119,8 +120,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, char data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.CHAR_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.CHAR_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -133,8 +134,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, short data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.SHORT_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.SHORT_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -147,8 +148,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, int data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.INT_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.INT_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -164,8 +165,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, long data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.LONG_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.LONG_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -178,8 +179,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, float data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.FLOAT_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.FLOAT_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -195,8 +196,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, double data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.DOUBLE_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.DOUBLE_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -212,8 +213,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, String data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.STRING_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.STRING_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -226,8 +227,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, boolean[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.BOOLEAN_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.BOOLEAN_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -240,8 +241,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, byte[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.BYTE_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.BYTE_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -254,8 +255,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, char[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.CHAR_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.CHAR_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -268,8 +269,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, short[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.SHORT_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.SHORT_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -282,8 +283,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, int[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.INT_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.INT_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -299,8 +300,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, long[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.LONG_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.LONG_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -313,8 +314,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, float[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.FLOAT_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.FLOAT_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -330,8 +331,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, double[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.DOUBLE_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.DOUBLE_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -347,8 +348,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataToArduino(Context context, String address, char flag, String[] data) {
-		Intent intent = getSendIntent(address, AmarinoIntent.STRING_ARRAY_EXTRA, flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getSendIntent(address, DefaultServiceIntentConfig.STRING_ARRAY_EXTRA, flag);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -367,8 +368,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, boolean data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.BOOLEAN_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.BOOLEAN_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -384,8 +385,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, byte data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.BYTE_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.BYTE_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -401,8 +402,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, char data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.CHAR_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.CHAR_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -418,8 +419,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, int data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.INT_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.INT_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -435,8 +436,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, long data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.LONG_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.LONG_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -452,8 +453,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, float data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.FLOAT_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.FLOAT_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -469,8 +470,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, double data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.DOUBLE_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.DOUBLE_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -486,8 +487,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, String data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.STRING_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.STRING_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -503,8 +504,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, boolean[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.BOOLEAN_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.BOOLEAN_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -520,8 +521,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, byte[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.BYTE_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.BYTE_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -537,8 +538,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, char[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.CHAR_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.CHAR_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -554,8 +555,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, short[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.SHORT_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.SHORT_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -571,8 +572,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, int[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.INT_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.INT_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -588,8 +589,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, long[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.LONG_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.LONG_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -605,8 +606,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, float[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.FLOAT_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.FLOAT_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -622,8 +623,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, double[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.DOUBLE_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.DOUBLE_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -639,8 +640,8 @@ public class Amarino {
 	 * @param data your data you want to send
 	 */
 	public static void sendDataFromPlugin(Context context, int pluginId, String[] data){
-		Intent intent = getPluginSendIntent(AmarinoIntent.STRING_ARRAY_EXTRA, pluginId);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA, data);
+		Intent intent = getPluginSendIntent(DefaultServiceIntentConfig.STRING_ARRAY_EXTRA, pluginId);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, data);
 		context.sendBroadcast(intent);
 	}
 	
@@ -662,17 +663,17 @@ public class Amarino {
 	
 
 	private static Intent getPluginSendIntent(int dataType, int pluginId){
-		Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, dataType);
-		intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);
+		Intent intent = new Intent(DefaultServiceIntentConfig.DEFAULT_ACTION_SEND);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA_TYPE, dataType);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);
 		return intent;
 	}
 
 	private static Intent getSendIntent(String address, int dataType, char flag){
-		Intent intent = new Intent(AmarinoIntent.ACTION_SEND);
-		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, address);
-		intent.putExtra(AmarinoIntent.EXTRA_DATA_TYPE, dataType);
-		intent.putExtra(AmarinoIntent.EXTRA_FLAG, flag);
+		Intent intent = new Intent(DefaultServiceIntentConfig.DEFAULT_ACTION_SEND);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA_TYPE, dataType);
+		intent.putExtra(DefaultServiceIntentConfig.EXTRA_FLAG, flag);
 		return intent;
 	}
 }

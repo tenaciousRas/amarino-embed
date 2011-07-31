@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Amarino - A prototyping software toolkit for Android and Arduino
+  Copyright (c) 2010 Bonifaz Kaufmann.  All right reserved.
+  
+  This application and its library is free software; you can redistribute
+  it and/or modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 3 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/root_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#111">
+
+	<LinearLayout android:id="@+id/button_bar"
+		android:orientation="horizontal" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="1px"
+		android:layout_alignParentBottom="true">
+		
+		<FrameLayout
+			android:layout_width="fill_parent"
+			android:layout_height="100dp"
+			android:layout_weight="1"
+			android:layout_marginRight="1dp"
+			>
+			<ImageButton
+				android:id="@+id/add_device_btn"
+				android:layout_height="fill_parent"
+				android:layout_width="fill_parent" 
+				style="@style/image_button_with_bottom_text"
+				android:src="@drawable/add">
+			</ImageButton>
+			
+			<TextView
+				android:id="@+id/add_device_btn_text"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				android:text="@string/add_bt_device"
+				android:paddingBottom="3dp"
+				android:gravity="center"
+				android:textSize="@dimen/button_font_size">
+			</TextView>
+		</FrameLayout>
+		
+		<FrameLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			android:layout_marginRight="1dp"
+			>
+			<ImageButton
+				android:id="@+id/monitoring_btn"
+				android:layout_height="fill_parent"
+				android:layout_width="fill_parent" 
+				style="@style/image_button_with_bottom_text"
+				android:src="@drawable/binocular_128">
+			</ImageButton>
+			
+			<TextView
+				android:id="@+id/monitoring_btn_text"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				android:text="@string/monitoring"
+				android:paddingBottom="3dp"
+				android:gravity="center"
+				android:textSize="@dimen/button_font_size">
+			</TextView>
+		</FrameLayout>
+		
+		 
+		<FrameLayout
+			android:id="@+id/settings_btn_layout"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_weight="1"
+			>
+			<ImageButton
+				android:id="@+id/settings_btn"
+				android:layout_height="fill_parent"
+				android:layout_width="fill_parent" 
+				style="@style/image_button_with_bottom_text"
+				android:src="@drawable/settings_128">
+			</ImageButton>
+			
+			<TextView
+				android:id="@+id/settings_btn_text"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="bottom"
+				android:text="@string/settings"
+				android:paddingBottom="3dp"
+				android:gravity="center"
+				android:textSize="@dimen/button_font_size">
+			</TextView>
+		</FrameLayout>
+		
+		
+	</LinearLayout>
+	
+
+	<ListView android:id="@+id/android:list"
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent"
+		android:layout_alignParentTop="true"
+		android:layout_above="@id/button_bar"
+		android:divider="#0000"
+		android:dividerHeight="2px"
+		android:drawSelectorOnTop="false"
+		
+		>
+	</ListView>
+
+
+	<FrameLayout android:id="@id/android:empty"
+		android:layout_width="fill_parent" 
+        android:layout_height="fill_parent"
+        android:layout_above="@id/button_bar"
+        >
+        
+        <ImageView 
+	        android:layout_width="fill_parent" 
+	        android:layout_height="fill_parent"
+	        android:src="@drawable/icon_background"
+	        android:layout_gravity="center"
+	        android:padding="20dp"
+	        android:scaleType="center"
+        />
+        
+		<TextView 
+        	android:layout_width="fill_parent" 
+	        android:layout_height="fill_parent"
+	        android:padding="6dp"
+	        android:textSize="15sp"
+	        android:text="@string/no_devices"/>
+
+	</FrameLayout>
+		
+	
+
+</RelativeLayout>
