@@ -1,5 +1,8 @@
 package at.abraxas.amarino.db;
 
+/**
+ * @author Free Beachler
+ */
 public class DefaultDBConfig implements DBConfig {
 
 	public static final int DATABASE_VERSION = 3;

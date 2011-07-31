@@ -32,7 +32,9 @@ import at.abraxas.amarino.Event;
 import at.abraxas.amarino.log.Logger;
 
 /**
- * $Id: AmarinoDbAdapter.java 444 2010-06-10 13:11:59Z abraxas $
+ * @author Bonifaz Kaufmann
+ * 
+ *         $Id: AmarinoDbAdapter.java 444 2010-06-10 13:11:59Z abraxas $
  */
 public class AmarinoDbAdapter {
 
@@ -178,8 +180,8 @@ public class AmarinoDbAdapter {
 	public long createDevice(BTDevice device) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_DEVICE_ADDRESS, device.getAddress());
-		initialValues.put(KEY_DEVICE_NAME, (device.getName() == null) ? "NONAME"
-				: device.getName());
+		initialValues.put(KEY_DEVICE_NAME,
+				(device.getName() == null) ? "NONAME" : device.getName());
 
 		return mDb.insert(mDbHelper.getConfig().getDevicesTableName(), null,
 				initialValues);

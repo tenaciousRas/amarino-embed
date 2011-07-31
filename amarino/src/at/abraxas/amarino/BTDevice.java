@@ -23,7 +23,7 @@ import it.gerdavax.easybluetooth.RemoteDevice;
 import java.io.Serializable;
 import java.util.HashMap;
 
-import at.abraxas.amarino.intent.DefaultServiceIntentConfig;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 
 /**
@@ -36,7 +36,7 @@ public class BTDevice implements Serializable {
 	private long id = -1;
 	private String address;
 	private String name;
-	int state = DefaultServiceIntentConfig.DISCONNECTED;
+	int state = DefaultAmarinoServiceIntentConfig.DISCONNECTED;
 	// <pluginID, event>
 	HashMap<Integer, Event> events;
 	

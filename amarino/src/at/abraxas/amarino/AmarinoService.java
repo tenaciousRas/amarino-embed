@@ -50,8 +50,8 @@ import android.os.IBinder;
 import android.util.Log;
 import at.abraxas.amarino.db.AmarinoDbAdapter;
 import at.abraxas.amarino.db.DBConfig;
-import at.abraxas.amarino.intent.DefaultServiceIntentConfig;
-import at.abraxas.amarino.intent.ServiceIntentConfig;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
+import at.abraxas.amarino.intent.AmarinoServiceIntentConfig;
 import at.abraxas.amarino.log.Logger;
 
 /**
@@ -70,7 +70,7 @@ public class AmarinoService extends Service {
 	private LocalDevice localDevice;
 	private AmarinoDbAdapter db;
 	private DBConfig dbConfig;
-	private ServiceIntentConfig intentConfig;
+	private AmarinoServiceIntentConfig intentConfig;
 	private PendingIntent notifLaunchIntent;
 	private Class<Activity> notifLaunchIntentClass;
 	private Notification notification;
@@ -106,14 +106,14 @@ public class AmarinoService extends Service {
 	/**
 	 * @return the intentConfig
 	 */
-	public ServiceIntentConfig getIntentConfig() {
+	public AmarinoServiceIntentConfig getIntentConfig() {
 		return intentConfig;
 	}
 
 	/**
 	 * @param intentConfig the intentConfig to set
 	 */
-	public void setIntentConfig(ServiceIntentConfig intentConfig) {
+	public void setIntentConfig(AmarinoServiceIntentConfig intentConfig) {
 		this.intentConfig = intentConfig;
 	}
 
@@ -144,7 +144,7 @@ public class AmarinoService extends Service {
 			db = new AmarinoDbAdapter(getApplicationContext(), dbConfig);
 		}
 		if (null == intentConfig) {
-			intentConfig = new DefaultServiceIntentConfig();
+			intentConfig = new DefaultAmarinoServiceIntentConfig();
 		}
 
 		initNotificationManager();
@@ -213,7 +213,7 @@ public class AmarinoService extends Service {
 
 		/* --- CONNECT and DISCONNECT part --- */
 		String address = intent
-				.getStringExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
+				.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
 		if (address == null) {
 			Logger.d(TAG, "EXTRA_DEVICE_ADDRESS not found!");
 			return START_NOT_STICKY;
@@ -242,13 +242,13 @@ public class AmarinoService extends Service {
 
 	private void forwardDataToArduino(Intent intent) {
 
-		final int pluginId = intent.getIntExtra(DefaultServiceIntentConfig.EXTRA_PLUGIN_ID,
+		final int pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID,
 				-1);
 		// Log.d(TAG, "send from pluginID: " + pluginId);
 		if (pluginId == -1) {
 			// intent sent from app, not a plugin
 			final String address = intent
-					.getStringExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
+					.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
 			if (address == null) {
 				Logger.d(TAG, "Data not sent! EXTRA_DEVICE_ADDRESS not set.");
 				return;
@@ -279,7 +279,7 @@ public class AmarinoService extends Service {
 				for (BTDevice device : devices) {
 					// we have to put the flag into the intent in order to
 					// fulfill the message builder requirements
-					intent.putExtra(DefaultServiceIntentConfig.EXTRA_FLAG,
+					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG,
 							device.events.get(pluginId).flag);
 					// Log.d(TAG, "flag" + device.events.get(pluginId).flag);
 
@@ -459,9 +459,9 @@ public class AmarinoService extends Service {
 		else
 			intent = new Intent(intentConfig.getIntentNameActionDisable());
 
-		intent.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
-		intent.putExtra(DefaultServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
-		intent.putExtra(DefaultServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME,
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME,
 				e.serviceClassName);
 
 		intent.setPackage(e.packageName);
@@ -483,7 +483,7 @@ public class AmarinoService extends Service {
 		Set<String> addresses = connections.keySet();
 		String[] result = new String[addresses.size()];
 		result = addresses.toArray(result);
-		returnIntent.putExtra(DefaultServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES,
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES,
 				result);
 		sendBroadcast(returnIntent);
 	}
@@ -494,7 +494,7 @@ public class AmarinoService extends Service {
 		notifyManager.notify(NOTIFY_ID, getNotification(info));
 
 		sendBroadcast(new Intent(intentConfig.getIntentNameActionDisconnected()).putExtra(
-				DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+				DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
 
 		broadcastConnectedDevicesList();
 	}
@@ -505,13 +505,13 @@ public class AmarinoService extends Service {
 		notifyManager.notify(NOTIFY_ID, getNotification(info));
 
 		sendBroadcast(new Intent(intentConfig.getIntentNameActionConnectionFailed())
-				.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+				.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
 	}
 
 	private void sendPairingRequested(String address) {
 		Logger.d(TAG, getString(R.string.service_pairing_request, address));
 		sendBroadcast(new Intent(intentConfig.getIntentNameActionPairingRequested())
-				.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+				.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
 	}
 
 	private void sendConnectionEstablished(String address) {
@@ -519,7 +519,7 @@ public class AmarinoService extends Service {
 		Logger.d(TAG, info);
 
 		sendBroadcast(new Intent(intentConfig.getIntentNameActionConnected()).putExtra(
-				DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+				DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
 
 		broadcastConnectedDevicesList();
 		// TODO - not sure what we're trying to do here
@@ -754,10 +754,10 @@ public class AmarinoService extends Service {
 		private void forwardDataToOtherApps(String msg) {
 			Logger.d(TAG, "Arduino says: " + msg);
 			Intent intent = new Intent(intentConfig.getIntentNameActionReceived());
-			intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA, msg);
-			intent.putExtra(DefaultServiceIntentConfig.EXTRA_DATA_TYPE,
-					DefaultServiceIntentConfig.STRING_EXTRA);
-			intent.putExtra(DefaultServiceIntentConfig.EXTRA_DEVICE_ADDRESS, mAddress);
+			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, msg);
+			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE,
+					DefaultAmarinoServiceIntentConfig.STRING_EXTRA);
+			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, mAddress);
 			sendBroadcast(intent);
 		}
 

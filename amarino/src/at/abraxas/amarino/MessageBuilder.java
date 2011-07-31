@@ -19,7 +19,7 @@
 package at.abraxas.amarino;
 
 import android.content.Intent;
-import at.abraxas.amarino.intent.DefaultServiceIntentConfig;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.log.Logger;
 
 /**
@@ -49,75 +49,75 @@ public class MessageBuilder {
 	
 
 	public static String getMessage(Intent intent){
-		final int dataType = intent.getIntExtra(DefaultServiceIntentConfig.EXTRA_DATA_TYPE, -1);
+		final int dataType = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, -1);
 		if (dataType == -1) {
 			Logger.d(TAG, "EXTRA_DATA_TYPE not found");
 			return null;
 		}
 		
-		final char flag = intent.getCharExtra(DefaultServiceIntentConfig.EXTRA_FLAG, '-');
+		final char flag = intent.getCharExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, '-');
 		if (flag  == -1 ){
 			Logger.d(TAG, "EXTRA_FLAG not found");
 			return null;
 		}
 		
 		switch (dataType){
-		case DefaultServiceIntentConfig.STRING_EXTRA:
-			String s = intent.getStringExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.STRING_EXTRA:
+			String s = intent.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			//Logger.d(TAG, "plugin says: " + s);
 			if (s==null) return "0" + ACK_FLAG;
 			return flag + s + ACK_FLAG;
 			
 		/* double is too large for Arduinos, better not to use this datatype */
-		case DefaultServiceIntentConfig.DOUBLE_EXTRA:
-			double d = intent.getDoubleExtra(DefaultServiceIntentConfig.EXTRA_DATA, -1);
+		case DefaultAmarinoServiceIntentConfig.DOUBLE_EXTRA:
+			double d = intent.getDoubleExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + d);
 			return flag + (d + String.valueOf(ACK_FLAG));
 			
 		/* byte is byte. In Arduino a byte stores an 8-bit unsigned number, from 0 to 255. */
-		case DefaultServiceIntentConfig.BYTE_EXTRA:
-			byte by = intent.getByteExtra(DefaultServiceIntentConfig.EXTRA_DATA, (byte)-1);
+		case DefaultAmarinoServiceIntentConfig.BYTE_EXTRA:
+			byte by = intent.getByteExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, (byte)-1);
 			//Logger.d(TAG, "plugin says: " + by);
 			return flag + (by + String.valueOf(ACK_FLAG));
 			
 		/* int in Android is long in Arduino (4 bytes) */
-		case DefaultServiceIntentConfig.INT_EXTRA:
-			int i = intent.getIntExtra(DefaultServiceIntentConfig.EXTRA_DATA, -1);
+		case DefaultAmarinoServiceIntentConfig.INT_EXTRA:
+			int i = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1);
 			//Logger.d(TAG, "plugin says: " + i);
 			return flag + (i + String.valueOf(ACK_FLAG));
 			
 		/* short in Android is like int in Arduino (2 bytes) 2^15 */
-		case DefaultServiceIntentConfig.SHORT_EXTRA:
-			short sh = intent.getShortExtra(DefaultServiceIntentConfig.EXTRA_DATA, (short)-1);
+		case DefaultAmarinoServiceIntentConfig.SHORT_EXTRA:
+			short sh = intent.getShortExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, (short)-1);
 			//Logger.d(TAG, "plugin says: " + sh);
 			return flag + (sh + String.valueOf(ACK_FLAG));
 
 		/* float in Android is float in Arduino (4 bytes) */
-		case DefaultServiceIntentConfig.FLOAT_EXTRA:
-			float f = intent.getFloatExtra(DefaultServiceIntentConfig.EXTRA_DATA, -1f);
+		case DefaultAmarinoServiceIntentConfig.FLOAT_EXTRA:
+			float f = intent.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1f);
 			//Logger.d(TAG, "plugin says: " + f);
 			return flag + (f + String.valueOf(ACK_FLAG));
 		
 		/* boolean in Android is in Arduino 0=false, 1=true */
-		case DefaultServiceIntentConfig.BOOLEAN_EXTRA:
-			boolean b = intent.getBooleanExtra(DefaultServiceIntentConfig.EXTRA_DATA, false);
+		case DefaultAmarinoServiceIntentConfig.BOOLEAN_EXTRA:
+			boolean b = intent.getBooleanExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, false);
 			//Logger.d(TAG, "plugin says: " + b);
 			return flag + (((b) ? 1 : 0) + String.valueOf(ACK_FLAG));
 			
 		/* char is char. In Arduino stored in 1 byte of memory */
-		case DefaultServiceIntentConfig.CHAR_EXTRA:
-			char c = intent.getCharExtra(DefaultServiceIntentConfig.EXTRA_DATA, 'x');
+		case DefaultAmarinoServiceIntentConfig.CHAR_EXTRA:
+			char c = intent.getCharExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, 'x');
 			//Logger.d(TAG, "plugin says: " + c);
 			return flag + (c + String.valueOf(ACK_FLAG));
 		
 		/* long in Android does not fit in Arduino data types, better not to use it */
-		case DefaultServiceIntentConfig.LONG_EXTRA:
-			long l = intent.getLongExtra(DefaultServiceIntentConfig.EXTRA_DATA, -1l);
+		case DefaultAmarinoServiceIntentConfig.LONG_EXTRA:
+			long l = intent.getLongExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1l);
 			//Logger.d(TAG, "plugin says: " + l);
 			return flag + (l + String.valueOf(ACK_FLAG));
 
-		case DefaultServiceIntentConfig.INT_ARRAY_EXTRA:
-			int[] ints = intent.getIntArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.INT_ARRAY_EXTRA:
+			int[] ints = intent.getIntArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (ints != null){
 				String msg = new String();
 				for (int integer : ints){
@@ -127,8 +127,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.CHAR_ARRAY_EXTRA:
-			char[] chars = intent.getCharArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.CHAR_ARRAY_EXTRA:
+			char[] chars = intent.getCharArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (chars != null){
 				String msg = new String();
 				for (char character : chars){
@@ -138,8 +138,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.BYTE_ARRAY_EXTRA:
-			byte[] bytes = intent.getByteArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.BYTE_ARRAY_EXTRA:
+			byte[] bytes = intent.getByteArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (bytes != null){
 				String msg = new String();
 				for (byte oneByte : bytes){
@@ -149,8 +149,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.SHORT_ARRAY_EXTRA:
-			short[] shorts = intent.getShortArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.SHORT_ARRAY_EXTRA:
+			short[] shorts = intent.getShortArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (shorts != null){
 				String msg = new String();
 				for (short shorty : shorts){
@@ -160,8 +160,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.STRING_ARRAY_EXTRA:
-			String[] strings = intent.getStringArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.STRING_ARRAY_EXTRA:
+			String[] strings = intent.getStringArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (strings != null){
 				String msg = new String();
 				for (String str : strings){
@@ -171,8 +171,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.DOUBLE_ARRAY_EXTRA:
-			double[] doubles = intent.getDoubleArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.DOUBLE_ARRAY_EXTRA:
+			double[] doubles = intent.getDoubleArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (doubles != null){
 				String msg = new String();
 				for (double singleDouble : doubles){ // :-)
@@ -182,8 +182,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.FLOAT_ARRAY_EXTRA:
-			float[] floats = intent.getFloatArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.FLOAT_ARRAY_EXTRA:
+			float[] floats = intent.getFloatArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (floats != null){
 				String msg = new String();
 				for (float fl : floats){
@@ -193,8 +193,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:
-			boolean[] booleans = intent.getBooleanArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:
+			boolean[] booleans = intent.getBooleanArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (booleans != null){
 				String msg = new String();
 				for (boolean bool : booleans){
@@ -204,8 +204,8 @@ public class MessageBuilder {
 			}
 			break;
 			
-		case DefaultServiceIntentConfig.LONG_ARRAY_EXTRA:
-			long[] longs = intent.getLongArrayExtra(DefaultServiceIntentConfig.EXTRA_DATA);
+		case DefaultAmarinoServiceIntentConfig.LONG_ARRAY_EXTRA:
+			long[] longs = intent.getLongArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 			if (longs != null){
 				String msg = new String();
 				for (long longo : longs){
@@ -237,7 +237,7 @@ public class MessageBuilder {
 	public static String getMessage(int dataType, Object array){
 		String s = new String();
 		switch(dataType){
-			case DefaultServiceIntentConfig.INT_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.INT_ARRAY_EXTRA:
 				int[] ints = (int[]) array;
 				for (int i2 : ints){
 					s += String.valueOf(i2);
@@ -245,7 +245,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.FLOAT_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.FLOAT_ARRAY_EXTRA:
 				float[] floats = (float[]) array;
 				for (float f : floats){
 					s += String.valueOf(f);
@@ -253,7 +253,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.STRING_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.STRING_ARRAY_EXTRA:
 				String[] strings = (String[]) array;
 				for (String str : strings){
 					s += str;
@@ -261,7 +261,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.SHORT_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.SHORT_ARRAY_EXTRA:
 				short[] shorts = (short[]) array;
 				for (short shorty : shorts){
 					s += String.valueOf(shorty);
@@ -269,7 +269,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.BYTE_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.BYTE_ARRAY_EXTRA:
 				byte[] bytes = (byte[]) array;
 				for (byte b : bytes){
 					s += String.valueOf(b);
@@ -277,7 +277,7 @@ public class MessageBuilder {
 				}
 			break;
 		
-			case DefaultServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:
 				boolean[] booleans = (boolean[]) array;
 				for (boolean bool : booleans){
 					s += String.valueOf(bool);
@@ -285,7 +285,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.CHAR_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.CHAR_ARRAY_EXTRA:
 				char[] chars = (char[]) array;
 				for (char c : chars){
 					s += String.valueOf(c);
@@ -293,7 +293,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.DOUBLE_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.DOUBLE_ARRAY_EXTRA:
 				double[] doubles = (double[]) array;
 				for (double d : doubles){
 					s += String.valueOf(d);
@@ -301,7 +301,7 @@ public class MessageBuilder {
 				}
 			break;
 			
-			case DefaultServiceIntentConfig.LONG_ARRAY_EXTRA:
+			case DefaultAmarinoServiceIntentConfig.LONG_ARRAY_EXTRA:
 				long[] longs = (long[]) array;
 				for (long l : longs){
 					s += String.valueOf(l);
