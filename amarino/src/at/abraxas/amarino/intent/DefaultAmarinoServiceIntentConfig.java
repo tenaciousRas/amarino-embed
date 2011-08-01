@@ -18,7 +18,6 @@
  */
 package at.abraxas.amarino.intent;
 
-import at.abraxas.amarino.Amarino;
 
 /**
  * DefaultAmarinoServiceIntentConfig is a collection of Intents and Extras used by
@@ -125,18 +124,6 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionConnect
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionConnect(String name) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionDisconnect
 	 * ()
 	 */
@@ -149,33 +136,11 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionDisconnect
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionDisconnect(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionSend()
 	 */
 	@Override
 	public String getIntentNameActionSend() {
 		return DEFAULT_ACTION_SEND;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionSend
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionSend(String name) {
 	}
 
 	/*
@@ -194,34 +159,12 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionReceived
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionReceived(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionConnected
 	 * ()
 	 */
 	@Override
 	public String getIntentNameActionConnected() {
 		return DEFAULT_ACTION_CONNECTED;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionConnected
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionConnected(String name) {
 	}
 
 	/*
@@ -239,33 +182,12 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionDisconnected
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionDisconnected(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
 	 * getIntentNameActionConnectionFailed()
 	 */
 	@Override
 	public String getIntentNameActionConnectionFailed() {
 		return DEFAULT_ACTION_CONNECTION_FAILED;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
-	 * setIntentNameActionConnectionFailed(java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionConnectionFailed(String name) {
 	}
 
 	/*
@@ -283,31 +205,11 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
-	 * setIntentNameActionPairingRequested(java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionPairingRequested(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
 	 * getIntentNameActionGetConnectedDevices()
 	 */
 	@Override
 	public String getIntentNameActionGetConnectedDevices() {
 		return DEFAULT_ACTION_GET_CONNECTED_DEVICES;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
-	 * setIntentNameActionGetConnectedDevices(java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionGetConnectedDevices(String name) {
 	}
 
 	/*
@@ -324,33 +226,12 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see at.abraxas.amarino.intent.AmarinoServiceIntentConfig#
-	 * setIntentNameActionConnectedDevices(java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionConnectedDevices(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionEnable()
 	 */
 	@Override
 	public String getIntentNameActionEnable() {
 		return DEFAULT_ACTION_ENABLE;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionEnable
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionEnable(String name) {
 	}
 
 	/*
@@ -369,17 +250,6 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionDisable
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionDisable(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionDisableAll
 	 * ()
 	 */
@@ -392,34 +262,12 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionDisableAll
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionDisableAll(String name) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#getIntentNameActionEditPlugin
 	 * ()
 	 */
 	@Override
 	public String getIntentNameActionEditPlugin() {
 		return DEFAULT_ACTION_EDIT_PLUGIN;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * at.abraxas.amarino.intent.AmarinoServiceIntentConfig#setIntentNameActionEditPlugin
-	 * (java.lang.String)
-	 */
-	@Override
-	public void setIntentNameActionEditPlugin(String name) {
 	}
 
 }

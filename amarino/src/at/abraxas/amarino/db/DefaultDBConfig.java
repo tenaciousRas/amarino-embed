@@ -21,16 +21,8 @@ public class DefaultDBConfig implements DBConfig {
 	}
 
 	@Override
-	public void setDBName(String name) {
-	}
-
-	@Override
 	public String getDevicesTableName() {
 		return DEVICES_TABLE_NAME;
-	}
-
-	@Override
-	public void setDevicesTableName(String name) {
 	}
 
 	@Override
@@ -38,7 +30,4 @@ public class DefaultDBConfig implements DBConfig {
 		return EVENTS_TABLE_NAME;
 	}
 
-	@Override
-	public void setEventsTableName(String name) {
-	}
 }

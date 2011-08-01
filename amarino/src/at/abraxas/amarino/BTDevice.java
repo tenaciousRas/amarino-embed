@@ -38,8 +38,8 @@ public class BTDevice implements Serializable {
 	private String name;
 	int state = DefaultAmarinoServiceIntentConfig.DISCONNECTED;
 	// <pluginID, event>
-	HashMap<Integer, Event> events;
-	
+	private HashMap<Integer, Event> events;
+
 	public BTDevice(String address){
 		this.address = address;
 	}

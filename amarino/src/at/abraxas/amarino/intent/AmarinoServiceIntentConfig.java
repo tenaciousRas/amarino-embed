@@ -39,12 +39,6 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionConnect();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionConnect
-	 */
-	public abstract void setIntentNameActionConnect(String name);
-
-	/**
 	 * Activity Action: Tell <i>Amarino</i> to disconnect from a device
 	 * <p>
 	 * Input: <em>{@link #EXTRA_DEVICE_ADDRESS}</em> - The address of the device
@@ -68,12 +62,6 @@ public interface AmarinoServiceIntentConfig {
 	 * </pre>
 	 */
 	public abstract String getIntentNameActionDisconnect();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionDisconnect
-	 */
-	public abstract void setIntentNameActionDisconnect(String name);
 
 	/**
 	 * Activity Action: Tell <i>Amarino</i> to send data to Arduino
@@ -103,12 +91,6 @@ public interface AmarinoServiceIntentConfig {
 	 * </p>
 	 */
 	public abstract String getIntentNameActionSend();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionSend
-	 */
-	public abstract void setIntentNameActionSend(String name);
 
 	/**
 	 * Broadcast Action sent by <i>Amarino</i>: <i>Amarino</i> broadcasts any
@@ -155,12 +137,6 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionReceived();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionReceived
-	 */
-	public abstract void setIntentNameActionReceived(String name);
-
-	/**
 	 * Broadcast Action sent by <i>Amarino</i>: A connection to a device has
 	 * been established
 	 * 
@@ -175,12 +151,6 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionConnected();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionConnected
-	 */
-	public abstract void setIntentNameActionConnected(String name);
-
-	/**
 	 * Broadcast Action sent by <i>Amarino</i>: The connection to a device has
 	 * been disconnected
 	 * 
@@ -193,12 +163,6 @@ public interface AmarinoServiceIntentConfig {
 	 * </p>
 	 */
 	public abstract String getIntentNameActionDisconnected();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionDisconnected
-	 */
-	public abstract void setIntentNameActionDisconnected(String name);
 
 	/**
 	 * Broadcast Action sent by <i>Amarino</i>: A connection attempt to a device
@@ -226,12 +190,6 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionConnectionFailed();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionConnectionFailed
-	 */
-	public abstract void setIntentNameActionConnectionFailed(String name);
-
-	/**
 	 * Broadcast Action sent by <i>Amarino</i>: Indicates that a pairing request
 	 * has been started.
 	 * 
@@ -241,12 +199,6 @@ public interface AmarinoServiceIntentConfig {
 	 * </p>
 	 */
 	public abstract String getIntentNameActionPairingRequested();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionPairingRequest
-	 */
-	public abstract void setIntentNameActionPairingRequested(String name);
 
 	/**
 	 * Activity Action: Request the connected devices list from <i>Amarino</i>
@@ -264,12 +216,6 @@ public interface AmarinoServiceIntentConfig {
 	 * </p>
 	 */
 	public abstract String getIntentNameActionGetConnectedDevices();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionGetConnectedDevices
-	 */
-	public abstract void setIntentNameActionGetConnectedDevices(String name);
 
 	/**
 	 * Broadcast Action sent by <i>Amarino</i>: The list of currently connected
@@ -290,21 +236,9 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionConnectedDevices();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionConnectedDevices
-	 */
-	public abstract void setIntentNameActionConnectedDevices(String name);
-
-	/**
 	 * used to enaable a specific plug-in, needs EXTRA_PLUGIN_ID to be set
 	 */
 	public abstract String getIntentNameActionEnable();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionEnable
-	 */
-	public abstract void setIntentNameActionEnable(String name);
 
 	/**
 	 * used to disable a specific plug-in, needs EXTRA_PLUGIN_ID to be set
@@ -312,32 +246,14 @@ public interface AmarinoServiceIntentConfig {
 	public abstract String getIntentNameActionDisable();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionDisable
-	 */
-	public abstract void setIntentNameActionDisable(String name);
-
-	/**
 	 * disables all plug-ins if there is no active connection
 	 */
 	public abstract String getIntentNameActionDisableAll();
 
 	/**
-	 * @param name
-	 *            the intent name to set for actionDisableAll
-	 */
-	public abstract void setIntentNameActionDisableAll(String name);
-
-	/**
 	 * Calls the edit activity of a plug-in.
 	 */
 	public abstract String getIntentNameActionEditPlugin();
-
-	/**
-	 * @param name
-	 *            the intent name to set for actionEditPlugin
-	 */
-	public abstract void setIntentNameActionEditPlugin(String name);
 
 	/**
 	 * Type: BTDevice

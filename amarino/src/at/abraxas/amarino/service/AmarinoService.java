@@ -16,7 +16,7 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-package at.abraxas.amarino;
+package at.abraxas.amarino.service;
 
 import it.gerdavax.easybluetooth.BtSocket;
 import it.gerdavax.easybluetooth.LocalDevice;
@@ -48,11 +48,17 @@ import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import at.abraxas.amarino.Amarino;
+import at.abraxas.amarino.BTDevice;
+import at.abraxas.amarino.Event;
+import at.abraxas.amarino.R;
 import at.abraxas.amarino.db.AmarinoDbAdapter;
 import at.abraxas.amarino.db.DBConfig;
-import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.intent.AmarinoServiceIntentConfig;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.log.Logger;
+import at.abraxas.amarino.message.DefaultMessageBuilder;
+import at.abraxas.amarino.message.MessageBuilder;
 
 /**
  * $Id: AmarinoService.java 444 2010-06-10 13:11:59Z abraxas $
@@ -71,8 +77,9 @@ public class AmarinoService extends Service {
 	private AmarinoDbAdapter db;
 	private DBConfig dbConfig;
 	private AmarinoServiceIntentConfig intentConfig;
+	private MessageBuilder msgBuilder;
 	private PendingIntent notifLaunchIntent;
-	private Class<Activity> notifLaunchIntentClass;
+	private Class<? extends Activity> notifLaunchIntentClass;
 	private Notification notification;
 	private NotificationManager notifyManager;
 
@@ -111,7 +118,8 @@ public class AmarinoService extends Service {
 	}
 
 	/**
-	 * @param intentConfig the intentConfig to set
+	 * @param intentConfig
+	 *            the intentConfig to set
 	 */
 	public void setIntentConfig(AmarinoServiceIntentConfig intentConfig) {
 		this.intentConfig = intentConfig;
@@ -129,8 +137,23 @@ public class AmarinoService extends Service {
 	 * @param notifLaunchIntentClass
 	 *            the notifLaunchIntentClass to set
 	 */
-	public void setNotifLaunchIntentClass(Class<Activity> notifLaunchIntentClass) {
+	public void setNotifLaunchIntentClass(Class<? extends Activity> notifLaunchIntentClass) {
 		this.notifLaunchIntentClass = notifLaunchIntentClass;
+	}
+
+	/**
+	 * @return the msgBuilder
+	 */
+	public MessageBuilder getMsgBuilder() {
+		return msgBuilder;
+	}
+
+	/**
+	 * @param msgBuilder
+	 *            the msgBuilder to set
+	 */
+	public void setMsgBuilder(MessageBuilder msgBuilder) {
+		this.msgBuilder = msgBuilder;
 	}
 
 	@Override
@@ -145,6 +168,9 @@ public class AmarinoService extends Service {
 		}
 		if (null == intentConfig) {
 			intentConfig = new DefaultAmarinoServiceIntentConfig();
+		}
+		if (null == msgBuilder) {
+			msgBuilder = new DefaultMessageBuilder();
 		}
 
 		initNotificationManager();
@@ -161,23 +187,25 @@ public class AmarinoService extends Service {
 			mStartForeground = mStopForeground = null;
 		}
 
-		IntentFilter filter = new IntentFilter(intentConfig.getIntentNameActionSend());
+		IntentFilter filter = new IntentFilter(
+				intentConfig.getIntentNameActionSend());
 		registerReceiver(receiver, filter);
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
-		handleStart(intent, startId);
+		super.onStart(intent, startId);
+		handleIntent(intent);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		return handleStart(intent, startId);
+		super.onStart(intent, startId);
+		return handleIntent(intent);
 	}
 
-	private int handleStart(Intent intent, int startId) {
+	private int handleIntent(Intent intent) {
 		// Logger.d(TAG, "onStart");
-		super.onStart(intent, startId);
 
 		if (intent == null) {
 			// here we might restore our state if we got killed by the system
@@ -231,7 +259,8 @@ public class AmarinoService extends Service {
 			if (intentConfig.getIntentNameActionConnect().equals(action)) {
 				Logger.d(TAG, "ACTION_CONNECT request received");
 				connect(address);
-			} else if (intentConfig.getIntentNameActionDisconnect().equals(action)) {
+			} else if (intentConfig.getIntentNameActionDisconnect().equals(
+					action)) {
 				Logger.d(TAG, "ACTION_DISCONNECT request received");
 				disconnect(address);
 			}
@@ -242,8 +271,8 @@ public class AmarinoService extends Service {
 
 	private void forwardDataToArduino(Intent intent) {
 
-		final int pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID,
-				-1);
+		final int pluginId = intent.getIntExtra(
+				DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 		// Log.d(TAG, "send from pluginID: " + pluginId);
 		if (pluginId == -1) {
 			// intent sent from app, not a plugin
@@ -254,7 +283,7 @@ public class AmarinoService extends Service {
 				return;
 			}
 
-			String message = MessageBuilder.getMessage(intent);
+			String message = msgBuilder.getMessage(intent);
 			if (message == null)
 				return;
 
@@ -262,7 +291,7 @@ public class AmarinoService extends Service {
 			Logger.d(
 					TAG,
 					getString(R.string.service_message_to_send,
-							message.substring(1, message.length() - 1)));
+							message.substring(0, message.length() - 1)));
 
 			try {
 				sendData(address, message.getBytes("ISO-8859-1"));
@@ -279,11 +308,12 @@ public class AmarinoService extends Service {
 				for (BTDevice device : devices) {
 					// we have to put the flag into the intent in order to
 					// fulfill the message builder requirements
-					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG,
-							device.events.get(pluginId).flag);
+					intent.putExtra(
+							DefaultAmarinoServiceIntentConfig.EXTRA_FLAG,
+							device.getEvents().get(pluginId).flag);
 					// Log.d(TAG, "flag" + device.events.get(pluginId).flag);
 
-					String message = MessageBuilder.getMessage(intent);
+					String message = msgBuilder.getMessage(intent);
 					if (message == null)
 						return;
 
@@ -397,7 +427,7 @@ public class AmarinoService extends Service {
 
 		if (device != null) {
 			ArrayList<Event> events = db.fetchEvents(device.getId());
-			device.events = new HashMap<Integer, Event>();
+			device.setEvents(new HashMap<Integer, Event>());
 
 			for (Event e : events) {
 				if (enable) {
@@ -416,7 +446,7 @@ public class AmarinoService extends Service {
 					}
 					// add to our fast HashMap for later use when sending data
 					// we need fast retrival of pluginId->flag
-					device.events.put(e.pluginId, e);
+					device.getEvents().put(e.pluginId, e);
 					// start plugin no matter if it was active or not, plugins
 					// must be able to handle consecutive start calls
 					informPlugIn(e, address, true);
@@ -443,7 +473,7 @@ public class AmarinoService extends Service {
 					}
 					// normally it shouldn't be any event with this id in
 					// device's events map, but we double check
-					device.events.remove(e.pluginId);
+					device.getEvents().remove(e.pluginId);
 				}
 			}
 		}
@@ -459,9 +489,12 @@ public class AmarinoService extends Service {
 		else
 			intent = new Intent(intentConfig.getIntentNameActionDisable());
 
-		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
-		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
-		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME,
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+				address);
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID,
+				e.pluginId);
+		intent.putExtra(
+				DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME,
 				e.serviceClassName);
 
 		intent.setPackage(e.packageName);
@@ -474,7 +507,8 @@ public class AmarinoService extends Service {
 	}
 
 	private void broadcastConnectedDevicesList() {
-		Intent returnIntent = new Intent(intentConfig.getIntentNameActionConnectedDevices());
+		Intent returnIntent = new Intent(
+				intentConfig.getIntentNameActionConnectedDevices());
 		if (connections.size() == 0) {
 			sendBroadcast(returnIntent);
 			shutdownService(false);
@@ -483,8 +517,10 @@ public class AmarinoService extends Service {
 		Set<String> addresses = connections.keySet();
 		String[] result = new String[addresses.size()];
 		result = addresses.toArray(result);
-		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES,
-				result);
+		returnIntent
+				.putExtra(
+						DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES,
+						result);
 		sendBroadcast(returnIntent);
 	}
 
@@ -493,8 +529,10 @@ public class AmarinoService extends Service {
 		Logger.d(TAG, info);
 		notifyManager.notify(NOTIFY_ID, getNotification(info));
 
-		sendBroadcast(new Intent(intentConfig.getIntentNameActionDisconnected()).putExtra(
-				DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+		sendBroadcast(new Intent(intentConfig.getIntentNameActionDisconnected())
+				.putExtra(
+						DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+						address));
 
 		broadcastConnectedDevicesList();
 	}
@@ -504,22 +542,30 @@ public class AmarinoService extends Service {
 		Logger.d(TAG, info);
 		notifyManager.notify(NOTIFY_ID, getNotification(info));
 
-		sendBroadcast(new Intent(intentConfig.getIntentNameActionConnectionFailed())
-				.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+		sendBroadcast(new Intent(
+				intentConfig.getIntentNameActionConnectionFailed())
+				.putExtra(
+						DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+						address));
 	}
 
 	private void sendPairingRequested(String address) {
 		Logger.d(TAG, getString(R.string.service_pairing_request, address));
-		sendBroadcast(new Intent(intentConfig.getIntentNameActionPairingRequested())
-				.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+		sendBroadcast(new Intent(
+				intentConfig.getIntentNameActionPairingRequested())
+				.putExtra(
+						DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+						address));
 	}
 
 	private void sendConnectionEstablished(String address) {
 		String info = getString(R.string.service_connected_to, address);
 		Logger.d(TAG, info);
 
-		sendBroadcast(new Intent(intentConfig.getIntentNameActionConnected()).putExtra(
-				DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address));
+		sendBroadcast(new Intent(intentConfig.getIntentNameActionConnected())
+				.putExtra(
+						DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+						address));
 
 		broadcastConnectedDevicesList();
 		// TODO - not sure what we're trying to do here
@@ -553,6 +599,7 @@ public class AmarinoService extends Service {
 					0, new Intent(AmarinoService.this, notifLaunchIntentClass)
 							.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 		} else {
+			// FIXME: ???
 			notifLaunchIntent = null;
 		}
 	}
@@ -730,7 +777,7 @@ public class AmarinoService extends Service {
 			char c;
 			for (int i = 0; i < data.length(); i++) {
 				c = data.charAt(i);
-				if (c == MessageBuilder.ARDUINO_MSG_FLAG) {
+				if (c == DefaultMessageBuilder.ARDUINO_MSG_FLAG) {
 					// TODO this could be used to determine the data type
 					// if (i+1<data.length()){
 					// int dataType = data.charAt(i+1);
@@ -741,7 +788,7 @@ public class AmarinoService extends Service {
 					// else {
 					// // wait for the next char to be sent
 					// }
-				} else if (c == MessageBuilder.ACK_FLAG) {
+				} else if (c == DefaultMessageBuilder.ACK_FLAG) {
 					// message complete send the data
 					forwardDataToOtherApps(forwardBuffer.toString());
 					forwardBuffer = new StringBuffer();
@@ -753,11 +800,14 @@ public class AmarinoService extends Service {
 
 		private void forwardDataToOtherApps(String msg) {
 			Logger.d(TAG, "Arduino says: " + msg);
-			Intent intent = new Intent(intentConfig.getIntentNameActionReceived());
+			Intent intent = new Intent(
+					intentConfig.getIntentNameActionReceived());
 			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, msg);
 			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE,
 					DefaultAmarinoServiceIntentConfig.STRING_EXTRA);
-			intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, mAddress);
+			intent.putExtra(
+					DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS,
+					mAddress);
 			sendBroadcast(intent);
 		}
 
@@ -793,8 +843,8 @@ public class AmarinoService extends Service {
 			// Log.d(TAG, action);
 
 			if (intentConfig.getIntentNameActionSend().equals(action)) {
-				intent.setClass(context, AmarinoService.class);
-				startService(intent);
+				intent.setClass(context, this.getClass());
+				handleIntent(intent);
 			}
 		}
 	};
@@ -818,7 +868,7 @@ public class AmarinoService extends Service {
 	 * This is a wrapper around the new startForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void startForegroundCompat(int id, Notification notification) {
+	public void startForegroundCompat(int id, Notification notification) {
 		// If we have the new startForeground API, then use it.
 		if (mStartForeground != null) {
 			mStartForegroundArgs[0] = Integer.valueOf(id);
@@ -836,7 +886,8 @@ public class AmarinoService extends Service {
 		}
 
 		// Fall back on the old API.
-		setForeground(true);
+		// causing grief in honeycomb+
+		// setForeground(true);
 		notifyManager.notify(id, notification);
 	}
 
@@ -844,7 +895,7 @@ public class AmarinoService extends Service {
 	 * This is a wrapper around the new stopForeground method, using the older
 	 * APIs if it is not available.
 	 */
-	void stopForegroundCompat(int id) {
+	public void stopForegroundCompat(int id) {
 		// If we have the new stopForeground API, then use it.
 		if (mStopForeground != null) {
 			mStopForegroundArgs[0] = Boolean.TRUE;
@@ -863,6 +914,7 @@ public class AmarinoService extends Service {
 		// Fall back on the old API. Note to cancel BEFORE changing the
 		// foreground state, since we could be killed at that point.
 		cancelNotification();
-		setForeground(false);
+		// causing grief in honeycomb+
+		// setForeground(false);
 	}
 }

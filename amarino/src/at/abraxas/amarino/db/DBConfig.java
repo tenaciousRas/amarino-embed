@@ -1,9 +1,8 @@
 package at.abraxas.amarino.db;
 
 /**
- * Provides a DB configuration for the {@link AmarinoService}.
- * Using this you can provide your own DB name and table names to 
- * record devices and events.
+ * Provides a DB configuration for the {@link AmarinoService}. Using this you
+ * can provide your own DB name and table names to record devices and events.
  * 
  * @author fbeachler
  */
@@ -12,13 +11,7 @@ public interface DBConfig {
 
 	public abstract int getDBVersion();
 
-	public abstract void setDBName(String name);
-
 	public abstract String getDevicesTableName();
 
-	public abstract void setDevicesTableName(String name);
-
 	public abstract String getEventsTableName();
-
-	public abstract void setEventsTableName(String name);
 }
