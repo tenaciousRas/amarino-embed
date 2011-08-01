@@ -21,9 +21,8 @@ package at.abraxas.amarino.plugin;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public abstract class BackgroundService extends Service {
 	
@@ -97,11 +96,11 @@ public abstract class BackgroundService extends Service {
 			String action = intent.getAction();
 			if (DEBUG) Log.d(TAG, action + " received");
 
-			if (AmarinoIntent.ACTION_DISABLE.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE.equals(action)){
 				if (DEBUG) Log.d(TAG, "stop requested");
 				stopSelf();
 			}
-			else if (AmarinoIntent.ACTION_ENABLE.equals(action)) {
+			else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_ENABLE.equals(action)) {
 				Log.d(TAG, "started");
 				initInternal();
 			}

@@ -55,11 +55,10 @@ import android.widget.TextView;
  */
 public class DeviceDiscovery extends ListActivity {
 	
-	protected static String ADDRESS_EXTRA = "device_address";
-	
-	@SuppressWarnings("unused")
 	private static final String TAG = "DeviceDiscovery";
-	
+
+	protected static String ADDRESS_EXTRA = "device_address";
+
 	private DeviceAdapter adapter;
 	private LocalDevice localDevice;
 

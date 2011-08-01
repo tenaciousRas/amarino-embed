@@ -2,6 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="src" path="Amarino_2_src"/>
+	<classpathentry kind="src" path="Amarino_src"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="/Amarino/libs/AndroidBluetoothLibrary.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

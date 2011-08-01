@@ -37,13 +37,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -52,7 +52,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.abraxas.amarino.db.AmarinoDbAdapter;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.log.Logger;
+import at.abraxas.amarino.service.AmarinoService;
 
 /**
  * 
@@ -94,26 +96,26 @@ public class MainScreen extends ListActivity implements OnClickListener {
 				return;
 			Logger.d(TAG, action + " received");
 
-			if (AmarinoIntent.ACTION_CONNECTED_DEVICES.equals(action)) {
+			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES.equals(action)) {
 				updateDeviceStates(intent
-						.getStringArrayExtra(AmarinoIntent.EXTRA_CONNECTED_DEVICE_ADDRESSES));
+						.getStringArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES));
 				return;
 			}
 
 			final String address = intent
-					.getStringExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS);
+					.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
 			if (address == null)
 				return;
 
 			Message msg = new Message();
 
-			if (AmarinoIntent.ACTION_CONNECTED.equals(action)) {
+			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED.equals(action)) {
 				msg.what = MyHandler.CONNECTED;
-			} else if (AmarinoIntent.ACTION_DISCONNECTED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECTED.equals(action)) {
 				msg.what = MyHandler.DISCONNECTED;
-			} else if (AmarinoIntent.ACTION_CONNECTION_FAILED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTION_FAILED.equals(action)) {
 				msg.what = MyHandler.CONNECTION_FAILED;
-			} else if (AmarinoIntent.ACTION_PAIRING_REQUESTED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_PAIRING_REQUESTED.equals(action)) {
 				msg.what = MyHandler.PAIRING_REQUESTED;
 			} else
 				return;
@@ -171,16 +173,16 @@ public class MainScreen extends ListActivity implements OnClickListener {
 		super.onResume();
 		// listen for device state changes
 		IntentFilter intentFilter = new IntentFilter(
-				AmarinoIntent.ACTION_CONNECTED_DEVICES);
-		// intentFilter.addAction(AmarinoIntent.ACTION_CONNECTED);
-		// intentFilter.addAction(AmarinoIntent.ACTION_DISCONNECTED);
-		intentFilter.addAction(AmarinoIntent.ACTION_CONNECTION_FAILED);
-		intentFilter.addAction(AmarinoIntent.ACTION_PAIRING_REQUESTED);
+				DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES);
+		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED);
+		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECTED);
+		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTION_FAILED);
+		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_PAIRING_REQUESTED);
 		registerReceiver(receiver, intentFilter);
 
 		// request state of devices
 		Intent intent = new Intent(this, AmarinoService.class);
-		intent.setAction(AmarinoIntent.ACTION_GET_CONNECTED_DEVICES);
+		intent.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_GET_CONNECTED_DEVICES);
 		startService(intent);
 	}
 
@@ -285,7 +287,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 		menu.setHeaderTitle(device.getName());
 
 		menu.add(0, MENU_ITEM_CONNECT, 0,
-				device.state == AmarinoIntent.DISCONNECTED ? R.string.connect
+				device.state == DefaultAmarinoServiceIntentConfig.DISCONNECTED ? R.string.connect
 						: R.string.disconnect);
 		menu.add(0, MENU_ITEM_SHOW_EVENTS, 0, R.string.show_events);
 		menu.add(0, MENU_ITEM_REMOVE_DEVICE, 0, R.string.remove_device);
@@ -304,7 +306,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 		switch (item.getItemId()) {
 		case MENU_ITEM_REMOVE_DEVICE:
 			// before we remove the device, we disconnect it if connected
-			if (device.state == AmarinoIntent.CONNECTED) {
+			if (device.state == DefaultAmarinoServiceIntentConfig.CONNECTED) {
 				Toast.makeText(this,
 						"Please disconnect the device before removing it!",
 						Toast.LENGTH_SHORT).show();
@@ -377,13 +379,13 @@ public class MainScreen extends ListActivity implements OnClickListener {
 
 	private void onConnectBtnClick(Button btn, int postion) {
 		Intent i = new Intent(MainScreen.this, AmarinoService.class);
-		i.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, devices.deviceEntries
+		i.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, devices.deviceEntries
 				.get(postion).getAddress());
 
 		if (btn.getText().equals(getString(R.string.connect)))
-			i.setAction(AmarinoIntent.ACTION_CONNECT);
+			i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECT);
 		else
-			i.setAction(AmarinoIntent.ACTION_DISCONNECT);
+			i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECT);
 
 		btn.setEnabled(false);
 		btn.setText(R.string.connecting);
@@ -393,7 +395,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 
 	private void onEventListBtnClick(int pos) {
 		Intent intent = new Intent(MainScreen.this, EventListActivity.class);
-		intent.putExtra(AmarinoIntent.EXTRA_DEVICE,
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE,
 				devices.deviceEntries.get(pos));
 		startActivity(intent);
 	}
@@ -471,7 +473,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 		} // end handleMessage()
 
 		private void setDeviceConnected(BTDevice device, View view, Button btn) {
-			device.state = AmarinoIntent.CONNECTED;
+			device.state = DefaultAmarinoServiceIntentConfig.CONNECTED;
 			view.findViewById(R.id.connected).setBackgroundResource(
 					R.color.connected_on);
 			view.findViewById(R.id.disconnected).setBackgroundResource(
@@ -481,7 +483,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 
 		private void setDeviceDisconnected(BTDevice device, View view,
 				Button btn) {
-			device.state = AmarinoIntent.DISCONNECTED;
+			device.state = DefaultAmarinoServiceIntentConfig.DISCONNECTED;
 			view.findViewById(R.id.connected).setBackgroundResource(
 					R.color.connected_off);
 			view.findViewById(R.id.disconnected).setBackgroundResource(

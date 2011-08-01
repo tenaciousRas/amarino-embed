@@ -35,16 +35,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import at.abraxas.amarino.db.AmarinoDbAdapter;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.log.Logger;
+import at.abraxas.amarino.message.DefaultMessageBuilder;
+import at.abraxas.amarino.service.AmarinoService;
 import at.abraxas.amarino.visualizer.Visualizer;
 
 /**
@@ -83,7 +86,7 @@ public class EventListActivity extends ListActivity {
 		
 		Intent intent = getIntent();
 		if (intent != null){
-			device = (BTDevice) intent.getSerializableExtra(AmarinoIntent.EXTRA_DEVICE);
+			device = (BTDevice) intent.getSerializableExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE);
 			if (device == null) {
 				// there is something wrong, should never happen
 			}
@@ -106,7 +109,7 @@ public class EventListActivity extends ListActivity {
 
 	private void buildPluginList() {
 		PackageManager pm = this.getPackageManager();
-		List<ResolveInfo> editActivites = pm.queryIntentActivities(new Intent(AmarinoIntent.ACTION_EDIT_PLUGIN), 0);
+		List<ResolveInfo> editActivites = pm.queryIntentActivities(new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN), 0);
 		Log.d(TAG, "Number of available plugins: " + editActivites.size());
 		
 		ArrayList<Plugin> plugins = new ArrayList<Plugin>(editActivites.size());
@@ -125,7 +128,7 @@ public class EventListActivity extends ListActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		IntentFilter filter = new IntentFilter(AmarinoIntent.ACTION_SEND);
+		IntentFilter filter = new IntentFilter(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND);
 		registerReceiver(receiver, filter);
 	}
 
@@ -134,7 +137,7 @@ public class EventListActivity extends ListActivity {
 		super.onStop();
 		unregisterReceiver(receiver);
 		startService(new Intent(this, AmarinoService.class)
-							.setAction(AmarinoIntent.ACTION_DISABLE_ALL));
+							.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE_ALL));
 	}
 	
 	
@@ -213,20 +216,20 @@ public class EventListActivity extends ListActivity {
 
 
 	private void enablePlugin(Event e) {
-		Intent enableIntent = new Intent(AmarinoIntent.ACTION_ENABLE);
-		enableIntent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.getAddress());
-		enableIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, e.pluginId);
-		enableIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
+		Intent enableIntent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_ENABLE);
+		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
+		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
+		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
 		enableIntent.setPackage(e.packageName);
 		sendBroadcast(enableIntent);
 	}
 
 
 	private void disablePlugin(Event e) {
-		Intent disableIntent = new Intent(AmarinoIntent.ACTION_DISABLE);
-		disableIntent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.getAddress());
-		disableIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, e.pluginId);
-		disableIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
+		Intent disableIntent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE);
+		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
+		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
+		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
 		disableIntent.setPackage(e.packageName);
 		sendBroadcast(disableIntent);
 	}
@@ -238,11 +241,11 @@ public class EventListActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		Event event = eventListAdapter.entries.get(position);
 		
-		Intent intent = new Intent(AmarinoIntent.ACTION_EDIT_PLUGIN);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN);
 		intent.setClassName(event.packageName, event.editClassName);
-		intent.putExtra(AmarinoIntent.EXTRA_FLAG, event.flag);
-		intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.getAddress());
-		intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, event.pluginId);
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, event.flag);
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
+		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, event.pluginId);
 		intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		
 		startActivityForResult(intent, REQUEST_UPDATE_EVENT);
@@ -266,12 +269,12 @@ public class EventListActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// start EditActivity of selected plugin
 					selectedPlugin = pluginListAdapter.entries.get(which);
-					Intent intent = new Intent(AmarinoIntent.ACTION_EDIT_PLUGIN);
+					Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN);
 					intent.setClassName(selectedPlugin.packageName, selectedPlugin.editClassName);
 					
-					intent.putExtra(AmarinoIntent.EXTRA_FLAG, getNextFlag());
-					intent.putExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS, device.getAddress());
-					intent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, selectedPlugin.label.hashCode());
+					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, getNextFlag());
+					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
+					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, selectedPlugin.label.hashCode());
 	
 					startActivityForResult(intent, REQUEST_CREATE_EVENT);
 				}
@@ -298,19 +301,19 @@ public class EventListActivity extends ListActivity {
 				// retrieve plugin infos and create new event element
 				if (data == null) return;
 
-				String name = data.getStringExtra(AmarinoIntent.EXTRA_PLUGIN_NAME);
-				String desc = data.getStringExtra(AmarinoIntent.EXTRA_PLUGIN_DESC);
-				String serviceClassName = data.getStringExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME);
-				visualizer = data.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, -1);
-				pluginId = data.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+				String name = data.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_NAME);
+				String desc = data.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_DESC);
+				String serviceClassName = data.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME);
+				visualizer = data.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, -1);
+				pluginId = data.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 				
 				event = new Event(name, desc, visualizer, getNextFlag(), 
 						selectedPlugin.packageName, selectedPlugin.editClassName, 
 						serviceClassName, pluginId, device.getId());
 				
-				if (visualizer == AmarinoIntent.VISUALIZER_GRAPH || visualizer == AmarinoIntent.VISUALIZER_BARS){
-					event.visualizerMinValue = data.getFloatExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, 0f);
-					event.visualizerMaxValue = data.getFloatExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 1024f);
+				if (visualizer == DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH || visualizer == DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS){
+					event.visualizerMinValue = data.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, 0f);
+					event.visualizerMaxValue = data.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, 1024f);
 				}
 				
 				Logger.d(TAG, event.toString());
@@ -331,14 +334,14 @@ public class EventListActivity extends ListActivity {
 			case REQUEST_UPDATE_EVENT:
 				if (data == null) return;
 				
-				pluginId = data.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+				pluginId = data.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 				event = db.getEvent(device.getId(), pluginId);
 				
 				if (event != null){
-					event.visualizer = data.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, -1);
-					if (event.visualizer == AmarinoIntent.VISUALIZER_GRAPH || event.visualizer == AmarinoIntent.VISUALIZER_BARS){
-						event.visualizerMinValue = data.getFloatExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, 0f);
-						event.visualizerMaxValue = data.getFloatExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 1024f);
+					event.visualizer = data.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, -1);
+					if (event.visualizer == DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH || event.visualizer == DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS){
+						event.visualizerMinValue = data.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, 0f);
+						event.visualizerMaxValue = data.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, 1024f);
 					}
 					
 					int num = db.updateEvent(event);
@@ -403,12 +406,12 @@ public class EventListActivity extends ListActivity {
 				final int dataType = msg.arg2;
 				
 				switch (e.visualizer){
-				case AmarinoIntent.VISUALIZER_TEXT:
+				case DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT:
 					updateTextView(msg, e, i, dataType);
 					break;
 					
-				case AmarinoIntent.VISUALIZER_BARS:
-				case AmarinoIntent.VISUALIZER_GRAPH:
+				case DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS:
+				case DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH:
 					updateVisualizer(msg, e, i, dataType);
 					break;
 
@@ -427,7 +430,7 @@ public class EventListActivity extends ListActivity {
 			}
 			else {
 				// data type is an array
-				String s = MessageBuilder.getMessage(dataType, msg.obj);
+				String s = new DefaultMessageBuilder().getMessage(dataType, msg.obj);
 				try {
 					tv.setText(s.subSequence(0, s.length()-1));
 				} catch (IndexOutOfBoundsException e1) { /* no data there */ }
@@ -442,21 +445,21 @@ public class EventListActivity extends ListActivity {
 			try {
 				switch(dataType){
 				
-					case AmarinoIntent.SHORT_EXTRA: 	visual.setData((Short)msg.obj); 	break;
-					case AmarinoIntent.INT_EXTRA: 		visual.setData((Integer)msg.obj);	break;
-					case AmarinoIntent.FLOAT_EXTRA: 	visual.setData((Float)msg.obj); 	break;
-					case AmarinoIntent.DOUBLE_EXTRA: 	visual.setData((Double)msg.obj); 	break;
-					case AmarinoIntent.BYTE_EXTRA: 		visual.setData((Byte)msg.obj); 		break;
-					case AmarinoIntent.BOOLEAN_EXTRA: 	visual.setData((Boolean)msg.obj); 	break;
-					case AmarinoIntent.STRING_EXTRA:	visual.setData(Float.parseFloat((String)msg.obj)); break;
+					case DefaultAmarinoServiceIntentConfig.SHORT_EXTRA: 	visual.setData((Short)msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.INT_EXTRA: 		visual.setData((Integer)msg.obj);	break;
+					case DefaultAmarinoServiceIntentConfig.FLOAT_EXTRA: 	visual.setData((Float)msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.DOUBLE_EXTRA: 	visual.setData((Double)msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.BYTE_EXTRA: 		visual.setData((Byte)msg.obj); 		break;
+					case DefaultAmarinoServiceIntentConfig.BOOLEAN_EXTRA: 	visual.setData((Boolean)msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.STRING_EXTRA:	visual.setData(Float.parseFloat((String)msg.obj)); break;
 
-					case AmarinoIntent.SHORT_ARRAY_EXTRA:	visual.setData((short[])msg.obj); 	break;
-					case AmarinoIntent.INT_ARRAY_EXTRA:		visual.setData((int[])msg.obj); 	break;
-					case AmarinoIntent.FLOAT_ARRAY_EXTRA:	visual.setData((float[])msg.obj); 	break;
-					case AmarinoIntent.DOUBLE_ARRAY_EXTRA:	visual.setData((double[])msg.obj); 	break;
-					case AmarinoIntent.BYTE_ARRAY_EXTRA:	visual.setData((byte[])msg.obj); 	break;
-					case AmarinoIntent.BOOLEAN_ARRAY_EXTRA:	visual.setData((boolean[])msg.obj); break;
-					case AmarinoIntent.STRING_ARRAY_EXTRA:	visual.setData((String[])msg.obj);	break;
+					case DefaultAmarinoServiceIntentConfig.SHORT_ARRAY_EXTRA:	visual.setData((short[])msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.INT_ARRAY_EXTRA:		visual.setData((int[])msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.FLOAT_ARRAY_EXTRA:	visual.setData((float[])msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.DOUBLE_ARRAY_EXTRA:	visual.setData((double[])msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.BYTE_ARRAY_EXTRA:	visual.setData((byte[])msg.obj); 	break;
+					case DefaultAmarinoServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:	visual.setData((boolean[])msg.obj); break;
+					case DefaultAmarinoServiceIntentConfig.STRING_ARRAY_EXTRA:	visual.setData((String[])msg.obj);	break;
 
 				}
 			} catch (NumberFormatException e1) {
@@ -485,11 +488,11 @@ public class EventListActivity extends ListActivity {
 			final String action = intent.getAction();
 			if (action == null) return;
 			
-			if (AmarinoIntent.ACTION_SEND.equals(action)){
-				final int pluginId = intent.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND.equals(action)){
+				final int pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 				if (pluginId == -1) return; // we are only interested in data sent from plugins
 				
-				final int dataType = intent.getIntExtra(AmarinoIntent.EXTRA_DATA_TYPE, -1);
+				final int dataType = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, -1);
 				if (dataType == -1) return;
 				
 				Message msg = new Message();
@@ -497,48 +500,48 @@ public class EventListActivity extends ListActivity {
 				msg.arg2 = dataType;
 				
 				switch (dataType){
-				case AmarinoIntent.STRING_EXTRA:
-					String s = intent.getStringExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.STRING_EXTRA:
+					String s = intent.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					Log.d(TAG, "received: " + s);
 					msg.obj = s;
 					break;
-				case AmarinoIntent.FLOAT_EXTRA:
-					float f = intent.getFloatExtra(AmarinoIntent.EXTRA_DATA, -1);
+				case DefaultAmarinoServiceIntentConfig.FLOAT_EXTRA:
+					float f = intent.getFloatExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1);
 					Log.d(TAG, "received: " + f);
 					msg.obj = f;
 					break;
-				case AmarinoIntent.INT_EXTRA:
-					int i = intent.getIntExtra(AmarinoIntent.EXTRA_DATA, -1);
+				case DefaultAmarinoServiceIntentConfig.INT_EXTRA:
+					int i = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1);
 					Log.d(TAG, "received: " + i);
 					msg.obj = i;
 					break;
-				case AmarinoIntent.BYTE_EXTRA:
-					byte b = intent.getByteExtra(AmarinoIntent.EXTRA_DATA, (byte)-1);
+				case DefaultAmarinoServiceIntentConfig.BYTE_EXTRA:
+					byte b = intent.getByteExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, (byte)-1);
 					Log.d(TAG, "received: " + b);
 					msg.obj = b;
 					break;
-				case AmarinoIntent.BOOLEAN_EXTRA:
-					boolean bool = intent.getBooleanExtra(AmarinoIntent.EXTRA_DATA, false);
+				case DefaultAmarinoServiceIntentConfig.BOOLEAN_EXTRA:
+					boolean bool = intent.getBooleanExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, false);
 					Log.d(TAG, "received: " + bool);
 					msg.obj = bool;
 					break;
-				case AmarinoIntent.DOUBLE_EXTRA:
-					double d = intent.getDoubleExtra(AmarinoIntent.EXTRA_DATA, -1);
+				case DefaultAmarinoServiceIntentConfig.DOUBLE_EXTRA:
+					double d = intent.getDoubleExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1);
 					Log.d(TAG, "received: " + d);
 					msg.obj = d;
 					break;
-				case AmarinoIntent.SHORT_EXTRA:
-					short shorty = intent.getShortExtra(AmarinoIntent.EXTRA_DATA, (short)-1);
+				case DefaultAmarinoServiceIntentConfig.SHORT_EXTRA:
+					short shorty = intent.getShortExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, (short)-1);
 					Log.d(TAG, "received: " + shorty);
 					msg.obj = shorty;
 					break;
-				case AmarinoIntent.LONG_EXTRA:
-					long l = intent.getLongExtra(AmarinoIntent.EXTRA_DATA, -1l);
+				case DefaultAmarinoServiceIntentConfig.LONG_EXTRA:
+					long l = intent.getLongExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA, -1l);
 					Log.d(TAG, "received: " + l);
 					msg.obj = l;
 					break;
-				case AmarinoIntent.STRING_ARRAY_EXTRA:
-					String[] strings = intent.getStringArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.STRING_ARRAY_EXTRA:
+					String[] strings = intent.getStringArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (strings != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (String str : strings){
@@ -548,8 +551,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = strings;
 					break;
-				case AmarinoIntent.FLOAT_ARRAY_EXTRA:
-					float[] floats = intent.getFloatArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.FLOAT_ARRAY_EXTRA:
+					float[] floats = intent.getFloatArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (floats != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (float fl : floats){
@@ -559,8 +562,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = floats;
 					break;
-				case AmarinoIntent.INT_ARRAY_EXTRA:
-					int[] ints = intent.getIntArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.INT_ARRAY_EXTRA:
+					int[] ints = intent.getIntArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (ints != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (int in : ints){
@@ -570,8 +573,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = ints;
 					break;
-				case AmarinoIntent.BYTE_ARRAY_EXTRA:
-					byte[] bytes = intent.getByteArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.BYTE_ARRAY_EXTRA:
+					byte[] bytes = intent.getByteArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (bytes != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (byte by : bytes){
@@ -581,8 +584,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = bytes;
 					break;
-				case AmarinoIntent.BOOLEAN_ARRAY_EXTRA:
-					boolean[] booleans = intent.getBooleanArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.BOOLEAN_ARRAY_EXTRA:
+					boolean[] booleans = intent.getBooleanArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (booleans != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (boolean bo : booleans){
@@ -592,8 +595,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = booleans;
 					break;
-				case AmarinoIntent.DOUBLE_ARRAY_EXTRA:
-					double[] doubles = intent.getDoubleArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.DOUBLE_ARRAY_EXTRA:
+					double[] doubles = intent.getDoubleArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (doubles != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (double dou : doubles){
@@ -603,8 +606,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = doubles;
 					break;
-				case AmarinoIntent.SHORT_ARRAY_EXTRA:
-					short[] shorts = intent.getShortArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.SHORT_ARRAY_EXTRA:
+					short[] shorts = intent.getShortArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (shorts != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (short sh : shorts){
@@ -614,8 +617,8 @@ public class EventListActivity extends ListActivity {
 					}
 					msg.obj = shorts;
 					break;
-				case AmarinoIntent.LONG_ARRAY_EXTRA:
-					long[] longs = intent.getLongArrayExtra(AmarinoIntent.EXTRA_DATA);
+				case DefaultAmarinoServiceIntentConfig.LONG_ARRAY_EXTRA:
+					long[] longs = intent.getLongArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 					if (longs != null) {
 						StringBuilder sBuilder = new StringBuilder();
 						for (long lo : longs){

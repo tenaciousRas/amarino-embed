@@ -30,6 +30,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.visualizer.BarsView;
 import at.abraxas.amarino.visualizer.GraphView;
 import at.abraxas.amarino.visualizer.Visualizer;
@@ -90,7 +91,7 @@ public class EventListAdapter extends BaseAdapter {
 		if (stub.findViewWithTag(VISUALIZER_TAG) == null) {
 			switch (event.visualizer){
 	
-			case AmarinoIntent.VISUALIZER_TEXT:
+			case DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT:
 				Log.d(TAG, "build text visualizer for event: " + event.name);
 				TextView tv = new TextView(context);
 				
@@ -107,13 +108,13 @@ public class EventListAdapter extends BaseAdapter {
 				stub.addView(tv);
 				break;
 				
-			case AmarinoIntent.VISUALIZER_BARS:
+			case DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS:
 				Log.d(TAG, "build bars visualizer for event:" + event.name);
 				BarsView bars = new BarsView(context);
 				addVisualizer(stub, event, bars);
 				break;
 				
-			case AmarinoIntent.VISUALIZER_GRAPH:
+			case DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH:
 				Log.d(TAG, "build graph visualizer for event:" + event.name);
 				GraphView graph = new GraphView(context);
 				addVisualizer(stub, event, graph);
