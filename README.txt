@@ -1,3 +1,5 @@
+Overview
+--------
 This is an embeddable version of the Amarino library (http://www.amarino-toolkit.net/).  Amarino is originally built to be installed as an Android application which other Android apps depend on.  While this is an acceptable practice (for ex:  Google Navigator does it), this isn't always a pattern that works well for application developers.
 
 Amarino is nice.  It has a simple RPC-like frame-buffer implementation that allows it to execute callbacks on an Arduino connected to a bluetooth module (such as SparkFun's BlueSmirf).  It's easy to use too.
@@ -8,7 +10,14 @@ Another important change in the API is support for custom MessageBuilder impleme
 
 This is an early project commit.  Please excuse any issues and help contribute to the project -- if you have time to help write code let me know I'd love some help!
 
-Known issues:
+Branches
+--------
+vendor => original Amarino branch.  The jumping point for merging changes from the Google Code source branch.
+dev-* => dev branch
+trunk => latest stable branch
+
+Known issues
+------------
 * Some bugs in Amarino -- something with the way the service is bound -- top priority
 * Testing of Amarino APK as a shared app -- old behavior fully supported?  -- top priority
 * No way to set a custom icon for service notifications
