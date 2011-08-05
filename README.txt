@@ -16,10 +16,16 @@ vendor => original Amarino branch.  The jumping point for merging changes from t
 dev-* => dev branch
 trunk => latest stable branch
 
+Getting Started
+---------------
+More documentation is needed and planned.  For now, take a look at android-examples/RGBLEDSliders for a sample of an Android App that uses Amarino as an embedded service.
+
 Known issues
 ------------
-* Some bugs in Amarino -- something with the way the service is bound -- top priority
+* Amarino Service crashes -- something with the way the service is bound and this is in original API -- top priority
 * Testing of Amarino APK as a shared app -- old behavior fully supported?  -- top priority
-* No way to set a custom icon for service notifications
-* I think service notifications needs to be more configurable -- haven't looked at it
- 
+* Document an example of how to embed Amarino -- top priority
+* Embedded service is not disconnecting when bluetooth disabled -- top priority
+* MeetAndroid.cpp -- blocking for reads and writes.  Writes block with every open-source serial-communication API available for Arduino, but reads don't have to.  This Arduino Library should be refactored to use NewSoftSerial.
+* No way to set a custom Resources for subclass of AmarinoService
+* Looks like notifications need to be more configurable -- needs research
