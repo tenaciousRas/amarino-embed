@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="fill_vertical">
+	<FrameLayout android:name="RGBSlider01" android:id="@+id/rgbslider01"
+		android:layout_weight="1" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+	<FrameLayout android:name="RGBSlider02" android:id="@+id/rgbslider02"
+		android:layout_weight="1" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+	<FrameLayout android:name="RGBSlider03" android:id="@+id/rgbslider03"
+		android:layout_weight="1" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" />
+</LinearLayout>
