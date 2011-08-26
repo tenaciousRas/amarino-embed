@@ -14,7 +14,7 @@ Branches
 --------
 vendor => original Amarino branch.  The jump-point for merging changes from the Google Code source branch.
 dev-* => dev branch
-trunk => latest stable branch
+trunk => latest stable branch (coming when top priority bugs resolved and backwards-compat tested)
 
 Getting Started
 ---------------
