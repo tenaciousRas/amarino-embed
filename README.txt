@@ -8,7 +8,7 @@ This API decouples the Amarino Service architecture from its application, allowi
 
 Another important change in the API is support for custom MessageBuilder implementations.  This allows you to implement new protocols to talk to Arduino.  Maybe you want to use Google's Protocol Buffers to talk to Arudino.  Maybe you want to send binary data, or BSON over the wireless wire.  No problem�write a custom MessageBuilder implementation and set that in your embedded service.
 
-This is an early project commit.  Please excuse any issues and help contribute to the project -- if you have time to help write code let me know I'd love some help!
+This project is considered relatively stable, but so many changes from the original project were needed that it can only be considered relatively stable.  For example, the Amarino APK is known to crash, and that hasn't been fixed here (yet).  Please excuse any issues and help contribute to the project -- if you have time to help write code let me know I'd love some help!
 
 Branches
 --------
@@ -18,7 +18,7 @@ trunk => latest stable branch (coming when top priority bugs resolved and backwa
 
 Getting Started
 ---------------
-Look at the Wiki for basic documentation.  More documentation is needed and will be coming soon.  For now, take a look at android-examples/RGBLEDSliders for a sample of an Android App that uses Amarino as an embedded service.
+Look at the Wiki for basic documentation.  You'll need to include amarino/dist/amarino-embed.jar in your project for starters.  The next step is to create an implementation for the AmarinoServiceIntentConfig interface, providing (Intent) namespaces that work for your app.  More documentation is needed and will be coming soon.  For now, take a look at android-examples/RGBLEDSliders for a sample of an Android App that uses Amarino as an embedded service.
 
 Known issues
 ------------
