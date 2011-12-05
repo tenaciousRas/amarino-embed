@@ -41,24 +41,24 @@ public class RemoteControl extends BroadcastReceiver {
 			String action = intent.getAction();
 			if (action == null) return;
 			
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECT.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECT.equals(action)){
 				Logger.d(TAG, "CONNECT request received");
 				Intent i = new Intent(context, AmarinoService.class);
-				i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECT);
+				i.setAction(DefaultAmarinoServiceIntentConfig.ACTION_CONNECT);
 				i.replaceExtras(intent);
 				context.startService(i);
 			}
-			else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECT.equals(action)){
+			else if (DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECT.equals(action)){
 				Logger.d(TAG, "DISCONNECT request received");
 				Intent i = new Intent(context, AmarinoService.class);
-				i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECT);
+				i.setAction(DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECT);
 				i.replaceExtras(intent);
 				context.startService(i);
 			}
-			else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_GET_CONNECTED_DEVICES.equals(action)){
+			else if (DefaultAmarinoServiceIntentConfig.ACTION_GET_CONNECTED_DEVICES.equals(action)){
 				Logger.d(TAG, "GET_CONNECTED_DEVICES request received");
 				Intent i = new Intent(context, AmarinoService.class);
-				i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_GET_CONNECTED_DEVICES);
+				i.setAction(DefaultAmarinoServiceIntentConfig.ACTION_GET_CONNECTED_DEVICES);
 				context.startService(i);
 			}
 		}

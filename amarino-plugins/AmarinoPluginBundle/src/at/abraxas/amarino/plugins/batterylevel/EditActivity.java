@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.plugins.Constants;
 import at.abraxas.amarino.plugins.R;
 
@@ -34,7 +34,7 @@ public class EditActivity extends Activity {
         
         Intent intent = getIntent();
         if (intent != null){
-        	pluginId = intent.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+        	pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 	        
 	        // we need to know the ID Amarino has assigned to this plugin
 	        // in order to identify sent data
@@ -76,28 +76,28 @@ public class EditActivity extends Activity {
 		else {
 			final Intent returnIntent = new Intent();
 			
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, getString(R.string.batterylevel_plugin_name));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, getString(R.string.batterylevel_plugin_desc));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.batterylevel.BackgroundService"); 
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);	
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_NAME, getString(R.string.batterylevel_plugin_name));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_DESC, getString(R.string.batterylevel_plugin_desc));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.batterylevel.BackgroundService"); 
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);	
 			
 			int selectedVisualizer = visualizer.getSelectedItemPosition();
 			PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(KEY_VISUALIZER, selectedVisualizer).commit();
 			
 			switch(selectedVisualizer){
 				case Constants.TEXT:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_TEXT);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT);
 					break;
 				case Constants.GRAPH:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_GRAPH);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH);
 					break;
 				case Constants.BARS:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_BARS);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS);
 					break;
 			}
 			
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, 0f);
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 100f);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, 0f);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, 100f);
 			
 			setResult(RESULT_OK, returnIntent);
 		}

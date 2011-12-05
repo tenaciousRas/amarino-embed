@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public abstract class EditActivity extends Activity {
 
@@ -84,13 +84,13 @@ public abstract class EditActivity extends Activity {
         
         Intent intent = getIntent();
         if (intent != null){
-        	pluginId = intent.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+        	pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 	        if (DEBUG) Log.d(TAG, "pluginId: " + pluginId);
 	        // we need to know the ID Amarino has assigned to this plugin
 	        // in order to identify sent data
 	        PreferenceManager.getDefaultSharedPreferences(EditActivity.this)
 				.edit()
-				.putInt(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId)
+				.putInt(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId)
 				.commit();
         }
 
@@ -137,25 +137,25 @@ public abstract class EditActivity extends Activity {
 		
 		final Intent returnIntent = new Intent();
 		
-		returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, pluginName);
-		returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, description);
-		returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, serviceClassName);
-		returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);	
-		returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, visualizerMin);
-		returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, visualizerMax);
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_NAME, pluginName);
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_DESC, description);
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, serviceClassName);
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);	
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, visualizerMin);
+		returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, visualizerMax);
 		
 		int selectedVisualizer = visualizer.getSelectedItemPosition();
 		PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(KEY_VISUALIZER, selectedVisualizer).commit();
 		
 		switch(selectedVisualizer){
 			case 0:
-				returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_TEXT);
+				returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT);
 				break;
 			case 1:
-				returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_GRAPH);
+				returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH);
 				break;
 			case 2:
-				returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_BARS);
+				returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS);
 				break;
 		}
 

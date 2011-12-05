@@ -61,7 +61,7 @@ public class Amarino {
 	 * <pre>e.g. "00:06:54:4B:31:7E"</pre>
 	 */
 	public static void connect(Context context, String address){
-		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECT);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_CONNECT);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		context.sendBroadcast(intent);
 	}
@@ -78,7 +78,7 @@ public class Amarino {
 	 * which you used to connect to the device
 	 */
 	public static void disconnect(Context context, String address){
-		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECT);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECT);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		context.sendBroadcast(intent);
 	}
@@ -663,14 +663,14 @@ public class Amarino {
 	
 
 	private static Intent getPluginSendIntent(int dataType, int pluginId){
-		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_SEND);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, dataType);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);
 		return intent;
 	}
 
 	private static Intent getSendIntent(String address, int dataType, char flag){
-		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_SEND);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, dataType);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, flag);

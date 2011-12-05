@@ -39,7 +39,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import at.abraxas.amarino.Amarino;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public class MultiColorLamp extends Activity implements OnSeekBarChangeListener{
 	
@@ -80,7 +80,7 @@ public class MultiColorLamp extends Activity implements OnSeekBarChangeListener{
 		public void onReceive(Context context, Intent intent) {
 			if (intent != null){
 				String action = intent.getAction();
-				if (AmarinoIntent.ACTION_CONNECTED.equals(action)){
+				if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED.equals(action)){
 					updateAllColors();
 				}
 			}
@@ -126,7 +126,7 @@ public class MultiColorLamp extends Activity implements OnSeekBarChangeListener{
 	protected void onStart() {
 		super.onStart();
 		
-        registerReceiver(connectionStateReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTED));
+        registerReceiver(connectionStateReceiver, new IntentFilter(DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED));
         Amarino.connect(this, deviceAddress);
 	}
 

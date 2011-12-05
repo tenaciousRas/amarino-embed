@@ -30,7 +30,6 @@ unsigned long ledColor[NUMBER_OF_LEDS] = {0xFF0000, 0x00CC00, 0x00CC};
 byte ledStateIndex;
 
 void setup()  {
-  Serial.begin(9600);
   // set the data rate for Amarino
   Serial.begin(19200);
   // send init data

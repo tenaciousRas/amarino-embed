@@ -96,11 +96,11 @@ public abstract class BackgroundService extends Service {
 			String action = intent.getAction();
 			if (DEBUG) Log.d(TAG, action + " received");
 
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_DISABLE.equals(action)){
 				if (DEBUG) Log.d(TAG, "stop requested");
 				stopSelf();
 			}
-			else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_ENABLE.equals(action)) {
+			else if (DefaultAmarinoServiceIntentConfig.ACTION_ENABLE.equals(action)) {
 				Log.d(TAG, "started");
 				initInternal();
 			}

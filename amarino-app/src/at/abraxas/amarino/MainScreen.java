@@ -96,7 +96,7 @@ public class MainScreen extends ListActivity implements OnClickListener {
 				return;
 			Logger.d(TAG, action + " received");
 
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES.equals(action)) {
+			if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED_DEVICES.equals(action)) {
 				updateDeviceStates(intent
 						.getStringArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES));
 				return;
@@ -109,13 +109,13 @@ public class MainScreen extends ListActivity implements OnClickListener {
 
 			Message msg = new Message();
 
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED.equals(action)) {
+			if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED.equals(action)) {
 				msg.what = MyHandler.CONNECTED;
-			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECTED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECTED.equals(action)) {
 				msg.what = MyHandler.DISCONNECTED;
-			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTION_FAILED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTION_FAILED.equals(action)) {
 				msg.what = MyHandler.CONNECTION_FAILED;
-			} else if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_PAIRING_REQUESTED.equals(action)) {
+			} else if (DefaultAmarinoServiceIntentConfig.ACTION_PAIRING_REQUESTED.equals(action)) {
 				msg.what = MyHandler.PAIRING_REQUESTED;
 			} else
 				return;
@@ -173,16 +173,16 @@ public class MainScreen extends ListActivity implements OnClickListener {
 		super.onResume();
 		// listen for device state changes
 		IntentFilter intentFilter = new IntentFilter(
-				DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES);
-		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED);
-		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECTED);
-		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTION_FAILED);
-		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_PAIRING_REQUESTED);
+				DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED_DEVICES);
+		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED);
+		// intentFilter.addAction(DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECTED);
+		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.ACTION_CONNECTION_FAILED);
+		intentFilter.addAction(DefaultAmarinoServiceIntentConfig.ACTION_PAIRING_REQUESTED);
 		registerReceiver(receiver, intentFilter);
 
 		// request state of devices
 		Intent intent = new Intent(this, AmarinoService.class);
-		intent.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_GET_CONNECTED_DEVICES);
+		intent.setAction(DefaultAmarinoServiceIntentConfig.ACTION_GET_CONNECTED_DEVICES);
 		startService(intent);
 	}
 
@@ -383,9 +383,9 @@ public class MainScreen extends ListActivity implements OnClickListener {
 				.get(postion).getAddress());
 
 		if (btn.getText().equals(getString(R.string.connect)))
-			i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECT);
+			i.setAction(DefaultAmarinoServiceIntentConfig.ACTION_CONNECT);
 		else
-			i.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISCONNECT);
+			i.setAction(DefaultAmarinoServiceIntentConfig.ACTION_DISCONNECT);
 
 		btn.setEnabled(false);
 		btn.setText(R.string.connecting);

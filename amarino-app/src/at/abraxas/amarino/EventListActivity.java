@@ -109,7 +109,7 @@ public class EventListActivity extends ListActivity {
 
 	private void buildPluginList() {
 		PackageManager pm = this.getPackageManager();
-		List<ResolveInfo> editActivites = pm.queryIntentActivities(new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN), 0);
+		List<ResolveInfo> editActivites = pm.queryIntentActivities(new Intent(DefaultAmarinoServiceIntentConfig.ACTION_EDIT_PLUGIN), 0);
 		Log.d(TAG, "Number of available plugins: " + editActivites.size());
 		
 		ArrayList<Plugin> plugins = new ArrayList<Plugin>(editActivites.size());
@@ -128,7 +128,7 @@ public class EventListActivity extends ListActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		IntentFilter filter = new IntentFilter(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND);
+		IntentFilter filter = new IntentFilter(DefaultAmarinoServiceIntentConfig.ACTION_SEND);
 		registerReceiver(receiver, filter);
 	}
 
@@ -137,7 +137,7 @@ public class EventListActivity extends ListActivity {
 		super.onStop();
 		unregisterReceiver(receiver);
 		startService(new Intent(this, AmarinoService.class)
-							.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE_ALL));
+							.setAction(DefaultAmarinoServiceIntentConfig.ACTION_DISABLE_ALL));
 	}
 	
 	
@@ -216,7 +216,7 @@ public class EventListActivity extends ListActivity {
 
 
 	private void enablePlugin(Event e) {
-		Intent enableIntent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_ENABLE);
+		Intent enableIntent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_ENABLE);
 		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
 		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
 		enableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
@@ -226,7 +226,7 @@ public class EventListActivity extends ListActivity {
 
 
 	private void disablePlugin(Event e) {
-		Intent disableIntent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_DISABLE);
+		Intent disableIntent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_DISABLE);
 		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
 		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, e.pluginId);
 		disableIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, e.serviceClassName);
@@ -241,7 +241,7 @@ public class EventListActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		Event event = eventListAdapter.entries.get(position);
 		
-		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN);
+		Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_EDIT_PLUGIN);
 		intent.setClassName(event.packageName, event.editClassName);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, event.flag);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, device.getAddress());
@@ -269,7 +269,7 @@ public class EventListActivity extends ListActivity {
 				public void onClick(DialogInterface dialog, int which) {
 					// start EditActivity of selected plugin
 					selectedPlugin = pluginListAdapter.entries.get(which);
-					Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_EDIT_PLUGIN);
+					Intent intent = new Intent(DefaultAmarinoServiceIntentConfig.ACTION_EDIT_PLUGIN);
 					intent.setClassName(selectedPlugin.packageName, selectedPlugin.editClassName);
 					
 					intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, getNextFlag());
@@ -488,7 +488,7 @@ public class EventListActivity extends ListActivity {
 			final String action = intent.getAction();
 			if (action == null) return;
 			
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_SEND.equals(action)){
 				final int pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 				if (pluginId == -1) return; // we are only interested in data sent from plugins
 				

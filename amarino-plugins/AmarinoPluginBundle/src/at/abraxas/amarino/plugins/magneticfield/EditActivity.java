@@ -12,7 +12,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.plugins.Constants;
 import at.abraxas.amarino.plugins.R;
 
@@ -41,7 +41,7 @@ public class EditActivity extends Activity {
         
         Intent intent = getIntent();
         if (intent != null){
-        	pluginId = intent.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+        	pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 	        
 	        // we need to know the ID Amarino has assigned to this plugin
 	        // in order to identify sent data
@@ -112,29 +112,29 @@ public class EditActivity extends Activity {
 		else {
 			final Intent returnIntent = new Intent();
 			
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, getString(R.string.magneticfield_plugin_name));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, getString(R.string.magneticfield_plugin_desc));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.magneticfield.BackgroundService"); 
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);	
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_NAME, getString(R.string.magneticfield_plugin_name));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_DESC, getString(R.string.magneticfield_plugin_desc));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.magneticfield.BackgroundService"); 
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);	
 			
 			int selectedVisualizer = visualizer.getSelectedItemPosition();
 			PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(KEY_VISUALIZER, selectedVisualizer).commit();
 			
 			switch(selectedVisualizer){
 				case Constants.TEXT:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_TEXT);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT);
 					break;
 				case Constants.GRAPH:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_GRAPH);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_GRAPH);
 					break;
 				case Constants.BARS:
-					returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_BARS);
+					returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_BARS);
 					break;
 			}
 			
 			float range = Constants.getMaxSensorRange(this, Sensor.TYPE_MAGNETIC_FIELD, 2200f);
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, -range);
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, range);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, -range);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, range);
 			
 			setResult(RESULT_OK, returnIntent);
 		}

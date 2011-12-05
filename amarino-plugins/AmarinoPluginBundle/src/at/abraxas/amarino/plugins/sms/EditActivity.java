@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 import at.abraxas.amarino.plugins.R;
 
 public class EditActivity extends Activity {
@@ -31,7 +31,7 @@ public class EditActivity extends Activity {
         
         Intent intent = getIntent();
         if (intent != null){
-        	pluginId = intent.getIntExtra(AmarinoIntent.EXTRA_PLUGIN_ID, -1);
+        	pluginId = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, -1);
 	        
 	        // we need to know the ID Amarino has assigned to this plugin
 	        // in order to identify sent data
@@ -70,16 +70,16 @@ public class EditActivity extends Activity {
 		else {
 			final Intent returnIntent = new Intent();
 			
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_NAME, getString(R.string.sms_plugin_name));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_DESC, getString(R.string.sms_plugin_desc));
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.sms.BackgroundService"); 
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_ID, pluginId);	
-			returnIntent.putExtra(AmarinoIntent.EXTRA_PLUGIN_VISUALIZER, AmarinoIntent.VISUALIZER_TEXT);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_NAME, getString(R.string.sms_plugin_name));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_DESC, getString(R.string.sms_plugin_desc));
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME, "at.abraxas.amarino.plugins.sms.BackgroundService"); 
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_ID, pluginId);	
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_VISUALIZER, DefaultAmarinoServiceIntentConfig.VISUALIZER_TEXT);
 			
 			// visualizer min and max would not be needed for text
 			// but maybe we introduce in the future text size based on how many characters we expect to receive
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MIN_VALUE, 0f);
-			returnIntent.putExtra(AmarinoIntent.EXTRA_VISUALIZER_MAX_VALUE, 20f);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MIN_VALUE, 0f);
+			returnIntent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_VISUALIZER_MAX_VALUE, 20f);
 			
 			setResult(RESULT_OK, returnIntent);
 		}

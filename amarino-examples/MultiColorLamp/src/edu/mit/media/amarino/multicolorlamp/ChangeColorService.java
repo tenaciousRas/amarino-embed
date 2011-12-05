@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import at.abraxas.amarino.Amarino;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public class ChangeColorService extends Service {
 	
@@ -48,7 +48,7 @@ public class ChangeColorService extends Service {
 				.getString(MultiColorLamp.PREF_DEVICE_ADDRESS, MultiColorLamp.DEFAULT_DEVICE_ADDRESS);
 			
 			color = intent.getIntExtra(ColorReceiver.EXTRA_COLOR, 0);
-			registerReceiver(connectionStateReceiver, new IntentFilter(AmarinoIntent.ACTION_CONNECTED));
+			registerReceiver(connectionStateReceiver, new IntentFilter(DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED));
 			Amarino.connect(this, deviceAddress);
 		}
 		
@@ -61,7 +61,7 @@ public class ChangeColorService extends Service {
 		public void onReceive(Context context, Intent intent) {
 			if (intent != null){
 				String action = intent.getAction();
-				if (AmarinoIntent.ACTION_CONNECTED.equals(action)){
+				if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED.equals(action)){
 					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_RED, Color.red(color));
 					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_GREEN, Color.green(color));
 					Amarino.sendDataToArduino(ChangeColorService.this, deviceAddress, MultiColorLamp.FLAG_BLUE, Color.blue(color));

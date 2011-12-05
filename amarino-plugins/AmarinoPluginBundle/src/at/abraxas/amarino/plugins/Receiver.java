@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public class Receiver extends BroadcastReceiver {
 	
@@ -21,9 +21,9 @@ public class Receiver extends BroadcastReceiver {
 		
 		Intent i;
 		
-		String className = intent.getStringExtra(AmarinoIntent.EXTRA_PLUGIN_SERVICE_CLASS_NAME);
+		String className = intent.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_PLUGIN_SERVICE_CLASS_NAME);
 		if (className == null) {
-			if (AmarinoIntent.ACTION_DISABLE.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_DISABLE.equals(action)){
 				// disable all plugins
 				i = new Intent(ACTION_DISABLE_ALL);
 				i.setPackage(context.getPackageName());

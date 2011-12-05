@@ -220,3 +220,4 @@ public class ColorPickerView extends View {
 		return true;
 	}
 }
+

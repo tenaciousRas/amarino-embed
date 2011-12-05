@@ -26,13 +26,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TextView;
 import at.abraxas.amarino.Amarino;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 /**
  * <h3>Application that receives sensor readings from Arduino displaying it graphically.</h3>
  * 
  * This example demonstrates how to catch data sent from Arduino forwarded by Amarino 2.0.
- * SensorGraph registers a BroadcastReceiver to catch Intents with action string: <b>AmarinoIntent.ACTION_RECEIVED</b>
+ * SensorGraph registers a BroadcastReceiver to catch Intents with action string: <b>DefaultAmarinoServiceIntentConfig.ACTION_RECEIVED</b>
  * 
  * @author Bonifaz Kaufmann - April 2010
  *
@@ -42,7 +42,7 @@ public class SensorGraph extends Activity {
 	private static final String TAG = "SensorGraph";
 	
 	// change this to your Bluetooth device address 
-	private static final String DEVICE_ADDRESS =  "00:06:66:03:73:7B"; //"00:06:66:03:73:7B";
+	private static final String DEVICE_ADDRESS =  "00:06:66:06:BF:36"; //"00:06:66:03:73:7B";
 	
 	private GraphView mGraph; 
 	private TextView mValueTV;
@@ -67,7 +67,7 @@ public class SensorGraph extends Activity {
 	protected void onStart() {
 		super.onStart();
 		// in order to receive broadcasted intents we need to register our receiver
-		registerReceiver(arduinoReceiver, new IntentFilter(AmarinoIntent.ACTION_RECEIVED));
+		registerReceiver(arduinoReceiver, new IntentFilter(DefaultAmarinoServiceIntentConfig.ACTION_RECEIVED));
 		
 		// this is how you tell Amarino to connect to a specific BT device from within your own code
 		Amarino.connect(this, DEVICE_ADDRESS);
@@ -99,16 +99,16 @@ public class SensorGraph extends Activity {
 			String data = null;
 			
 			// the device address from which the data was sent, we don't need it here but to demonstrate how you retrieve it
-			final String address = intent.getStringExtra(AmarinoIntent.EXTRA_DEVICE_ADDRESS);
+			final String address = intent.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS);
 			
 			// the type of data which is added to the intent
-			final int dataType = intent.getIntExtra(AmarinoIntent.EXTRA_DATA_TYPE, -1);
+			final int dataType = intent.getIntExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, -1);
 			
 			// we only expect String data though, but it is better to check if really string was sent
 			// later Amarino will support differnt data types, so far data comes always as string and
 			// you have to parse the data to the type you have sent from Arduino, like it is shown below
-			if (dataType == AmarinoIntent.STRING_EXTRA){
-				data = intent.getStringExtra(AmarinoIntent.EXTRA_DATA);
+			if (dataType == DefaultAmarinoServiceIntentConfig.STRING_EXTRA){
+				data = intent.getStringExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA);
 				
 				if (data != null){
 					mValueTV.setText(data);

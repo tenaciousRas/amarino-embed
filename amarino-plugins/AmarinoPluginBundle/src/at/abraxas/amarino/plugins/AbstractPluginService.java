@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
-import at.abraxas.amarino.AmarinoIntent;
+import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 public abstract class AbstractPluginService extends Service {
 	
@@ -64,10 +64,10 @@ public abstract class AbstractPluginService extends Service {
 			String action = intent.getAction();
 			if (DEBUG) Log.d(getTAG(), action + " received");
 
-			if (AmarinoIntent.ACTION_DISABLE.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_DISABLE.equals(action)){
 				stopSelf();
 			}
-			else if (AmarinoIntent.ACTION_ENABLE.equals(action)) {
+			else if (DefaultAmarinoServiceIntentConfig.ACTION_ENABLE.equals(action)) {
 				Log.d(getTAG(), "started");
 				init();
 			}

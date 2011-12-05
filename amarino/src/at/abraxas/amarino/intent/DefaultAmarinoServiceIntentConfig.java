@@ -93,20 +93,20 @@ package at.abraxas.amarino.intent;
  */
 public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentConfig {
 
-	public static final String DEFAULT_ACTION_CONNECT = "amarino.intent.action.CONNECT";
-	public static final String DEFAULT_ACTION_DISCONNECT = "amarino.intent.action.DISCONNECT";
-	public static final String DEFAULT_ACTION_SEND = "amarino.intent.action.SEND";
-	public static final String DEFAULT_ACTION_RECEIVED = "amarino.intent.action.RECEIVED";
-	public static final String DEFAULT_ACTION_CONNECTED = "amarino.intent.action.CONNECTED";
-	public static final String DEFAULT_ACTION_DISCONNECTED = "amarino.intent.action.DISCONNECTED";
-	public static final String DEFAULT_ACTION_CONNECTION_FAILED = "amarino.intent.action.CONNECTION_FAILED";
-	public static final String DEFAULT_ACTION_PAIRING_REQUESTED = "amarino.intent.action.PAIRING_REQUESTED";
-	public static final String DEFAULT_ACTION_GET_CONNECTED_DEVICES = "amarino.intent.action.ACTION_GET_CONNECTED_DEVICES";
-	public static final String DEFAULT_ACTION_CONNECTED_DEVICES = "amarino.intent.action.ACTION_CONNECTED_DEVICES";
-	public static final String DEFAULT_ACTION_ENABLE = "amarino.intent.action.ENABLE";
-	public static final String DEFAULT_ACTION_DISABLE = "amarino.intent.action.DISABLE";
-	public static final String DEFAULT_ACTION_DISABLE_ALL = "amarino.intent.action.DISABLE_ALL";
-	public static final String DEFAULT_ACTION_EDIT_PLUGIN = "amarino.intent.action.EDIT_PLUGIN";
+	public static final String ACTION_CONNECT = "amarino.intent.action.CONNECT";
+	public static final String ACTION_DISCONNECT = "amarino.intent.action.DISCONNECT";
+	public static final String ACTION_SEND = "amarino.intent.action.SEND";
+	public static final String ACTION_RECEIVED = "amarino.intent.action.RECEIVED";
+	public static final String ACTION_CONNECTED = "amarino.intent.action.CONNECTED";
+	public static final String ACTION_DISCONNECTED = "amarino.intent.action.DISCONNECTED";
+	public static final String ACTION_CONNECTION_FAILED = "amarino.intent.action.CONNECTION_FAILED";
+	public static final String ACTION_PAIRING_REQUESTED = "amarino.intent.action.PAIRING_REQUESTED";
+	public static final String ACTION_GET_CONNECTED_DEVICES = "amarino.intent.action.ACTION_GET_CONNECTED_DEVICES";
+	public static final String ACTION_CONNECTED_DEVICES = "amarino.intent.action.ACTION_CONNECTED_DEVICES";
+	public static final String ACTION_ENABLE = "amarino.intent.action.ENABLE";
+	public static final String ACTION_DISABLE = "amarino.intent.action.DISABLE";
+	public static final String ACTION_DISABLE_ALL = "amarino.intent.action.DISABLE_ALL";
+	public static final String ACTION_EDIT_PLUGIN = "amarino.intent.action.EDIT_PLUGIN";
 
 	/*
 	 * (non-Javadoc)
@@ -117,7 +117,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionConnect() {
-		return DEFAULT_ACTION_CONNECT;
+		return ACTION_CONNECT;
 	}
 
 	/*
@@ -129,7 +129,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionDisconnect() {
-		return DEFAULT_ACTION_DISCONNECT;
+		return ACTION_DISCONNECT;
 	}
 
 	/*
@@ -140,7 +140,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionSend() {
-		return DEFAULT_ACTION_SEND;
+		return ACTION_SEND;
 	}
 
 	/*
@@ -152,7 +152,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionReceived() {
-		return DEFAULT_ACTION_RECEIVED;
+		return ACTION_RECEIVED;
 	}
 
 	/*
@@ -164,7 +164,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionConnected() {
-		return DEFAULT_ACTION_CONNECTED;
+		return ACTION_CONNECTED;
 	}
 
 	/*
@@ -176,7 +176,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionDisconnected() {
-		return DEFAULT_ACTION_DISCONNECTED;
+		return ACTION_DISCONNECTED;
 	}
 
 	/*
@@ -187,7 +187,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionConnectionFailed() {
-		return DEFAULT_ACTION_CONNECTION_FAILED;
+		return ACTION_CONNECTION_FAILED;
 	}
 
 	/*
@@ -198,7 +198,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionPairingRequested() {
-		return DEFAULT_ACTION_PAIRING_REQUESTED;
+		return ACTION_PAIRING_REQUESTED;
 	}
 
 	/*
@@ -209,7 +209,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionGetConnectedDevices() {
-		return DEFAULT_ACTION_GET_CONNECTED_DEVICES;
+		return ACTION_GET_CONNECTED_DEVICES;
 	}
 
 	/*
@@ -220,7 +220,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionConnectedDevices() {
-		return DEFAULT_ACTION_CONNECTED_DEVICES;
+		return ACTION_CONNECTED_DEVICES;
 	}
 
 	/*
@@ -231,7 +231,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionEnable() {
-		return DEFAULT_ACTION_ENABLE;
+		return ACTION_ENABLE;
 	}
 
 	/*
@@ -243,7 +243,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionDisable() {
-		return DEFAULT_ACTION_DISABLE;
+		return ACTION_DISABLE;
 	}
 
 	/*
@@ -255,7 +255,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionDisableAll() {
-		return DEFAULT_ACTION_DISABLE_ALL;
+		return ACTION_DISABLE_ALL;
 	}
 
 	/*
@@ -267,7 +267,7 @@ public class DefaultAmarinoServiceIntentConfig implements AmarinoServiceIntentCo
 	 */
 	@Override
 	public String getIntentNameActionEditPlugin() {
-		return DEFAULT_ACTION_EDIT_PLUGIN;
+		return ACTION_EDIT_PLUGIN;
 	}
 
 }

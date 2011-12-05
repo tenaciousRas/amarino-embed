@@ -115,11 +115,11 @@ public class Monitoring extends Activity implements LogListener, View.OnClickLis
 		flagBtn.setText(getString(R.string.flag_btn, selectedFlag));
 		
 		// we want to know which devices are connected in order to send data to a device
-		IntentFilter intentFilter = new IntentFilter(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES);
+		IntentFilter intentFilter = new IntentFilter(DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED_DEVICES);
 	    registerReceiver(receiver, intentFilter);
 	    
 	    Intent intent = new Intent(Monitoring.this, AmarinoService.class);
-		intent.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_GET_CONNECTED_DEVICES);
+		intent.setAction(DefaultAmarinoServiceIntentConfig.ACTION_GET_CONNECTED_DEVICES);
 		Monitoring.this.startService(intent);
 	}
 
@@ -180,7 +180,7 @@ public class Monitoring extends Activity implements LogListener, View.OnClickLis
 	
 	private void sendData(String address, String msg){
 		Intent intent = new Intent(Monitoring.this, AmarinoService.class);
-		intent.setAction(DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_SEND);
+		intent.setAction(DefaultAmarinoServiceIntentConfig.ACTION_SEND);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DEVICE_ADDRESS, address);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_FLAG, selectedFlag);
 		intent.putExtra(DefaultAmarinoServiceIntentConfig.EXTRA_DATA_TYPE, DefaultAmarinoServiceIntentConfig.STRING_EXTRA);
@@ -294,7 +294,7 @@ public class Monitoring extends Activity implements LogListener, View.OnClickLis
 			String action = intent.getAction();
 			if (action == null) return;
 
-			if (DefaultAmarinoServiceIntentConfig.DEFAULT_ACTION_CONNECTED_DEVICES.equals(action)){
+			if (DefaultAmarinoServiceIntentConfig.ACTION_CONNECTED_DEVICES.equals(action)){
 				addresses = intent.getStringArrayExtra(DefaultAmarinoServiceIntentConfig.EXTRA_CONNECTED_DEVICE_ADDRESSES);
 			}
 		}
