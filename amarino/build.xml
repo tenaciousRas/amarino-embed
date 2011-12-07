@@ -55,10 +55,36 @@
     </target>
 -->
     <target name="-post-compile">
-    	<move file="${out.dir}/classes.jar" tofile="${out.dir}/amarino-embed.jar"/>
+    	<move file="${out.dir}/classes.jar" tofile="${dist.bin}/amarino-embed.jar"/>
     </target>
 
-    <!-- Import the actual build file.
+	<target name="src-dist" description="create a source distribution">
+		<mkdir dir="${dist.sources}/temp" />
+		<copy todir="${dist.sources}/temp">
+			<fileset dir=".">
+				<include name="src/" />
+				<include name="README" />
+				<include name="INSTALL" />
+				<include name="NOTICE" />
+				<include name="LICENSE" />
+				<include name="changes.xml" />
+				<include name="contributors.xml" />
+				<include name="build.xml" />
+				<include name="ant.properties" />
+				<include name="project.properties" />
+			</fileset>
+		</copy>
+
+		<fixcrlf srcdir="${dist.sources}/temp">
+			<include name="**/*.java" />
+			<include name="**/*.xml" />
+			<include name="**/*.properties" />
+		</fixcrlf>
+		<jar jarfile="${dist.sources}/amarino-embed-source.jar" basedir="${dist.sources}/temp" />
+		<delete dir="${dist.sources}/temp" />
+	</target>
+
+	<!-- Import the actual build file.
 
          To customize existing targets, there are two options:
          - Customize only one target:
@@ -76,7 +102,7 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: 1 -->
+    <!-- version-tag: custom -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
 </project>
