@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Amarino" default="help">
 
-    <!-- The local.properties file is created and updated by the 'android' tool.
+	<!-- The local.properties file is created and updated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
-    <loadproperties srcFile="local.properties" />
+	<loadproperties srcFile="local.properties" />
 
-    <!-- The ant.properties file can be created by you. It is only edited by the
+	<!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.
          This is the place to change some Ant specific build properties.
          Here are some properties you may want to change/update:
@@ -26,9 +26,9 @@
          application and should be checked into Version Control Systems.
 
          -->
-    <property file="ant.properties" />
+	<property file="ant.properties" />
 
-    <!-- The project.properties file is created and updated by the 'android'
+	<!-- The project.properties file is created and updated by the 'android'
          tool, as well as ADT.
 
          This contains project specific properties such as project target, and library
@@ -37,26 +37,50 @@
 
          This file is an integral part of the build system for your
          application and should be checked into Version Control Systems. -->
-    <loadproperties srcFile="project.properties" />
+	<loadproperties srcFile="project.properties" />
 
-    <!-- quick check on sdk.dir -->
-    <fail
-            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project'"
-            unless="sdk.dir"
-    />
+	<!-- quick check on sdk.dir -->
+	<fail message="sdk.dir is missing. Make sure to generate local.properties using 'android update project'" unless="sdk.dir" />
 
 
-<!-- extension targets. Uncomment the ones where you want to do custom work
+	<!-- extension targets. Uncomment the ones where you want to do custom work
      in between standard targets -->
-<!--
+	<!--
     <target name="-pre-build">
     </target>
     <target name="-pre-compile">
     </target>
--->
-    <target name="-post-compile">
+
     	<move file="${out.dir}/classes.jar" tofile="${dist.bin}/amarino-embed.jar"/>
-    </target>
+
+    	<copy todir="${dist.bin}/temp">
+			<fileset dir=".">
+				<include name="classes/" />
+				<include name="README" />
+				<include name="INSTALL" />
+				<include name="NOTICE" />
+				<include name="LICENSE" />
+				<include name="changes.xml" />
+				<include name="contributors.xml" />
+				<include name="build.xml" />
+				<include name="ant.properties" />
+				<include name="project.properties" />
+			</fileset>
+		</copy>
+
+    	<delete dir="${dist.bin}/temp" />
+
+-->
+
+	<target name="-post-compile">
+		<unzip src="libs/AndroidBluetoothLibrary.jar" dest="${out.dir}/classes">
+			<!-- TODO:  need to not exclude .svn*, .project, .classpath, etc. -->
+			<patternset>
+				<include name="**" />
+			</patternset>
+		</unzip>
+		<jar jarfile="${dist.bin}/amarino-embed.jar" basedir="${out.dir}/classes" />
+	</target>
 
 	<target name="src-dist" description="create a source distribution">
 		<mkdir dir="${dist.sources}/temp" />
@@ -102,7 +126,7 @@
          In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
          in order to avoid having your file be overridden by tools such as "android update project"
     -->
-    <!-- version-tag: custom -->
-    <import file="${sdk.dir}/tools/ant/build.xml" />
+	<!-- version-tag: custom -->
+	<import file="${sdk.dir}/tools/ant/build.xml" />
 
 </project>
