@@ -96,6 +96,11 @@ public class AmarinoService extends Service {
 	private HashMap<Integer, List<BTDevice>> enabledEvents = new HashMap<Integer, List<BTDevice>>();
 
 	/**
+	 * The resourceId of a custom Icon to use
+	 */
+	private int customNotificationIconId;
+
+	/**
 	 * @return the dbConfig
 	 */
 	public DBConfig getDbConfig() {
@@ -605,7 +610,7 @@ public class AmarinoService extends Service {
 	}
 
 	private Notification getNotification(String title) {
-		notification = new Notification(R.drawable.icon_small, title,
+		notification = new Notification(getNotificationIconId(), title,
 				System.currentTimeMillis());
 		notification.flags |= Notification.FLAG_ONGOING_EVENT;
 		notification.flags |= Notification.FLAG_NO_CLEAR;
@@ -618,6 +623,19 @@ public class AmarinoService extends Service {
 		notifyManager.cancel(NOTIFY_ID);
 	}
 
+	public void setNotificationIconId(int resId) {
+		customNotificationIconId = resId;
+	}
+
+	public int getNotificationIconId() {
+		if (0 == customNotificationIconId) {
+			return R.drawable.icon_small;
+		}
+		if (0 < customNotificationIconId) {
+			return customNotificationIconId;
+		}
+		return 0;
+	}
 	/* ---------- Connection Threads ---------- */
 
 	/**
