@@ -18,7 +18,13 @@ trunk => latest stable branch (coming when top priority bugs resolved and backwa
 
 Getting Started
 ---------------
-This Github Wiki provides (basic) documentation, and the HelloAmarinoWorld and RGBLEDPickers projects provide working examples.  Also, there's a source JAR in Amarino/dist, and a "src-dist" ANT target in the Amarino project that builds the sources JAR.  You'll need to reference Amarino as a library project, for starters.  You'll also need to add a the AndroidBluetooth.JAR file found in Amarino/libs as a JAR on the build path of your project.  The next step is to create an implementation for the AmarinoServiceIntentConfig interface, providing (Intent) namespaces that work for your app.  More documentation is needed and will be coming soon.  For now, take a look at android-examples/RGBLEDSliders for a sample of an Android App that uses Amarino as an embedded service.
+This Github Wiki provides (basic) documentation, and the HelloAmarinoWorld and RGBLEDPickers projects provide working examples.  Also, there's a source JAR in Amarino/dist, and a "src-dist" ANT target in the Amarino project that builds the sources JAR.  The basic steps are as follows:
+- You'll need to reference the Amarino project as a library project.  In Eclipse this means following the usual steps to import an Android Library project.
+- You'll need to add a the AndroidBluetooth.JAR file found in Amarino/libs as a JAR on the build path of your project.
+- The next step is to create an implementation for the AmarinoServiceIntentConfig interface, providing (Intent) namespaces that work for your app.
+- The next step is to setup an intent receiver in your Activity that handles the broadcast Amarino service intents (defined in AmarinoServiceIntentConfig).  See the HelloAmarinoWorld or RGBLEDPickers examples.
+- The final step is to connect and communicate with the Arduino hardware in your Activity.
+
 
 Known issues
 ------------
