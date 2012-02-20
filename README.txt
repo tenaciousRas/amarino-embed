@@ -10,6 +10,11 @@ Another important change in the API is support for custom MessageBuilder impleme
 
 This project is considered relatively stable, but so many changes from the original project were needed that it can only be considered relatively stable.  For example, the Amarino APK is known to crash, and that hasn't been fixed here (yet).  Please excuse any issues and help contribute to the project -- if you have time to help write code let me know I'd love some help!
 
+Several of the examples in this project are from the original Amarino codebase, modified for the Amarino Library project.  Two examples are provided that use the embedded service:  HelloAmarinoWorld and RGBLEDPickers.  HelloAmarinoWorld
+provides a simple working example that only requires an Arduino with an Amarino-compatible bluetooth module.  The RGBLEDPickers example is similar
+but requires a small working circuit built around the Arduino.  RGBLEDPickers works with an embedded Amarino service and
+uses the Android compatibility library (fragments).
+
 Branches
 --------
 vendor => original Amarino branch.  The jump-point for merging changes from the Google Code source branch.
