@@ -21,8 +21,10 @@ void setup()
 void loop()
 {
   meetAndroid.receive(); // you need to keep this in your loop() to receive events
+  
   // read input pin and send result to Android
   meetAndroid.send(analogRead(sensor));
+  
   // add a little delay otherwise the phone is pretty busy
   delay(100);
 }

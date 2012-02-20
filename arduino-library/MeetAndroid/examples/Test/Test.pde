@@ -1,6 +1,7 @@
 /*
   Receives Test Events from your phone.
-  After it gets a test message the led 13 will blink.
+  After it gets a test message the led 13 will blink
+  for one second.
 */
  
 #include <MeetAndroid.h>
@@ -31,16 +32,12 @@ void loop()
 
 /*
  * This method is called constantly.
- * note: flag is in this case 'A' and numOfValues is 1 (since test event sends a random int)
+ * note: flag is in this case 'A' and numOfValues is 0 (since test event doesn't send any data)
  */
 void testEvent(byte flag, byte numOfValues)
 {
-  // the test event in Amarino generates a random value between 0 and 255
-  int randomValue = meetAndroid.getInt();
-  
   flushLed(300);
   flushLed(300);
-  flushLed(randomValue);
 }
 
 void flushLed(int time)

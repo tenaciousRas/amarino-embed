@@ -33,7 +33,7 @@
 	  - send functions added
 	  - names of most functions changed
 	  
-  last modified by Bonifaz Kaufmann 04 Jul 2010
+  last modified by Bonifaz Kaufmann 08 Dec 2011
 */
 
 #ifndef MeetAndroid_h
@@ -53,7 +53,7 @@ class MeetAndroid : public Print
 #define ByteBufferLenght 64
 #define FunctionBufferLenght 75 // 48-122 (in ascii: 0 - z)
 #define FunctionBufferOffset 48  // offset to calc the position in the function buffer ('0' should be stored in intFunc[0])
-#define _MEET_ANDROID_VERSION 3 // software version of this library
+#define _MEET_ANDROID_VERSION 4 // software version of this library
 private:
 	// per object data
 	uint8_t bufferCount;
@@ -101,7 +101,12 @@ public:
 	void getFloatValues(float[]);
 	void getDoubleValues(float[]); // in Arduino double and float are the same
 	
+	#if defined(ARDUINO) && ARDUINO >= 100
+	size_t write(uint8_t);
+	#else
 	void write(uint8_t);
+	#endif
+	
 
 	void send(char);
     void send(const char[]);
