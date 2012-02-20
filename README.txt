@@ -22,7 +22,9 @@ This Github Wiki provides (basic) documentation, and the HelloAmarinoWorld and R
 - You'll need to reference the Amarino project as a library project.  In Eclipse this means following the usual steps to import an Android Library project.
 - You'll need to add a the AndroidBluetooth.JAR file found in Amarino/libs as a JAR on the build path of your project.
 - The next step is to create an implementation for the AmarinoServiceIntentConfig interface, providing (Intent) namespaces that work for your app.
+- The next step is to subclass AmarinoService with your implementation that injects your AmarinoServiceIntentConfig implementation (above step).
 - The next step is to setup an intent receiver in your Activity that handles the broadcast Amarino service intents (defined in AmarinoServiceIntentConfig).  See the HelloAmarinoWorld or RGBLEDPickers examples.
+- You'll need to modify your AndroidManifest to define your service class and allow for Bluetooth permissions.
 - The final step is to connect and communicate with the Arduino hardware in your Activity.
 
 
