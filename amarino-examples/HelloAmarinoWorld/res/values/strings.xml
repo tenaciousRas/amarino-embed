@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello Amarino World!</string>
+    <string name="app_name">HelloAmarinoWorld</string>
+    <string name="button_text_on">Turn LED On</string>
+    <string name="button_text_off">Turn LED Off</string>
+    <string name="instructions">This example shows how you can control your Arduino with a simple interface.</string>
+
+    <string name="device_address">Set BT Device Address</string>
+    <string name="set_device_address">Please enter the address of your Bluetooth module on your Arduino.</string>
+    <string name="device_address_format_error">Address needs to be in the following format: xx:xx:xx:xx:xx:xx\n\ne.g. 00:06:66:03:73:7B</string>
+
+</resources>

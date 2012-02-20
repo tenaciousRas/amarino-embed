@@ -1,4 +1,4 @@
-**/*/bin/
-**/*/gen/
-**/*/target/
+**/**/bin/**
+**/**/gen/**
+**/**/target/**
 **/*/local.properties

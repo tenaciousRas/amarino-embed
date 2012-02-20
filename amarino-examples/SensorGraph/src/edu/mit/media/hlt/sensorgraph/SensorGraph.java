@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.TextView;
 import at.abraxas.amarino.Amarino;
+import at.abraxas.amarino.R;
 import at.abraxas.amarino.intent.DefaultAmarinoServiceIntentConfig;
 
 /**

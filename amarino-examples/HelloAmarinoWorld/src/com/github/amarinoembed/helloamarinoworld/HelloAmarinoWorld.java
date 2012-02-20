@@ -1,29 +1,38 @@
-package com.longevitysoft.android.rgbledsliders;
+package com.github.amarinoembed.helloamarinoworld;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+import at.abraxas.amarino.Amarino;
 import at.abraxas.amarino.AmarinoConfigured;
 import at.abraxas.amarino.log.Logger;
 
-import com.longevitysoft.android.rgbledsliders.ColorPickerView.OnColorChangedListener;
+public class HelloAmarinoWorld extends Activity {
 
-/**
- * @author fbeachler
- * 
- */
-public class Main extends FragmentActivity {
+	public static final String TAG = "HelloAmarinoWorld";
 
-	public static final String TAG = "Main";
-	public static final String BT_DEVICE_ADDRESS = "00:06:66:06:BF:36"; // bluesmirf
-																		// MAC
-																		// addy
-	public static final int NUMBER_OF_LEDS = 3; // number of sliders in UI
+	public static final String DEFAULT_DEVICE_ADDRESS = "00:06:66:03:73:7B";
+
+	public static final String PREFS = "helloamarinoworld";
+	public static final String PREF_DEVICE_ADDRESS = "device_address";
+
+	private static final int DIALOG_DEVICE_ADDRESS = 1;
+	private static final int addressEditTextId = 15;
 
 	public static class ArduinoReceiver extends BroadcastReceiver {
 		@Override
@@ -90,6 +99,9 @@ public class Main extends FragmentActivity {
 		}
 	}
 
+	private String deviceAddress;
+	private SharedPreferences prefs;
+
 	/**
 	 * The embedded Amarino service. If used globally consider moving this to an
 	 * instance of {@link android.app.Application}.
@@ -99,15 +111,15 @@ public class Main extends FragmentActivity {
 	private ArduinoReceiver receiver;
 	private ServiceIntentConfig intentConfig;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-	 */
+	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initLayout();
+		setContentView(R.layout.main);
+		// get device address
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		deviceAddress = prefs.getString(PREF_DEVICE_ADDRESS,
+				DEFAULT_DEVICE_ADDRESS);
 		receiver = new ArduinoReceiver();
 		intentConfig = new ServiceIntentConfig();
 		registerReceiver(receiver,
@@ -115,29 +127,21 @@ public class Main extends FragmentActivity {
 		registerReceiver(receiver,
 				new IntentFilter(intentConfig.getIntentNameActionReceived()));
 		Log.v(TAG, new StringBuilder("bluetooth receiver intent registered")
-				.append(BT_DEVICE_ADDRESS).toString());
+				.append(deviceAddress).toString());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onStart()
-	 */
 	@Override
 	protected void onStart() {
 		super.onStart();
-		arduinoConnect();
+		embeddedAmarino = new AmarinoConfigured(this.getApplicationContext());
+		embeddedAmarino.setIntentConfig(intentConfig);
+		embeddedAmarino.connect(deviceAddress);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.FragmentActivity#onPause()
-	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
-		embeddedAmarino.disconnect(BT_DEVICE_ADDRESS);
+		embeddedAmarino.disconnect(deviceAddress);
 		if (null != receiver) {
 			try {
 				unregisterReceiver(receiver);
@@ -147,51 +151,87 @@ public class Main extends FragmentActivity {
 		}
 	}
 
-	/**
-	 * Setup the fragment layout.
-	 */
-	protected void initLayout() {
-		setContentView(R.layout.main);
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-				.beginTransaction();
-		int viewIds[] = { R.id.rgbslider01, R.id.rgbslider02, R.id.rgbslider03 };
-		for (int i = 0; i < NUMBER_OF_LEDS; i++) {
-			Slider slider = new Slider();
-			slider.setLedIndex(i);
-			slider.setOnChangeListener(new OnColorChangedListener() {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
 
-				@Override
-				public void onColorChanged(int ledIndex, int color) {
-					setArduinoLEDColor(ledIndex, color);
-				}
-			});
-			fragmentTransaction.replace(viewIds[i], slider);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.device_address:
+			showDialog(DIALOG_DEVICE_ADDRESS);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		fragmentTransaction.commit();
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+
+		case DIALOG_DEVICE_ADDRESS:
+			final EditText addressEditText = new EditText(this);
+			addressEditText.setId(addressEditTextId);
+			addressEditText.setText(deviceAddress);
+
+			return new AlertDialog.Builder(this)
+					.setTitle(R.string.device_address)
+					.setMessage(R.string.set_device_address)
+					.setView(addressEditText)
+					.setPositiveButton("Save", new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							String address = addressEditText.getEditableText()
+									.toString();
+							if (Amarino.isCorrectAddressFormat(address)) {
+								prefs.edit()
+										.putString(PREF_DEVICE_ADDRESS, address)
+										.commit();
+							} else {
+								Toast.makeText(HelloAmarinoWorld.this,
+										R.string.device_address_format_error,
+										Toast.LENGTH_LONG).show();
+							}
+
+						}
+					}).setNegativeButton("Discard", null).create();
+
+		default:
+			return super.onCreateDialog(id);
+		}
+
+	}
+
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		EditText addressEditText = (EditText) dialog
+				.findViewById(addressEditTextId);
+		addressEditText.setText(prefs.getString(PREF_DEVICE_ADDRESS,
+				DEFAULT_DEVICE_ADDRESS));
+		super.onPrepareDialog(id, dialog);
 	}
 
 	/**
-	 * Connect to Arudino device sans error handling + assume success, yay!
-	 */
-	private void arduinoConnect() {
-		// create an instance of embeddedAmarino to wrap BT
-		// intent broadcasts to service
-		embeddedAmarino = new AmarinoConfigured(this.getApplicationContext());
-		embeddedAmarino.setIntentConfig(intentConfig);
-		embeddedAmarino.connect(BT_DEVICE_ADDRESS);
-	}
-
-	/**
-	 * Calls 'c' callback registered by Amarino on the Arduino board, with LED
-	 * color value.
+	 * Send a blank data packet with the 'x' callback to Arduino.
 	 * 
-	 * @param ledIndex
-	 * @param value
+	 * @param v
 	 */
-	public void setArduinoLEDColor(int ledIndex, int color) {
-		// take lower 24 bits
-		int color32 = (color << 8) >> 8;
-		int vals[] = { ledIndex, color32 };
-		embeddedAmarino.sendDataToArduino(BT_DEVICE_ADDRESS, 'c', vals);
+	public void buttonClickLEDOff(View v) {
+		Amarino.sendDataToArduino(this, deviceAddress, 'x', "");
 	}
+
+	/**
+	 * Send a blank data packet with the 'o' callback to Arduino.
+	 * 
+	 * @param v
+	 */
+	public void buttonClickLEDOn(View v) {
+		Amarino.sendDataToArduino(this, deviceAddress, 'o', "");
+	}
+
 }

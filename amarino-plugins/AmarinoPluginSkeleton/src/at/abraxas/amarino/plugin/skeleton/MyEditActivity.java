@@ -2,6 +2,7 @@ package at.abraxas.amarino.plugin.skeleton;
 
 import android.view.View;
 import android.view.ViewStub;
+import at.abraxas.amarino.R;
 
 public class MyEditActivity extends EditActivity {
 

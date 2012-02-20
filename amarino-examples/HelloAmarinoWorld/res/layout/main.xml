@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<TextView android:id="@+id/TextView01" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content" 
+	android:padding="10dp"
+	android:text="@string/instructions"
+	android:textSize="18sp">
+	</TextView>
+	 
+	<Button 
+	android:id="@+id/Button01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="180dp" 
+	android:textSize="40dp" 
+	android:layout_margin="16dp"
+	android:layout_gravity="center"
+ 	android:onClick="buttonClickLEDOn"
+ 	android:text="@string/button_text_on">
+ 	</Button>
+
+	<Button 
+	android:id="@+id/Button01" 
+	android:layout_width="fill_parent" 
+	android:layout_height="180dp" 
+	android:textSize="40dp" 
+	android:layout_margin="16dp"
+	android:layout_gravity="center"
+ 	android:onClick="buttonClickLEDOff"
+ 	android:text="@string/button_text_off">
+ 	</Button>
+
+</LinearLayout>
