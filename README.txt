@@ -31,6 +31,7 @@ This Github Wiki provides (basic) documentation, and the HelloAmarinoWorld and R
 - The next step is to setup an intent receiver in your Activity that handles the broadcast Amarino service intents (defined in AmarinoServiceIntentConfig).  See the HelloAmarinoWorld or RGBLEDPickers examples.
 - You'll need to modify your AndroidManifest to define your service class and allow for Bluetooth permissions.
 - The final step is to connect and communicate with the Arduino hardware in your Activity.
+- Having problems.  Try the Google Group for support at https://groups.google.com/forum/#!forum/amarino-embed.
 
 
 Known issues
