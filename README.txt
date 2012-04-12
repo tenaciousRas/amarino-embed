@@ -33,6 +33,9 @@ This Github Wiki provides (basic) documentation, and the HelloAmarinoWorld and R
 - The final step is to connect and communicate with the Arduino hardware in your Activity.
 - Having problems.  Try the Google Group for support at https://groups.google.com/forum/#!forum/amarino-embed.
 
+More Info
+---------
+A presentation about Amarino Embed and RGBLEDPickers can be found at https://docs.google.com/present/view?id=df3bs8md_57g8mr447x&interval=5&autoStart=true.  This presentation was given to the Denver and Boulder Android Meetup groups in 2011.
 
 Known issues
 ------------
