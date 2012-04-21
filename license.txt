@@ -1,5 +1,6 @@
 This file includes licensing information for parts of Amarino.
 
+
 First, the gnu general public license, which covers the Android Amarino
 application, and the Amarino Plug-in Bundle as well as added examples.
 
