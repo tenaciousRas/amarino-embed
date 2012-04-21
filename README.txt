@@ -1,3 +1,24 @@
+ANNOUNCEMENT
+------------
+Major refactoring to this project is coming!  This project is originally a fork of the Amarino project, which itself is a wrapper around the Abraxas Bluetooth API for Android.
+After many hours of work and advanced usage it's morphed into a fully-embeddable Android service.
+
+Amarino is a tool intended for those just getting introducced to Arduino.  Unlike Amarino, this tool is
+built by and for Android developers - first and foremost.  It is therefore intended for serious beginners,
+intermeditate, and advanced programmers in the Android and embedded development 'worlds'.
+
+Honestly - if you're just getting started with Arduino and want to build things with bluetooth - you should check out the
+kickstarter project Ard'Vark.  http://www.kickstarter.com/projects/694850905/the-ard-vark  It will probably be less
+confusing for you than Amarino, and you might get more done.
+
+In 2012 I plan to launch an Android application that's easily searchable in Google Play for easy Android connectivity.
+It will be based on a completely refactored codebase - and the point of the app is that it'll be easily searchable.
+
+The project will be renamed Android Bluetooth Connectivity and this one will either be phased-out or replaced.
+
+Stay tuned!
+
+
 Overview
 --------
 This is an embeddable version of the Amarino library (http://www.amarino-toolkit.net/).  Amarino is originally built to be installed as an Android application which other Android apps depend on.  While this is an acceptable practice (for ex:  Google Navigator does it), this isn't always a pattern that works well for application developers.
