@@ -6,9 +6,9 @@ Amarino is a tool intended for those just getting introducced to Arduino.  Unlik
 
 Honestly - if you're just getting started with Arduino and want to build things with bluetooth - you should check out the kickstarter project Ard'Vark.  http://www.kickstarter.com/projects/694850905/the-ard-vark  It will probably be less confusing for you than Amarino, and you might get more done.
 
-In 2012 I plan to launch an Android application that's easily searchable in Google Play for easy Android connectivity. It will be based on a completely refactored codebase.  The goal of the app is to be easily searchable.  There will be _no_ more support for plugins - as I said this is a tool for serious users.  After both goals are achieved the roadmap is taking this project to places Amarino won't visit for quite some time.
+In 2012 I plan to launch an Android application that's easily searchable in Google Play for easy Android connectivity. It will be based on a completely refactored codebase.  The goal of the app is to be easily searchable.  There will be _no_ more support for plugins - as I said this is a tool for serious users.  After both goals are achieved the roadmap is taking this project to places that Amarino won't visit for quite some time.
 
-The project will be renamed Android Bluetooth Connectivity (ABC) and this one will either be phased-out or replaced.  I do not plan to keep the same API.
+The project will be renamed Android Bluetooth Connectivity (ABC) and this one will be either phased-out or replaced.  I don't plan to keep the same API.  Licensing of the new project is TBD but will not be less restrictive than Amarino-Embed.
 
 Stay tuned!
 
@@ -25,16 +25,13 @@ Another important change in the API is support for custom MessageBuilder impleme
 
 This project is considered relatively stable, but so many changes from the original project were needed that it can only be considered relatively stable.  For example, the Amarino APK is known to crash, and that hasn't been fixed here (yet).  Please excuse any issues and help contribute to the project -- if you have time to help write code let me know I'd love some help!
 
-Several of the examples in this project are from the original Amarino codebase, modified for the Amarino Library project.  Two examples are provided that use the embedded service:  HelloAmarinoWorld and RGBLEDPickers.  HelloAmarinoWorld
-provides a simple working example that only requires an Arduino with an Amarino-compatible bluetooth module.  The RGBLEDPickers example is similar
-but requires a small working circuit built around the Arduino.  RGBLEDPickers works with an embedded Amarino service and
-uses the Android compatibility library (fragments).
+Several of the examples in this project are from the original Amarino codebase, modified for the Amarino Library project.  Two examples are provided that use the embedded service:  HelloAmarinoWorld and RGBLEDPickers.  HelloAmarinoWorld provides a simple working example that only requires an Arduino with an Amarino-compatible bluetooth module.  The RGBLEDPickers example is similar but requires a small working circuit built around the Arduino.  RGBLEDPickers works with an embedded Amarino service and uses the Android compatibility library (fragments).
 
 Branches
 --------
-vendor => original Amarino branch.  The jump-point for merging changes from the Google Code source branch.
-dev-* => dev branch
-trunk => latest stable branch (coming when top priority bugs resolved and backwards-compat tested)
+- vendor => original Amarino branch.  The jump-point for merging changes from the Google Code source branch.
+- dev-* => dev branch
+- trunk => latest stable branch (coming when top priority bugs resolved and backwards-compat tested)
 
 Getting Started
 ---------------
