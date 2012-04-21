@@ -1,6 +1,6 @@
 ANNOUNCEMENT
 ------------
-Major refactoring to this project is coming!  This project is originally a fork of the Amarino project, which itself is a wrapper around the Abraxas Bluetooth API for Android.  After many hours of work and advanced usage it's morphed into a fully-embeddable Android service.
+Major refactoring to this project is coming!  This project is originally a fork of the Amarino project, which itself is a wrapper around the Abraxas Bluetooth API for Android.  After many hours of work and fairly serious usage it's morphed into a fully-embeddable Android service.
 
 Amarino is a tool intended for those just getting introduced to Arduino and embeddable programming.  Unlike Amarino, this tool is built by and for Android developers - first and foremost.  It is therefore intended for serious beginners, intermeditate, and advanced programmers in the Android and embedded development 'worlds'.
 
