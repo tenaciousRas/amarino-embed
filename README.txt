@@ -12,23 +12,6 @@ This project is considered relatively stable, but so many changes from the origi
 
 Several of the examples in this project are from the original Amarino codebase, modified for the Amarino Library project.  Two examples are provided that use the embedded service:  HelloAmarinoWorld and RGBLEDPickers.  HelloAmarinoWorld provides a simple working example that only requires an Arduino with an Amarino-compatible bluetooth module.  The RGBLEDPickers example is similar but requires a small working circuit built around the Arduino.  RGBLEDPickers works with an embedded Amarino service and uses the Android compatibility library (fragments).
 
-ANNOUNCEMENT
-------------
-Major refactoring to this project is coming!  This project is originally a fork of the Amarino project, which itself is a wrapper around the 'Gerdavax' Bluetooth API for Android.  After many hours of work and fairly serious usage it's morphed into a fully-embeddable Android service.
-
-Let's face it.  Amarino isn't exactly easy to use.  Honestly, if you're just getting started with Arduino and want to build things with bluetooth you should check out the kickstarter project Ard'Vark.  http://www.kickstarter.com/projects/694850905/the-ard-vark  It will probably be less confusing for you than Amarino, and you might get more done.
-
-That's why I've decided to rebuild this code.  The concept of using an Android OpenIntent approach to expose bluetooth connectivity will stay, and the concept of having a side-by-side app for this will remain.  Just about everything else will change.  After evaluating the codebase fairly thoroughly the following roadmap is planned:
-1)  Remove the Gerdavax library and rebuid on the native (SDK) API.  Gerdavax, the base API for Amarino, is unfinished and no longer active, and has more robust cousins in the official SDK.  The prime motivation to choose this library may be to support Android OS 1.1-1.5.  That motivation has since evatporated.  Thus, no support is planned for 1.1 and 1.5; 1.6 and higher will be supported.
-2)  Rewrite the Amarino service and give it a new name.   Observe this project's differences with Amarino today - the desired pattern is already established - just needs to be refined and cleaned.  The code has already deviated significantly and is backwards compatible, as it should be.
-3)  Build a new Arduino sketch based on (either JSON or BSON) as a protocol.  Yes, the current protocol is so-very-thin, but it's brittle and breaks easily.
-3a)  Support non-standard pin assignment.
-3b)  Non-blocking reads.
-3c)  Investigate a roadmap that would deliver support for BT modules connected to Arduino in master mode.
-4)  Port Arduino sketch for PIC support.
-
-All of that is planned for 2012 - with no announced dates - because right now it's just me taking it on.  Would you like to help?  Any serious volunteers are welcome, even if you only have a few hours per year!
-
 Branches
 --------
 - vendor => original Amarino branch.  The jump-point for merging changes from the Google Code source branch.
